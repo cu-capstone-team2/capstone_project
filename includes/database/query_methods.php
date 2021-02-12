@@ -49,7 +49,7 @@ function query_many($sql,$types,$params){
 // query with no parameters
 function query_np($sql){
     global $conn;
-    $result = mysqli_query($sql,$conn);
+    $result = mysqli_query($conn,$sql);
     if(!$result){
         die("QUERY FAILED: " . mysqli_error($conn));
     }

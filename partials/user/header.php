@@ -9,10 +9,10 @@
 </head>
 <body>
     <header>
-        <div>
+        <div class="brand">
             <a href="user.php">Home</a>
         </div>
-        <nav>
+        <nav class="main-nav">
             <a href="logout.php">Logout</a>
         </nav>
     </header>

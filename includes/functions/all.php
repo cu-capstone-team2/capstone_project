@@ -44,4 +44,18 @@ function change_page($page){
     exit();
 }
 
+function check_user($valid_users){
+    /* Check if user is valid */
+    global $role;
+    $valid = false;
+    foreach($valid_users as $user){
+        if($role === $user){
+            $valid = true;
+            break;
+        }
+    }
+    if(!$valid)
+        change_page("user.php");
+}
+
 ?>

@@ -24,7 +24,7 @@ if(isset($_POST["submit_login"])){
 
 
 
-<div class="form__login">
+<div class="form__login login">
     <?= show_error($errors,"login") ?>
 
     <h1>Login</h1>

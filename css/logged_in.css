@@ -27,7 +27,7 @@ body,html{
 body{
 	display: grid;
 	grid-template-rows: 4rem 1fr 4rem;
-	grid-template-columns: 1fr;
+	grid-template-columns: 100vw;
 	grid-template-areas: "head" "main" "footer";
 }
 
@@ -307,9 +307,9 @@ footer{
 	.dropdown__toggle{
 		display: flex;
 	}
-	.main-nav{
+	/* .main-nav{
 		display: none;
-	}
+	} */
 	.side-nav{
         display: flex;
         flex-direction: column;

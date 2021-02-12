@@ -33,6 +33,18 @@ function logout(){
     unset($_SESSION["role"]);
 }
 
+function is_faculty($role){
+    switch($role){
+        case ADMIN:
+        case CHAIR:
+        case INSTRUCTOR:
+        case SECRETARY:
+            return true;
+        default:
+            return false;
+    }
+}
+
 function authenticate(){
     if(!is_logged_in()){
         change_page('index.php');
@@ -40,7 +52,7 @@ function authenticate(){
     $user = false;
     if($_SESSION["role"] === STUDENT)
         $user = get_student_by_id($_SESSION["id"]);
-    else
+    else if(is_faculty($_SESSION["role"]))
         $user = get_faculty_by_id($_SESSION["id"]);
     
     if(!$user)
