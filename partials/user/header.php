@@ -10,7 +10,7 @@
 <body>
     <header>
         <div class="brand">
-            <a href="user.php">Home</a>
+            <a href="user.php"><?= get_role_name($role) ?></a>
         </div>
         <nav class="main-nav">
             <a href="logout.php">Logout</a>

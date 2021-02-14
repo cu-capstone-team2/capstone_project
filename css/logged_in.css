@@ -22,6 +22,7 @@ body,html{
 	font-family: 'Play', sans-serif;
 	height: 100%;
 	overflow-x: hidden;
+	background-color: var(--lightest);
 }
 
 body{
@@ -45,6 +46,7 @@ header{
 	background-color: var(--darker);
 	color: var(--lightest);
 	z-index: 200;
+	opacity: .9;
 }
 
 .main-nav{
@@ -261,35 +263,43 @@ footer{
 	border-radius: 5px;
 }
 
-.login *{
+
+
+/* Tables */
+.div-table{
+	overflow-x: auto;
+}
+.div-table table{
+	text-align: left;
+	border: 1px solid black;
+	border-collapse: collapse;
+	background-color: var(--light);
 	color: var(--darkest);
-	margin: 5px;
+	position: relative;
 }
 
-.login input:focus{
-	-webkit-box-shadow: 0px 5px 21px -5px var(--darker); 
-	box-shadow: 0px 5px 21px -5px var(--darker);
-	background-color: var(--lightest);
-	color: var(--darker);
+.tr{
+	position: relative;
 }
 
-.login input:focus::placeholder{
-	color: var(--darkest);
-}
-
-.login input{
-	width: 100%;
-	padding: 10px;
-	font-size: 1rem;
-}
-
-.login input[type="submit"]{
-	color: var(--lightest);
+.div-table tr:nth-child(1){
 	background-color: var(--darker);
+	color: var(--light);
 }
 
-.login input[type="submit"]:hover{
-	cursor: pointer;
+.div-table tr:nth-child(even){
+	background-color: var(--dark);
+}
+
+th,td{
+	border: 1px solid black;
+	padding: 15px;
+}
+
+th{
+	position: sticky;
+	top: 0; /* Don't forget this, required for the stickiness */
+	box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 }
 
 @keyframes come-in{

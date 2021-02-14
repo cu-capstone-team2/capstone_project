@@ -29,44 +29,9 @@ foreach($features as $feature){
 }
 
 if($default){
-	echo "<h1>Default Page</h1>";
+	require_once("users/features/default.php");
 }
 
 ?>
-
-
-<style>
-	.div-table{
-		overflow-x: auto;
-	}
-	.div-table table{
-		text-align: left;
-		border: 1px solid black;
-		border-collapse: collapse;
-		background-color: var(--darkest);
-		color: var(--light);
-	}
-	th,td{
-		border: 1px solid black;
-		padding: 5px;
-	}
-</style>
-
-<br>
-<div class="div-table">
-
-	<table>
-
-	<?php foreach($user as $key=>$value): ?>
-		<tr>
-			<th><?= $key ?>: </th>
-			<td><?= $value ?></td>
-		</tr>
-	<?php endforeach; ?>
-
-	</table>
-
-</div>
-<br>
 
 <?php require_once("partials/user/footer.php") ?>

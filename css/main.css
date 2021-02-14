@@ -177,6 +177,7 @@ body {
 	
 }
 
+
 @media (max-width: 700px){
 	.container{
 		grid-template-rows: 48px 1fr auto;

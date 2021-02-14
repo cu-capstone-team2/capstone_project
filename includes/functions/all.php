@@ -44,6 +44,17 @@ function change_page($page){
     exit();
 }
 
+function get_role_name($role){
+    switch($role){
+        case ADMIN: return "Admin";
+        case SECRETARY: return "Secretary";
+        case STUDENT: return "Student";
+        case CHAIR: return "Chair";
+        case INSTRUCTOR: return "Instructor";
+        default: return "INVALID ROLE";
+    }
+}
+
 function check_user($valid_users){
     /* Check if user is valid */
     global $role;
@@ -56,6 +67,13 @@ function check_user($valid_users){
     }
     if(!$valid)
         change_page("user.php");
+}
+
+function get_current_user_name(){
+    global $user,$role;
+    if($role === STUDENT)
+        return $user["student_firstname"] . " " . $user["student_lastname"];
+    return $user["faculty_firstname"] . " " . $user["faculty_lastname"];
 }
 
 ?>
