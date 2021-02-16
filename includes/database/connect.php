@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect('localhost','cs01','CUqyh5Hf','cs01');
+$conn = mysqli_connect(D_LOCATION,D_USERNAME,D_PASSWORD,D_DATABASE);
 
 if($error = mysqli_connect_error($conn)){
     die("CONNECTION FAILED: " . $error);

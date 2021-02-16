@@ -1,20 +1,20 @@
 <?php check_user([ADMIN,CHAIR,INSTRUCTOR,STUDENT]) ?>
+
 <h1>List Classes</h1>
 
 <?php $classes = get_all_classes() ?>
 
 <div class="div-table">
-
     <table>
         <tr>
-            <td>CRN</td>
-            <td>Course</td>
-            <td>Title</td>
-            <td>Time</td>
-            <td>Days</td>
-            <td>Credits</td>
-            <td>Instructor</td>
-            <td>Students Enrolled</td>
+            <th>CRN</th>
+            <th>Course</th>
+            <th>Title</th>
+            <th>Time</th>
+            <th>Days</th>
+            <th>Credits</th>
+            <th>Instructor</th>
+            <th>Students Enrolled</th>
         </tr>
 
         <?php foreach($classes as $class): ?>

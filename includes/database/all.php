@@ -1,6 +1,6 @@
 <?php
 
-$files = ['connect','queries_get_all',
+$files = ['connect_variables','connect','queries_get_all',
 	'queries_get_many_by','queries_get_one_by','queries_insert',
 	'queries_update','queries_delete'];
 
