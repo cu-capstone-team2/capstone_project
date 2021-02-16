@@ -11,13 +11,11 @@ function get_students_by_advisor($advisor_id){
             PIN,
             student_username,
             student_active,
-            Major.short_name,
-            CONCAT(faculty_lastname,', ',faculty_firstname) as advisor
+            Major.short_name
         FROM Student
         INNER JOIN Major
             ON Major.major_id = Student.major_id
-        INNER JOIN Faculty_Staff
-            ON Faculty_Staff.faculty_id = Student.faculty_id
+        WHERE Student.faculty_id = ?
         ORDER BY student_lastname,student_firstname;
     ";
 
@@ -52,7 +50,29 @@ function get_classes_by_student($student_id){
 }
 
 function get_classes_by_instructor($instructor_id){
-
+    $sql = "
+        SELECT
+            Class.class_id,
+            course_name,
+            CONCAT(Major.short_name, Course.course_number) as course_title,
+            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+            days,
+            credits,
+            COUNT(Enrollment.student_id) as students
+        FROM Class
+        INNER JOIN Course
+            ON Course.course_id = Class.course_id
+        INNER JOIN Major
+            ON Major.major_id = Course.major_id
+        INNER JOIN Timeslot
+            ON Timeslot.time_id = Class.time_id
+        LEFT JOIN Enrollment
+            ON Enrollment.class_id = Class.class_id
+        WHERE Class.faculty_id = ?
+        GROUP BY Class.class_id
+        ORDER BY course_title
+    ";
+    return query_many($sql, "s", [$instructor_id]);
 }
 
 ?>

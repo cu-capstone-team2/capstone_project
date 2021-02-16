@@ -56,9 +56,16 @@ function query_np($sql){
     return $result;
 }
 
+// query one row with no parameters, doesn't clean array
+function query_one_np($sql){
+    $result = query_np($sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
+    
+}
+
 // query many with no parameters
 function query_many_np($sql){
-    global $conn;
     $result = query_np($sql);
     $array = [];
     while($row = mysqli_fetch_assoc($result)){

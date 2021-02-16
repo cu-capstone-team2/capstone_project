@@ -95,4 +95,29 @@ function get_all_classes(){
     return query_many_np($sql);
 }
 
+function get_all_courses(){
+    $sql = "
+        SELECT
+            course_id,
+            course_name,
+            credits,
+            CONCAT(Major.short_name,' ',course_number) as title
+        FROM Course
+        INNER JOIN Major
+            ON Major.major_id = Course.major_id
+        ORDER BY title    
+    ";
+    
+    return query_many_np($sql);
+}
+
+function get_all_constants(){
+    $sql = "
+        SELECT
+            *
+        FROM Constants;
+    ";
+    return query_one_np($sql);
+}
+
 ?>

@@ -1,37 +1,29 @@
-<?php require_once("includes/all.php") ?>
+<?php 
 
-<?php $user = authenticate(); ?>
+require_once("includes/all.php");
 
-<?php $role = isset($user["role"])? (int)$user["role"] : STUDENT ?>
-<?php require_once("partials/user/header.php") ?>
+$user = authenticate();
 
-<?php require_once("users/links/choose.php") ?>
+$role = isset($user["role"])? (int)$user["role"] : STUDENT;
 
-<?php
+require_once("partials/user/header.php");
 
-$features = [
-	"add_appointment","add_class","add_course","add_faculty","change_advisor",
-	"class_roster","contact_advisor","contact_chair","contact_student","edit_info",
-	"enroll","list_advisees","list_advisors","list_classes","list_courses","list_faculty",
-	"list_students","pick_major","teaching_schedule","view_appointments","view_schedule"
-];
+require_once("users/links/choose.php");
 
-$curr_feature = "";
+$feature = "";
+
 if(isset($_GET["feature"])){
-	$curr_feature = $_GET["feature"];
-}
-$default = true;
-foreach($features as $feature){
-	if($curr_feature === $feature){
-		$default = false;
-		require_once("users/features/{$feature}.php");
-	}
+	$feature = $_GET["feature"];
 }
 
-if($default){
+$file = "users/features/{$feature}.php";
+
+if(file_exists($file)){
+	require_once($file);
+} else{
 	require_once("users/features/default.php");
 }
 
-?>
+require_once("partials/user/footer.php");
 
-<?php require_once("partials/user/footer.php") ?>
+?>
