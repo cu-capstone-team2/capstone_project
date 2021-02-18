@@ -6,6 +6,7 @@ function get_all_students(){
             student_id,
             student_firstname,
             student_lastname,
+            CONCAT(student_lastname,', ',student_firstname) as full_name,
             student_email,
             classification,
             PIN,
@@ -54,7 +55,7 @@ function get_all_faculty(){
 function get_all_advisors(){
     $sql = "
         SELECT
-            faculty_id,
+            Faculty_Staff.faculty_id,
             faculty_firstname,
             faculty_lastname,
             CONCAT(faculty_lastname,', ',faculty_firstname) as full_name,
@@ -63,11 +64,15 @@ function get_all_advisors(){
             faculty_username,
             faculty_password,
             faculty_active,
-            CONCAT(Room.building,' ',Room.room_number) as room
+            CONCAT(Room.building,' ',Room.room_number) as room,
+            COUNT(Student.student_id) as students
         FROM Faculty_Staff
         INNER JOIN Room
             ON Room.room_id = Faculty_Staff.room_id
+        LEFT JOIN Student
+            ON Student.faculty_id = Faculty_Staff.faculty_id
         WHERE role = (SELECT role_instructor FROM Constants)
+        GROUP BY Faculty_Staff.faculty_id
         ORDER BY faculty_lastname, faculty_firstname;
     ";
     return query_many_np($sql);

@@ -6,6 +6,7 @@ function get_students_by_advisor($advisor_id){
             student_id,
             student_firstname,
             student_lastname,
+            CONCAT(student_lastname,', ',student_firstname) as full_name,
             student_email,
             classification,
             PIN,
@@ -20,6 +21,33 @@ function get_students_by_advisor($advisor_id){
     ";
 
     return query_many($sql, "s", [$advisor_id]);
+}
+
+function get_students_by_class($class_id){
+    $sql = "
+        SELECT
+            Student.student_id,
+            student_firstname,
+            student_lastname,
+            CONCAT(student_lastname,', ',student_firstname) as full_name,
+            student_email,
+            classification,
+            PIN,
+            student_username,
+            student_active,
+            Major.short_name
+        FROM Class
+        INNER JOIN Enrollment
+            ON Enrollment.class_id = Class.class_id
+        INNER JOIN Student
+            ON Student.student_id = Enrollment.student_id
+        INNER JOIN Major
+            ON Major.major_id = Student.major_id
+        WHERE Class.class_id = ?
+        ORDER BY student_lastname, student_firstname;
+    ";
+
+    return query_many($sql, "s", [$class_id]);
 }
 
 function get_classes_by_student($student_id){

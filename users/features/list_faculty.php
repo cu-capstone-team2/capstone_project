@@ -9,7 +9,7 @@
   <table>
     <tr>
       <th>ID</th>
-      <td>Role</td>
+      <th>Role</th>
       <th>Name</th>
       <th>Email</th>
       <th>Phone</th>
