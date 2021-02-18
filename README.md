@@ -11,4 +11,4 @@ This project was created for Dr. Zhao. It is a college enrollment simulation, an
 - Ryan Pierce
 - Cynthia Dy
 - Kadar Lamsal
-- Micheal Argyros
+- Michael Argyros

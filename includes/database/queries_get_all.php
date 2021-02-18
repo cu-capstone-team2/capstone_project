@@ -29,17 +29,24 @@ function get_all_faculty(){
             faculty_id,
             faculty_firstname,
             faculty_lastname,
+            CONCAT(faculty_lastname,', ',faculty_firstname) as full_name,
             faculty_email,
             faculty_phone,
             faculty_username,
             faculty_password,
             faculty_active,
-            CONCAT(Room.building,' ',Room.room_number)
+            CONCAT(Room.building,' ',Room.room_number) as room,
+            CASE
+                WHEN role = (SELECT role_instructor FROM Constants) THEN 'Instructor'
+                WHEN role = (SELECT role_secretary FROM Constants) THEN 'Secretary'
+                WHEN role = (SELECT role_admin FROM Constants) THEN 'Admin'
+                WHEN role = (SELECT role_chair FROM Constants) THEN 'Chair'
+                ELSE 'INVALID'
+            END as role
         FROM Faculty_Staff
         INNER JOIN Room
             ON Room.room_id = Faculty_Staff.room_id
-        WHERE role = (SELECT role_instructor FROM Constants)
-        ORDER BY faculty_lastname, faculty_firstname;
+        ORDER BY role, faculty_lastname, faculty_firstname;
     ";
     return query_many_np($sql);  
 }
@@ -50,12 +57,13 @@ function get_all_advisors(){
             faculty_id,
             faculty_firstname,
             faculty_lastname,
+            CONCAT(faculty_lastname,', ',faculty_firstname) as full_name,
             faculty_email,
             faculty_phone,
             faculty_username,
             faculty_password,
             faculty_active,
-            CONCAT(Room.building,' ',Room.room_number)
+            CONCAT(Room.building,' ',Room.room_number) as room
         FROM Faculty_Staff
         INNER JOIN Room
             ON Room.room_id = Faculty_Staff.room_id
@@ -118,6 +126,18 @@ function get_all_constants(){
         FROM Constants;
     ";
     return query_one_np($sql);
+}
+
+function get_all_majors(){
+    $sql = "
+        SELECT
+            major_id,
+            major_name,
+            short_name
+        FROM Major
+        ORDER BY short_name;
+    ";
+    return query_many_np($sql);
 }
 
 ?>

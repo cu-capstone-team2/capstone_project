@@ -1,20 +1,12 @@
 <?php
 
-    function insert_enrollment($student_id, $class_id){
+    function update_student_major($student_id,$major_id){
         $sql = "
-            INSERT INTO Enrollment(student_id, class_id)
-            VALUES (?, ?);
-        ";
-        return query($sql, "ii", [$student_id, $class_id]);
-    }
-
-    function delete_enrollment($student_id, $class_id){
-        $sql = "
-            DELETE FROM Enrollment
+            UPDATE Student
+                SET major_id = ?
             WHERE student_id = ?
-                AND class_id = ?
         ";
-        return query($sql, "ii", [$student_id, $class_id]);
+        return query($sql,"ii",[$major_id, $student_id]);
     }
 
 ?>

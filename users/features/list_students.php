@@ -1,4 +1,5 @@
 <?php check_user([ADMIN,CHAIR,SECRETARY]) ?>
+
 <h1>List Students</h1>
 
 <?php $students = get_all_students() ?>
@@ -11,12 +12,15 @@
             <th>ID</th>
             <th>Last Name</th>
             <th>First Name</th>
+            <th>Major</th>
+            <?php if($role === CHAIR || $role === SECRETARY): ?>
+                <th>Change Major</th>
+            <?php endif; ?>
             <th>Email</th>
             <th>Status</th>
             <th>PIN</th>
             <th>Username</th>
             <th>Active</th>
-            <th>Major</th>
             <th>Advisor</th>
         </tr>
 	<?php foreach($students as $student): ?>
@@ -24,16 +28,18 @@
             <td><?= $student["student_id"] ?></td>
             <td><?= $student["student_lastname"] ?></td>
             <td><?= $student["student_firstname"] ?></td>
+            <td><?= $student["short_name"] ?></td>
+            <?php if($role === CHAIR || $role === SECRETARY): ?>
+                <td><a href="user.php?feature=pick_major&student_id=<?= $student["student_id"] ?>">Change Major</a></td>
+            <?php endif; ?>
             <td><?= $student["student_email"] ?></td>
             <td><?= $student["classification"] ?></td>
             <td><?= $student["PIN"] ?></td>
             <td><?= $student["student_username"] ?></td>
             <td><?= $student["student_active"] ?></td>
-            <td><?= $student["short_name"] ?></td>
             <td><?= $student["advisor"] ?></td>
 		</tr>
 	<?php endforeach; ?>
-
 	</table>
 
 </div>
