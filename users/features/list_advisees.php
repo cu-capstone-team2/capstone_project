@@ -28,12 +28,18 @@ $advisees = get_students_by_advisor($faculty_id);
             <th>Name</th>
             <th>Classification</th>
             <th>PIN</th>
-            <?php if($role === INSTRUCTOR): ?>
-                <th>View Schedule</th>
-            <?php endif ?>
             <th>Student Username</th>
             <th>Student Active</th>
             <th>Major</th>
+            <?php if($role === INSTRUCTOR): ?>
+                <th>View Schedule</th>
+            <?php endif ?>
+            <?php if($role === INSTRUCTOR): ?>
+                 <th>Enroll</th>
+            <?php endif ?>
+            <?php if($role === SECRETARY): ?>
+                <th>Contact Student</th>
+            <?php endif ?>
         </tr>
         <?php foreach($advisees as $advisee): ?>
             <tr>
@@ -41,12 +47,18 @@ $advisees = get_students_by_advisor($faculty_id);
                 <td><?= $advisee["full_name"] ?></td>
                 <td><?= $advisee["student_email"] ?></td>
                 <td><?= $advisee["PIN"] ?></td>
-                <?php if($role === INSTRUCTOR): ?>
-                    <td><a href="user.php?feature=view_schedule&student_id=<?= $advisee["student_id"] ?>">View Schedule</a></td>
-                <?php endif; ?>
                 <td><?= $advisee["student_username"] ?></td>
                 <td><?= $advisee["student_active"] ?></td>
                 <td><?= $advisee["short_name"] ?></td>
+                <?php if($role === INSTRUCTOR): ?>
+                    <td><a href="user.php?feature=view_schedule&student_id=<?= $advisee["student_id"] ?>">View Schedule</a></td>
+                <?php endif; ?>
+                <?php if($role === INSTRUCTOR): ?>
+                    <td><a href="user.php?feature=enroll&student_id=<?= $advisee["student_id"] ?>">Enroll</a> </td>
+                <?php endif ?>
+                <?php if($role === SECRETARY): ?>
+                    <td><a href="user.php?feature=contact_student&student_id=<?=$advisee["student_id"]?>&student_email=<?=$advisee["student_email"]?>">Contact Student</a> </td>
+                <?php endif ?>
             </tr>
         <?php endforeach; ?>
     </table>

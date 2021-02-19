@@ -1,0 +1,31 @@
+
+.div-table{
+	overflow-x: auto;
+	overflow-y: scroll;
+	width: 100%;
+}
+
+main a{
+	color: var(--darkest-yellow);
+}
+
+.div-table table{
+	border: 1px solid black;
+	border-collapse: collapse;
+	width: 100%;
+	background-color: white;
+}
+
+.div-table tr:nth-child(odd){
+	background-color: var(--lightest-yellow);
+}
+
+.div-table tr:nth-child(1){
+	background-color: var(--dark-yellow);
+	color: black;
+}
+
+.div-table td,.div-table th{
+	padding: 5px;
+	border: 1px solid black;
+}

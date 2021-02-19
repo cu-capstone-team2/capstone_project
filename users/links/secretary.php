@@ -1,5 +1,6 @@
-<?php $links = ['list_students','list_advisors','edit_info']; ?>
+<?php
 
-<?php foreach($links as $link): ?>
-	<a href="user.php?feature=<?= $link ?>"><?= $link ?></a>
-<?php endforeach; ?>
+$links = ['list_students'=>"List Students",'list_advisors'=>"List Advisors",'edit_info'=>"Edit Info"];
+
+?>
+

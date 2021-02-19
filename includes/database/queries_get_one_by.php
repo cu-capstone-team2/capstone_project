@@ -92,8 +92,8 @@ function get_class_by_id($id){
             ON Enrollment.class_id = Class.class_id
         LEFT JOIN Student
             ON Student.student_id = Enrollment.student_id
+        WHERE Class.class_id = ?
         GROUP BY Class.class_id
-        WHERE class_id = ?
     ";
     return query_one($sql,"s",[$id]);
 }

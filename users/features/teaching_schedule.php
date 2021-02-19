@@ -13,6 +13,7 @@
             <th>Days</th>
             <th>Credits</th>
             <th>Students Enrolled</th>
+            <th>Class Listing</th>
         </tr>
 
         <?php foreach($classes as $class): ?>
@@ -24,6 +25,7 @@
                 <td><?= $class["days"] ?></td>
                 <td><?= $class["credits"] ?></td>
                 <td><?= $class["students"] ?></td> 
+                <td><a href="user.php?feature=class_roster&class_id=<?= $class["class_id"] ?>">Listing</a></td>
             </tr>
         <?php endforeach; ?>
     </table>

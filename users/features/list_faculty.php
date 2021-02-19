@@ -1,9 +1,10 @@
 <?php check_user([ADMIN]) ?>
+ 
+
 <h1>List Faculty</h1>
 
 <?php $faculty = get_all_faculty()?>
 
-<br>
 
 <div class="div-table">
   <table>
@@ -16,18 +17,29 @@
       <th>Room</th>
       <th>Username</th>
       <th>Active</th>
-    </tr>
-  <?php foreach ($faculty as $faculty): ?>
+      
+     <?php if($role == ADMIN): ?>
+              <th>Edit Info</th>
+       <?php endif; ?>
+      
+     </tr>
+
+ <?php foreach ($faculty as $faculty): ?>
     <tr>
       <td><?=	$faculty["faculty_id"] ?></td>
-      <td><?= $faculty["role"] ?></td>
+      <td><?=   $faculty["role"] ?></td>
       <td><?=	$faculty["full_name"] ?></td>
       <td><?=	$faculty["faculty_email"] ?></td>
-      <td><?= $faculty["faculty_phone"] ?></td>
-      <td><?= $faculty["room"] ?></td>
+      <td><?=   $faculty["faculty_phone"] ?></td>
+      <td><?=   $faculty["room"] ?></td>
       <td><?=	$faculty["faculty_username"] ?></td>
       <td><?= $faculty["faculty_active"] ?></td>
+      <?php if ($role == ADMIN): ?>
+
+                 <td><a href = "user.php?feature=edit_faculty&faculty_id=<?= $faculty["faculty_id"] ?>">Edit Info</a></td>
+      <?php endif ?>
     </tr>
+
   <?php endforeach; ?>
 </table>
 <div>

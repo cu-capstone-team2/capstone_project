@@ -1,5 +1,7 @@
-<?php $links = ['list_classes','list_advisees','teaching_schedule','contact_chair','edit_info']; ?>
+<?php
 
-<?php foreach($links as $link): ?>
-	<a href="user.php?feature=<?= $link ?>"><?= $link ?></a>
-<?php endforeach; ?>
+$links = ['list_classes'=>"List Classes",'list_advisees'=>"List Advisees",'teaching_schedule'=>"Teaching Schedule",
+		'contact_chair'=>"Contact Chair",'edit_info'=>"Edit Info"];
+
+?>
+

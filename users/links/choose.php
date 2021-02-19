@@ -19,3 +19,7 @@ switch($role){
 }
 
 ?>
+
+<?php foreach($links as $link=>$name): ?>
+	<a class="aside-link" href="user.php?feature=<?= $link ?>"><?= $name ?></a>
+<?php endforeach; ?>
