@@ -1,6 +1,5 @@
 <h1>Welcome, <?= get_current_user_name() ?></h1>
-
-<br>
+<hr>
 <div class="div-table">
 
 	<table>
@@ -15,4 +14,3 @@
 	</table>
 
 </div>
-<br>

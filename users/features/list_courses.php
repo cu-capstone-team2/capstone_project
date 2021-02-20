@@ -2,6 +2,7 @@
 
 
 <h1>List Courses</h1>
+<hr>
 
 <?php $courses = get_all_courses() ?>
 
@@ -9,23 +10,29 @@
 
 	<table>
 	<tr>
-	<th>ID</th>
-	<th>Title</th>
-	<th>Name</th>
-	<th>Credits</th>
-	<?php if($role === ADMIN):?>
-		<th>Add Class</th>
-	<?php endif; ?>
+		<th>ID</th>
+		<th>Title</th>
+		<th>Name</th>
 	</tr>
 	<?php foreach($courses as $course): ?>
-		<tr>
-	<td><?= $course["course_id"] ?></td>
-	<td><?= $course["title"] ?></td>
-	<td><?= $course["course_name"] ?></td>
-	<td><?= $course["credits"] ?></td>
-	<?php if($role === ADMIN): ?>
-		<td><a href="user.php?feature=add_class&course_id=<?= $course["course_id"] ?>">Add Class</a></td>
-	<?php endif; ?>
+		<tr class="row">
+			<td><?= $course["course_id"] ?></td>
+			<td><?= $course["title"] ?></td>
+			<td><?= $course["course_name"] ?></td>
+
+		</tr>
+		<td colspan="100%">
+			<div class="info-shown-div">
+				<div class="info-shown-div-info">
+					<p><strong>Credits: </strong><?= $course["credits"] ?></p>
+				</div>
+				<div class="info-shown-div-links">
+					<?php if($role === ADMIN): ?>
+						<a href="user.php?feature=add_class&course_id=<?= $course["course_id"] ?>">Add Class</a>
+					<?php endif; ?>
+				</div>
+			</div>
+		</td>
 		</tr>
 	<?php endforeach; ?>
 

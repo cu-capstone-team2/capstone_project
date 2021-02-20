@@ -1,5 +1,6 @@
 <?php check_user([CHAIR,INSTRUCTOR,STUDENT]) ?>
 <h1>Enroll</h1>
+<hr>
 <?php 
 	$s_id = $_GET["student_id"];
 	$student = get_student_by_id($s_id);

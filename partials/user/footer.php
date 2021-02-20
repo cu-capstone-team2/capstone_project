@@ -1,5 +1,6 @@
 <script src="js/main.js"></script>
 <script src="js/input.js"></script>
+<script src="js/table.js"></script>
 </div>
 </main>
 

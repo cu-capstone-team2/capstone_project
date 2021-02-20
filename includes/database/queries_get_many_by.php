@@ -50,6 +50,22 @@ function get_students_by_class($class_id){
     return query_many($sql, "s", [$class_id]);
 }
 
+function get_class_count($class_id){
+	$sql = "
+		SELECT
+			COUNT(Student.student_id) as students
+		FROM Class
+		LEFT JOIN Enrollment
+			ON Enrollment.class_id = Class.class_id
+		LEFT JOIN Student
+			ON Student.student_id = Enrollment.student_id
+		WHERE Class.class_id = ?
+		GROUP BY Class.class_id
+	";
+	$row = query_one($sql,"s",[$class_id]);
+	return $row["students"];
+}
+
 function get_classes_by_student($student_id){
     $sql = "
         SELECT

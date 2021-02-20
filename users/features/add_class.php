@@ -17,4 +17,5 @@ $courses = get_all_courses($course_id);
 
 
 <h1>Add Class</h1>
+<hr>
 <h3> <?php echo $course["course_name"] ?></h3>

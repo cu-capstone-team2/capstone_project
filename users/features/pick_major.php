@@ -36,6 +36,8 @@ if(isset($_POST["submit_new_major"])){
 ?>
 
 <h1>Pick Major</h1>
+<hr>
+
 <h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
 <form method="post">
     <label>New Major</label>

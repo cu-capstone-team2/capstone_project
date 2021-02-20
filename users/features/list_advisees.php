@@ -17,6 +17,7 @@ $advisees = get_students_by_advisor($faculty_id);
 ?>
 
 <h1>List Advisees</h1>
+<hr>
 
 <?php if($role !== INSTRUCTOR): ?>
     <h3> <?= COUNT($advisees) ?> Students advised by <?= $faculty["faculty_firstname"] ?> <?= $faculty["faculty_lastname"] ?></h3>
@@ -26,40 +27,35 @@ $advisees = get_students_by_advisor($faculty_id);
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Classification</th>
-            <th>PIN</th>
-            <th>Student Username</th>
-            <th>Student Active</th>
             <th>Major</th>
-            <?php if($role === INSTRUCTOR): ?>
-                <th>View Schedule</th>
-            <?php endif ?>
-            <?php if($role === INSTRUCTOR): ?>
-                 <th>Enroll</th>
-            <?php endif ?>
-            <?php if($role === SECRETARY): ?>
-                <th>Contact Student</th>
-            <?php endif ?>
         </tr>
         <?php foreach($advisees as $advisee): ?>
-            <tr>
+            <tr class="row">
                 <td><?= $advisee["student_id"] ?></td>
                 <td><?= $advisee["full_name"] ?></td>
-                <td><?= $advisee["student_email"] ?></td>
-                <td><?= $advisee["PIN"] ?></td>
-                <td><?= $advisee["student_username"] ?></td>
-                <td><?= $advisee["student_active"] ?></td>
                 <td><?= $advisee["short_name"] ?></td>
-                <?php if($role === INSTRUCTOR): ?>
-                    <td><a href="user.php?feature=view_schedule&student_id=<?= $advisee["student_id"] ?>">View Schedule</a></td>
-                <?php endif; ?>
-                <?php if($role === INSTRUCTOR): ?>
-                    <td><a href="user.php?feature=enroll&student_id=<?= $advisee["student_id"] ?>">Enroll</a> </td>
-                <?php endif ?>
-                <?php if($role === SECRETARY): ?>
-                    <td><a href="user.php?feature=contact_student&student_id=<?=$advisee["student_id"]?>&student_email=<?=$advisee["student_email"]?>">Contact Student</a> </td>
-                <?php endif ?>
             </tr>
+            <tr>
+            <td colspan="100%">
+                <div class="info-shown-div">
+                <div class="info-shown-div-info">
+                    <p><strong>Email: </strong><?= $advisee["student_email"] ?></p>
+                    <p><strong>Classification: </strong><?= $advisee["classification"] ?></p>
+                    <p><strong>PIN: </strong><?= $advisee["PIN"] ?></p>
+                    <p><strong>Username: </strong><?= $advisee["student_username"] ?></p>
+                </div>
+                <div class="info-shown-div-links">
+                    <?php if($role === INSTRUCTOR || $role === CHAIR): ?>
+                        <a class="feature-url" href="user.php?feature=view_schedule&student_id=<?= $advisee["student_id"] ?>">View Schedule</a>
+                        <a class="feature-url" href="user.php?feature=enroll&student_id=<?= $advisee["student_id"] ?>">Enroll</a>
+                    <?php endif ?>
+                    <?php if($role === SECRETARY || $role === CHAIR): ?>
+                        <a class="feature-url" href="user.php?feature=contact_student&student_id=<?=$advisee["student_id"]?>&student_email=<?=$advisee["student_email"]?>">Contact Student</a>
+                    <?php endif ?>
+                </div>
+                </div>
+            </td>
+        </tr>
         <?php endforeach; ?>
     </table>
 </div>

@@ -1,6 +1,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 
+
+
 :root{
     --dark-yellow: #ffc429;
     --darkest-yellow: #493502;
@@ -8,6 +10,8 @@
     --lightest-yellow: #fff3d3;
     --text-color: black;
     --shadow: black 0.1em 0.15em 0.6em;
+    --animation-time: .35s;
+    --transform-position: 15px;
 }
 .error{
     color: red;
@@ -32,25 +36,60 @@ body {
     display: grid;
     width: 100vw;
     grid-template-areas: "header header" "side main" "footer footer";
-    grid-template-rows: 48px 1fr 64px;
-    grid-template-columns: 250px minmax(auto,1fr);
+    grid-template-rows: 48px minmax(auto,1fr) 64px;
+    grid-template-columns: 250px 1fr;
 }
 
-h1{
+main h1{
     position: relative;
     width: 100%;
-    margin-bottom: 15px;
-    height: 50px;
+    animation-name: come-down;
+    animation-duration: var(--animation-time);
+    animation-iteration-count: 1;
 }
 
-h1:after{
-    content: '';
-    width: 100%;
+main hr{
+    animation-name: spread-out;
+    animation-duration: var(--animation-time);
+    animation-iteration-count: 1;
+    margin: 15px 0;
     height: 3px;
     background-color: black;
-    position: absolute;
-    left: 0;
-    bottom: 0;
+}
+
+.div-table, .form-content{
+    animation-name: come-up;
+    animation-duration: var(--animation-time);
+    animation-iteration-count: 1;
+}
+
+@keyframes come-down{
+    from{
+        transform: translateY(calc(-1 * var(--transform-position)));
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }  
+}
+
+@keyframes come-up{
+    from{
+        transform: translateY(var(--transform-position));
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }  
+}
+
+@keyframes spread-out{
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
 }
 
 header {
@@ -180,6 +219,7 @@ footer {
     font-size: 1.2rem;
 }
 
+
 .aside-link{
     text-align: center;
     font-size: .5rem;
@@ -238,9 +278,8 @@ footer {
 
 @media (max-width: 900px){
     body{
-        grid-template-rows: 48px minmax(calc(100vh - 64px - 48px),1fr) auto;
+        grid-template-rows: 48px minmax(90%,1fr) auto;
         grid-template-areas: "header header" "main main" "footer footer";
-
     }
     main{
         padding: 10px;
