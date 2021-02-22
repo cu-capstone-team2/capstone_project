@@ -28,7 +28,7 @@
 				</div>
 				<div class="info-shown-div-links">
 					<?php if($role === ADMIN): ?>
-						<a href="user.php?feature=add_class&course_id=<?= $course["course_id"] ?>">Add Class</a>
+						<a class="feature-url" href="user.php?feature=add_class&course_id=<?= $course["course_id"] ?>">Add Class</a>
 					<?php endif; ?>
 				</div>
 			</div>

@@ -1,13 +1,12 @@
 <?php check_user([CHAIR,INSTRUCTOR,SECRETARY]) ?>
 <?php 
 	$s_id = $_GET["student_id"];
-	echo $s_id;
 	$student = get_student_by_id($s_id);
 	$s_email = $student["student_email"];
 	if (!$student) {
 		change_page("user.php?feature=list_advisees");
 		change_page("user.php?feature=list_students");
-	
+
 	}
 	
 	

@@ -28,7 +28,7 @@
                                 <p><strong>Active Status: </strong><?= $advisors["faculty_active"] ?></p>
                             </div>
                             <div class="info-shown-div-links">
-                                <a href="user.php?feature=list_advisees&faculty_id=<?= $advisors["faculty_id"] ?>">List Advisees</a>
+                                <a class="feature-url" href="user.php?feature=list_advisees&faculty_id=<?= $advisors["faculty_id"] ?>">List Advisees</a>
                             </div>
                         </div>
                     </td>

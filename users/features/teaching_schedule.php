@@ -32,7 +32,7 @@
                     <p><strong># of Students: </strong><?= $class["students"] ?></p>
                 </div>
                 <div class="info-shown-div-links">
-                    <a href="user.php?feature=class_roster&class_id=<?= $class["class_id"] ?>">Class Listing</a>
+                    <a class="feature-url" href="user.php?feature=class_roster&class_id=<?= $class["class_id"] ?>">Class Listing</a>
 
                 </div>
                 </div>

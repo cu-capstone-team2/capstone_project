@@ -119,4 +119,25 @@ function get_classes_by_instructor($instructor_id){
     return query_many($sql, "s", [$instructor_id]);
 }
 
+function get_appointments_by_instructor($instructor_id){
+    $sql = "
+        SELECT
+            Student.student_id,
+            student_firstname,
+            student_lastname,
+            CONCAT(student_lastname,', ',student_firstname) as full_name,
+            DATE_FORMAT(appointment_date,'%M %e, %Y') as date,
+            TIME_FORMAT(time_, '%h:%i %p') as time,
+            is_finished
+        FROM Appointment
+        INNER JOIN Student
+            ON Student.student_id = Appointment.student_id
+        INNER JOIN Timeslot
+            ON Timeslot.time_id = Appointment.time_id
+        WHERE Appointment.faculty_id = ?
+        ORDER BY appointment_date, time_
+    ";
+    return query_many($sql,"s",[$instructor_id]);
+}
+
 ?>

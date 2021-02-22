@@ -41,5 +41,4 @@
     </tr>
   <?php endforeach; ?>
 </table>
-<div>
-<br>
+

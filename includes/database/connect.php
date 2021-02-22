@@ -73,5 +73,12 @@ function query_many_np($sql){
     return $array;
 }
 
+function query_one_np($sql){
+    global $conn;
+    $result = query_np($sql);
+    $row = mysqli_fetch_assoc($result);
+    if(!$row) return false;
+    return clean_array($row);
+}
 
 ?>

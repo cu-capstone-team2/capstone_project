@@ -58,6 +58,20 @@ function get_faculty_by_id($id){
     return query_one($sql,"s",[$id]);
 }
 
+function get_chair(){
+    $sql = "
+        SELECT
+            Faculty_Staff.*,
+            CONCAT(faculty_lastname,', ',faculty_firstname) as full_name,
+            CONCAT(Room.building,' ',Room.room_number) as room
+        FROM Faculty_Staff
+        INNER JOIN Room
+            ON Room.room_id = Faculty_Staff.room_id
+        WHERE role = (SELECT role_chair FROM Constants);
+    ";
+    return query_one_np($sql);
+}
+
 function get_course_by_id($id){
     $sql = "
         SELECT
@@ -75,6 +89,7 @@ function get_class_by_id($id){
     $sql = "
         SELECT
             Class.*,
+            Course.course_name,
             CONCAT(Major.short_name, Course.course_number) as course_title,
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
             DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
@@ -97,5 +112,7 @@ function get_class_by_id($id){
     ";
     return query_one($sql,"s",[$id]);
 }
+
+
 
 ?>
