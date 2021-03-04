@@ -1,13 +1,42 @@
 <?php check_user([ADMIN,CHAIR,SECRETARY]) ?>
 
+<?php 
 
-<?php $students = get_all_students() ?>
+$students = get_all_students($_GET);
+$input = clean_array($_GET);
+
+?>
 
 <h1>List Students</h1>
 <hr>
 
-<div class="div-table">
+<?php if($role === ADMIN): ?>
+    <a class="feature-url"  href="user.php?feature=add_student">Add Student</a>
+<?php endif; ?>
 
+<form method="GET">
+    <input name="feature" value="list_students" type="text" hidden/>
+    <label>Name: </label>
+    <input placeholder="Ex. Alden, Robert" type="text" name="name" value="<?= show_value($input,"name") ?>" />
+    <label>ID: </label>
+    <input type="text" name="id" value="<?= show_value($input,"id") ?>" />
+    <label>Major: </label>
+    <select name="major">
+        <option value="all" <?= check_select($input,"major","all") ?>>All Students</option>
+        <option value="it" <?= check_select($input,"major","it") ?>>IT Students</option>
+        <option value="cs" <?= check_select($input,"major","cs") ?>>CS Students</option>
+    </select>
+    <label>Order by: </label>
+    <select name="order">
+        <option value="name" <?= check_select($input,"order","name") ?>>Name</option>
+        <option value="id" <?= check_select($input,"order","id") ?>>ID</option>
+        <option value="major" <?= check_select($input,"order","major") ?>>Major</option>
+    </select>
+    <br>
+    <input type="submit" />
+</form>
+
+<div class="div-table">
 	<table>
         <tr>
             <th>ID</th>
@@ -44,7 +73,12 @@
                     <?php endif; ?>
                     <?php if($role === CHAIR): ?>
                         <a class="feature-url"  href="user.php?feature=enroll&student_id=<?= $student["student_id"] ?>">Enroll</a>
+                        <a class="feature-url"  href="user.php?feature=view_schedule&student_id=<?= $student["student_id"] ?>">View Schedule</a>                        
                     <?php endif; ?>
+		    <?php if($role === ADMIN): ?>
+			<a class="feature-url"  href="user.php?feature=edit_student&student_id=<?= $student["student_id"] ?>">Edit Student</a>
+
+		    <?php endif; ?>
                 </div>
                 </div>
             </td>

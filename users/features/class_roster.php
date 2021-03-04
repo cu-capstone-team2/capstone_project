@@ -2,14 +2,17 @@
 <h1>Class Roster</h1>
 <hr>
 
-<?php 
-    $class = get_class_by_id($_GET["class_id"]); 
+<?php
+    $class = get_class_by_id($_GET["class_id"]);
 
     if(!$class){
         change_page("user.php?feature=teaching_schedule");
     }
 
     $students = get_students_by_class($class["class_id"]);
+
+
+
 ?>
 
 <h3><?= $class["course_name"] ?>, <?= $class["time"] ?>, <?= $class["days"] ?> by <?= $class["instructor"] ?></h3>

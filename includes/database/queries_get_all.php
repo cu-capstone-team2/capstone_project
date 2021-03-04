@@ -1,6 +1,14 @@
 <?php
 
-function get_all_students(){
+function get_all_students($search){
+
+    // initialize names and id, in case they were entered by user
+    $name = "%";
+    $name.= isset($search["name"])? $search["name"] : "";
+    $name.= "%";
+    $id = isset($search["id"])? $search["id"] : "";
+    $id.= "%";
+    
     $sql = "
         SELECT
             student_id,
@@ -18,10 +26,43 @@ function get_all_students(){
         INNER JOIN Major
             ON Major.major_id = Student.major_id
         INNER JOIN Faculty_Staff
-            ON Faculty_Staff.faculty_id = Student.faculty_id
-        ORDER BY student_lastname,student_firstname;
+            ON Faculty_Staff.faculty_id = Student.faculty_id"
+    ;
+    $sql.= "
+        WHERE CAST(student_id AS CHAR) LIKE ?
     ";
-    return query_many_np($sql);
+    if(isset($search["major"])){
+        if($search["major"] === "it"){
+            $sql.= "
+                AND short_name LIKE 'IT'            
+            ";
+        } else if($search["major"] === "cs"){
+            $sql.= "
+                AND short_name LIKE 'CS'
+            ";
+        }
+    }
+    $sql.= "
+        HAVING full_name LIKE ?
+    ";
+    $orderby = "";
+    if(isset($search["order"])){
+        switch($search["order"]){
+            case "name":
+                $orderby = "ORDER BY full_name, student_id, short_name";
+                break;
+            case "major":
+                $orderby = "ORDER BY short_name, full_name, student_id";
+                break;
+            case "id":
+                $orderby = "ORDER BY student_id, full_name, short_name";
+                break;
+        }
+    }
+    $sql.= "
+        {$orderby}
+    ";
+    return query_many($sql,"ss",[$id, $name]);
 }
 
 function get_all_faculty(){
@@ -143,6 +184,29 @@ function get_all_majors(){
         ORDER BY short_name;
     ";
     return query_many_np($sql);
+}
+
+function get_all_timeslots(){
+    $sql = "
+        SELECT
+			time_id,
+			time_type,
+			DATE_FORMAT(time_,'%h:%i %p') as time
+        FROM Timeslot;
+    ";
+    return query_many_np($sql);
+}
+
+function get_all_appointment_timeslots(){
+	$sql = "
+		SELECT
+			time_id,
+			time_type,
+			DATE_FORMAT(time_,'%h:%i %p') as time
+		FROM Timeslot
+		WHERE time_type = (SELECT time_appointment FROM Constants);
+	";
+	return query_many_np($sql);
 }
 
 ?>

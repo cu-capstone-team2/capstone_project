@@ -53,7 +53,10 @@ $advisees = get_students_by_advisor($faculty_id);
                         <a class="feature-url" href="user.php?feature=contact_student&student_id=<?=$advisee["student_id"]?>&student_email=<?=$advisee["student_email"]?>">Contact Student</a>
                     <?php endif ?>
                     <?php if($role === CHAIR || $role === SECRETARY): ?>
-                        <a class="feature-url" href="user.php?feature=change_advisor&student_id=<?= $student["student_id"] ?>">Change Advisor</a>
+                        <a class="feature-url" href="user.php?feature=change_advisor&student_id=<?= $advisee["student_id"] ?>">Change Advisor</a>
+                    <?php endif ?>
+                    <?php if($role === INSTRUCTOR): ?>
+                        <a class="feature-url" href="user.php?feature=add_appointment&student_id=<?= $advisee["student_id"] ?>">Add Appointment</a>
                     <?php endif ?>
                 </div>
                 </div>

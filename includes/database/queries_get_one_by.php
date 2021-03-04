@@ -85,6 +85,19 @@ function get_course_by_id($id){
     return query_one($sql,"s",[$id]);
 }
 
+// returns one row of enrollment if student is enrolled
+function get_enrollment_by_student_class($student_id,$class_id){
+    $sql = "
+        SELECT
+            *
+        FROM Enrollment
+        WHERE student_id = ?
+            AND class_id = ?
+    ";
+    return query_one($sql,"ss",[$student_id,$class_id]);
+}
+
+// returns class information if class exists
 function get_class_by_id($id){
     $sql = "
         SELECT
@@ -113,6 +126,24 @@ function get_class_by_id($id){
     return query_one($sql,"s",[$id]);
 }
 
-
+// returns how many credits the student is currently enrolled in
+function get_credits_by_student($student_id){
+    $sql = "
+        SELECT
+            SUM(credits) as credits
+        FROM Enrollment
+        LEFT JOIN Student
+            ON Student.student_id = Enrollment.student_id
+        INNER JOIN Class
+            ON Class.class_id = Enrollment.class_id
+        INNER JOIN Course
+            ON Course.course_id = Class.course_id
+        WHERE Student.student_id = ?
+        GROUP BY Student.student_id;
+    ";
+    $row = query_one($sql,"s",[$student_id]);
+    if(!$row) return 0;
+    return (int)$row["credits"];
+}
 
 ?>

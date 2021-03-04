@@ -76,4 +76,11 @@ function get_current_user_name(){
     return $user["faculty_firstname"] . " " . $user["faculty_lastname"];
 }
 
+function check_student_active($isactive){
+	 switch($isactive){
+		case ACTIVE: return "Active";
+        	case NOT_ACTIVE: return "Not Active";
+		default: return "INVALID ACTIVE";
+	}
+}
 ?>

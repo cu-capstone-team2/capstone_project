@@ -16,6 +16,10 @@ if(isset($_GET["feature"])){
 	$feature = $_GET["feature"];
 }
 
+if($role === STUDENT && $feature !== "enroll" && isset($_SESSION["PIN"])){
+	unset($_SESSION["PIN"]);
+}
+
 $file = "users/features/{$feature}.php";
 
 if(file_exists($file)){

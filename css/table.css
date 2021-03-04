@@ -1,96 +1,97 @@
-
-.div-table{
-	overflow-x: auto;
-	overflow-y: scroll;
-	width: 100%;
+.div-table {
+  overflow-x: auto;
+  overflow-y: scroll;
+  width: 100%;
 }
 
-@media (max-width: 900px){
-	.div-table{
-		max-height: 85%;
-	}
-	.info-shown-div{
-		flex-direction: column;
-	}
+@media (max-width: 900px) {
+  .div-table {
+    max-height: 85%;
+  }
+  .info-shown-div {
+    flex-direction: column;
+  }
 }
 
-main a{
-	color: var(--darkest-yellow);
+main a {
+  color: var(--darkest-yellow);
 }
 
-main a:active{
-	text-decoration: none;
+main a:active {
+  text-decoration: none;
 }
 
-.div-table{
-	border: 1px solid black;
-	background-color: var(--lightest-yellow);
+.div-table {
+  border: 1px solid black;
+  background-color: var(--lightest-yellow);
 }
 
-.div-table table{
-	width: 100%;
-	border: 1px solid black;
-	border-collapse: collapse;
-	background-color: white;
+.div-table table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: white;
 }
 
-.div-table .row:hover{
-	background-color: var(--light-yellow);
-	color: rgb(255, 0, 0);
-	cursor: pointer;
+.div-table .row:hover {
+  background-color: var(--light-yellow);
+  color: rgb(255, 0, 0);
+  cursor: pointer;
 }
 
-.div-table .row{
-	background-color: var(--lightest-yellow);
-	z-index: 100;
+.div-table .row {
+  background-color: var(--lightest-yellow);
+  z-index: 100;
 }
 
-.div-table table{
-	position: relative;
+.div-table table {
+  position: relative;
 }
 
-.div-table .row + tr{
-	display: none;
+.div-table .row + tr {
+  display: none;
 }
 
-.info-shown{
-	color: blue;
+.info-shown {
+  color: blue;
 }
 
-.info-shown + tr{
-	display: table-row !important;
+.info-shown + tr {
+  display: table-row !important;
 }
 
-.info-shown-div{
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
+.info-shown-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.info-shown-div-info{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+.info-shown-div-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
-.info-shown-div-links{
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
+.info-shown-div-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
 }
 
-
-
-.div-table tr:nth-child(1){
-	background-color: var(--dark-yellow);
-	color: black;
+.div-table tr:nth-child(1) {
+  background-color: var(--dark-yellow);
+  color: black;
 }
 
-.div-table td,.div-table th{
-	padding: 5px;
-	border: 1px solid black;
+.div-table td,
+.div-table th {
+  padding: 5px;
+  border: 1px solid black;
 }
 
 /*
@@ -98,39 +99,36 @@ Button shadow and button press animation help from
 https://fdossena.com/?p=html5cool/buttons/i.frag
 */
 
-
-
-.feature-url{
-	padding: 0.3rem 0.7rem;
-	margin: 0 0.3rem 0.3rem 0;
-	border-radius: 0.15rem;
-	text-decoration: none;
-	text-transform: uppercase;
-	font-weight: 600;
-	color: black;
-	background-color: var(--dark-yellow);
-	box-shadow: inset 0 -0.6rem 0 -0.35rem rgba(0,0,0,0.17);
-	text-align: center;
-	position: relative;
-	opacity: .75;
-	width: 100%;
+.feature-url {
+  padding: 0.3rem 0.7rem;
+  margin: 0 0.3rem 0.3rem 0;
+  border-radius: 0.15rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: black;
+  background-color: var(--dark-yellow);
+  box-shadow: inset 0 -0.6rem 0 -0.35rem rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  opacity: 0.75;
+  width: 100%;
 }
 
-.feature-url:hover{
-	opacity: 1;
+.feature-url:hover {
+  opacity: 1;
 }
 
-.feature-url:active{
-	top: 0.1rem;
+.feature-url:active {
+  top: 0.1rem;
 }
 
-@media (max-width: 600px){
-	.feature-url{
-		width: 100%;
-	}
-	.info-shown-div{
-		flex-direction: column;
-	}
-
+@media (max-width: 600px) {
+  .feature-url {
+    width: 100%;
+  }
+  .info-shown-div {
+    flex-direction: column;
+    align-items: unset;
+  }
 }
-

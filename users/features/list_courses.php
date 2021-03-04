@@ -3,12 +3,13 @@
 
 <h1>List Courses</h1>
 <hr>
+<a class="feature-url" href="user.php?feature=add_course">Add Course</a>
+
 
 <?php $courses = get_all_courses() ?>
 
-<div class="div-table">
-
-	<table>
+	<div class="div-table">
+		<table>
 	<tr>
 		<th>ID</th>
 		<th>Title</th>
@@ -39,4 +40,7 @@
 	</table>
 
 </div>
+<br>
+<!-- <a class="feature-url" href="user.php?feature=add_course&course_id=<?= $course["course_id"] ?>">Add Course</a> -->
+
 <br>

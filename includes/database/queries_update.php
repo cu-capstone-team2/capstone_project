@@ -9,4 +9,14 @@
         return query($sql,"ii",[$major_id, $student_id]);
     }
 
+   function update_student_advisor($student_id,$faculty_id){
+	$sql = "
+		UPDATE Student
+		SET faculty_id = ?
+		WHERE student_id = ?
+	";
+	return query($sql, "ii",[$faculty_id,$student_id]);
+  
+   }
+
 ?>

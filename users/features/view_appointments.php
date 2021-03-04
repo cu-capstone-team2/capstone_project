@@ -8,19 +8,22 @@
 <table>
     <tr>
         <th>ID</th>
-        <th>Name</th>
+        <th>Student</th>
         <th>Date/Time</th>
+        <th>Days Away</th>
     </tr>
     <?php foreach($appointments as $appoint): ?>
     <tr class="row">
         <td><?= $appoint["student_id"] ?></td>
         <td><?= $appoint["full_name"] ?></td>
         <td><?= $appoint["date"] ?> <?= $appoint["time"] ?></td>
+        <td><?= $appoint["days_away"] ?></td>
     </tr>
     <tr>
       <td colspan="100%">
           <div class="info-shown-div">
             <div class="info-show-div-info">
+                <p><strong>Comments: </strong><?= $appoint["comments"] ?></p>
             </div>
               <div class="info-shown-div-links">
                   <a class="feature-url" href="user.php?feature=enroll&student_id=<?= $appoint["student_id"] ?>">Enroll</a>

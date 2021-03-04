@@ -4,6 +4,9 @@
 <h1>List Faculty</h1>
 <hr>
 
+
+    <a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
+
 <?php $faculty = get_all_faculty()?>
 
 
@@ -33,7 +36,7 @@
               </div>
               <div class="info-shown-div-links">
                   <?php if ($role == ADMIN): ?>
-                    <a class="feature-url" href = "user.php?feature=edit_faculty&faculty_id=<?= $faculty["faculty_id"] ?>">Edit Info</a>
+			              <a class="feature-url" href = "user.php?feature=edit_faculty&faculty_id=<?= $faculty["faculty_id"] ?>">Edit Info</a>
                   <?php endif ?>
               </div>
           </div>

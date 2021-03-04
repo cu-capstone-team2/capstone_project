@@ -13,9 +13,7 @@
             <th>Title</th>
             <th>Time</th>
             <th>Days</th>
-
         </tr>
-
         <?php foreach($classes as $class): ?>
             <tr class="row">
                 <td><?= $class["class_id"] ?></td>
@@ -37,6 +35,7 @@
                     <?php if($role === CHAIR): ?>
                         <a class="feature-url" href="user.php?feature=class_roster&class_id=<?= $class["class_id"] ?>">Class Roster</a>
                     <?php endif ?>
+	
                 </div>
                 </div>
             </td>

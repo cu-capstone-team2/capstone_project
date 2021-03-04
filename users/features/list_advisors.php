@@ -29,7 +29,9 @@
                             </div>
                             <div class="info-shown-div-links">
                                 <a class="feature-url" href="user.php?feature=list_advisees&faculty_id=<?= $advisors["faculty_id"] ?>">List Advisees</a>
+                                <a class="feature-url" href="user.php?feature=contact_advisor&faculty_id=<?= $advisors["faculty_id"] ?>">Contact Advisor</a>
                             </div>
+
                         </div>
                     </td>
                     </tr>

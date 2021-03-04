@@ -16,12 +16,20 @@
         <nav class="main-nav">
             <p><?= $user["full_name"] ?></p>
             <a class="mainlink" href="logout.php">Logout</a>
+            <div class="toggle-button">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </nav>
     </header>
     <div class="aside">
         <div class="aside-content">
-            <?php require_once("users/links/choose.php") ?>
+            <?php require("users/links/choose.php") ?>
         </div>
+    </div>
+    <div class="dropdown-menu">
+        <?php require("users/links/choose.php") ?>
     </div>
     <main>
         <div class="main-content">

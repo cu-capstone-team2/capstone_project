@@ -12,4 +12,7 @@ define('TIME_CLASS',2);
 define('ROOM_OFFICE',1);
 define('ROOM_CLASS',2);
 
+define('ACTIVE' ,1);
+define('NOT_ACTIVE',0);
+
 ?>

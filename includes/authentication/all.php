@@ -31,6 +31,7 @@ function login($id, $role){
 function logout(){
     unset($_SESSION["id"]);
     unset($_SESSION["role"]);
+    unset($_SESSION["PIN"]);
 }
 
 function is_faculty($role){

@@ -20,8 +20,13 @@ if(!$student)
     <h3>Schedule of <?= $student["student_firstname"] ?> <?= $student["student_lastname"] ?></h3>
 <?php endif ?>
 
-<div class="div-table">
+<?php
+$total_credits = get_credits_by_student($student["student_id"]);
+?>
 
+<h3>Total Credits: <?= $total_credits ?></h3>
+
+<div class="div-table">
     <table>
     <tr>
             <th>CRN</th>

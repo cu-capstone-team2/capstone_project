@@ -63,6 +63,7 @@ function get_class_count($class_id){
 		GROUP BY Class.class_id
 	";
 	$row = query_one($sql,"s",[$class_id]);
+    if(!$row) return "ERROR";
 	return $row["students"];
 }
 
@@ -128,7 +129,12 @@ function get_appointments_by_instructor($instructor_id){
             CONCAT(student_lastname,', ',student_firstname) as full_name,
             DATE_FORMAT(appointment_date,'%M %e, %Y') as date,
             TIME_FORMAT(time_, '%h:%i %p') as time,
-            is_finished
+            is_finished,
+            CASE
+                WHEN LENGTH(comments) = 0 THEN 'No Comments'
+                ELSE comments
+            END as comments,
+            DATEDIFF(appointment_date, now()) as days_away
         FROM Appointment
         INNER JOIN Student
             ON Student.student_id = Appointment.student_id
