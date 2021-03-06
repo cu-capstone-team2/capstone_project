@@ -16,7 +16,24 @@
 		WHERE student_id = ?
 	";
 	return query($sql, "ii",[$faculty_id,$student_id]);
-  
    }
 
+   function update_student_password($student_id, $password){
+	   $sql = "
+			UPDATE Student SET
+			student_password = ?
+			WHERE student_id = ?
+	   ";
+	   return query($sql, "ss", [$password, $student_id]);
+   }
+   
+    function update_faculty_password($faculty_id, $password){
+	   $sql = "
+			UPDATE Faculty_Staff SET
+			faculty_password = ?
+			WHERE faculty_id = ?
+	   ";
+	   return query($sql, "ss", [$password, $faculty_id]);
+   }
+   
 ?>

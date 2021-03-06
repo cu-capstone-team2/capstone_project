@@ -5,6 +5,21 @@
 <hr>
 <a class="feature-url" href="user.php?feature=add_course">Add Course</a>
 
+<!-- Beginning of search form -->
+
+<button class="search-button">Search</button>
+
+<div class="backdrop"></div>
+
+<form method="GET" class="search-form">
+    <input name="feature" value="list_faculty" type="text" hidden/>
+		<h3 style="color: red">Feature not finished, yet</h3>
+    <input type="submit" />
+</form>
+
+<script src="js/search_form.js"></script>
+
+<!-- End of search form -->
 
 <?php $courses = get_all_courses() ?>
 

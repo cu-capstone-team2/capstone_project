@@ -5,6 +5,7 @@
 $students = get_all_students($_GET);
 $input = clean_array($_GET);
 
+
 ?>
 
 <h1>List Students</h1>
@@ -14,27 +15,44 @@ $input = clean_array($_GET);
     <a class="feature-url"  href="user.php?feature=add_student">Add Student</a>
 <?php endif; ?>
 
-<form method="GET">
+<!-- Beginning of search form -->
+
+<button class="search-button">Search</button>
+
+<div class="backdrop"></div>
+
+<form method="GET" class="search-form">
     <input name="feature" value="list_students" type="text" hidden/>
-    <label>Name: </label>
-    <input placeholder="Ex. Alden, Robert" type="text" name="name" value="<?= show_value($input,"name") ?>" />
-    <label>ID: </label>
-    <input type="text" name="id" value="<?= show_value($input,"id") ?>" />
-    <label>Major: </label>
-    <select name="major">
-        <option value="all" <?= check_select($input,"major","all") ?>>All Students</option>
-        <option value="it" <?= check_select($input,"major","it") ?>>IT Students</option>
-        <option value="cs" <?= check_select($input,"major","cs") ?>>CS Students</option>
-    </select>
-    <label>Order by: </label>
-    <select name="order">
-        <option value="name" <?= check_select($input,"order","name") ?>>Name</option>
-        <option value="id" <?= check_select($input,"order","id") ?>>ID</option>
-        <option value="major" <?= check_select($input,"order","major") ?>>Major</option>
-    </select>
-    <br>
-    <input type="submit" />
+    <div>
+        <label>Name: </label>
+        <input placeholder="Ex. Alden, Robert" type="text" name="name" value="<?= show_value($input,"name") ?>" />
+    </div>
+    <div>
+        <label>ID: </label>
+        <input type="text" name="id" value="<?= show_value($input,"id") ?>" />
+    </div>
+    <div>
+        <label>Major: </label>
+        <select name="major">
+            <option value="all" <?= check_select($input,"major","all") ?>>All Students</option>
+            <option value="it" <?= check_select($input,"major","it") ?>>IT Students</option>
+            <option value="cs" <?= check_select($input,"major","cs") ?>>CS Students</option>
+        </select>
+    </div>
+    <div>
+        <label>Order by: </label>
+        <select name="order">
+            <option value="name" <?= check_select($input,"order","name") ?>>Name</option>
+            <option value="id" <?= check_select($input,"order","id") ?>>ID</option>
+            <option value="major" <?= check_select($input,"order","major") ?>>Major</option>
+        </select>
+    </div>
+    <input type="submit" value="Search" />
 </form>
+
+<script src="js/search_form.js"></script>
+
+<!-- End of search form -->
 
 <div class="div-table">
 	<table>

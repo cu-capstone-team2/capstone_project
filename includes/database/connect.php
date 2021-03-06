@@ -73,12 +73,19 @@ function query_many_np($sql){
     return $array;
 }
 
+// querys exactly one row, doesn't require parameters
 function query_one_np($sql){
     global $conn;
     $result = query_np($sql);
     $row = mysqli_fetch_assoc($result);
     if(!$row) return false;
     return clean_array($row);
+}
+
+// returns the last id entered into database.
+function get_last_id(){
+	global $conn;
+	return mysqli_insert_id($conn);
 }
 
 ?>

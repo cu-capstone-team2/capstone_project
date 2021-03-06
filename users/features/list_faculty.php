@@ -4,10 +4,58 @@
 <h1>List Faculty</h1>
 <hr>
 
+<a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
 
-    <a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
+<?php
+$faculty = get_all_faculty($_GET);
+$input = clean_array($_GET);
+$roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Secretary"];
 
-<?php $faculty = get_all_faculty()?>
+?>
+
+<!-- Beginning of search form -->
+
+<button class="search-button">Search</button>
+
+<div class="backdrop"></div>
+
+<form method="GET" class="search-form">
+    <input name="feature" value="list_faculty" type="text" hidden/>
+
+    <div>
+      <label>Name: </label>
+      <input placeholder="Ex. Pierce, Ryan" type="text" name="name" value="<?= show_value($input,"name") ?>" />      
+    </div>
+    <div>
+      <label>ID: </label>
+      <input type="text" name="id" value="<?= show_value($input,"id") ?>" />
+    </div>
+    <div>
+      <label>Role: </label>
+      <select name="role">
+        <option value="all">All</option>
+        <?php foreach($roles as $key=>$value): ?>
+          <option value="<?= $key ?>" <?= check_select($input,"role",$key) ?>><?= $value ?></option>
+        <?php endforeach ?>
+      </select>
+    </div>
+    <div>
+      <label>Order by: </label>
+      <select name="order">
+          <option value="role" <?= check_select($input,"order","role") ?>>Role</option>
+          <option value="name" <?= check_select($input,"order","name") ?>>Name</option>
+          <option value="id" <?= check_select($input,"order","id") ?>>ID</option>
+      </select>
+    </div>
+
+    <input type="submit" />
+</form>
+
+<script src="js/search_form.js"></script>
+
+<!-- End of search form -->
+
+
 
 
 <div class="div-table">

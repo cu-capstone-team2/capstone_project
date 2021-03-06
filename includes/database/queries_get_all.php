@@ -6,9 +6,24 @@ function get_all_students($search){
     $name = "%";
     $name.= isset($search["name"])? $search["name"] : "";
     $name.= "%";
-    $id = isset($search["id"])? $search["id"] : "";
-    $id.= "%";
-    
+    $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
+    $major = isset($search["major"]) && $search["major"] !== "all"? $search["major"] : "%";
+    $orderby = "";
+
+    if(isset($search["order"])){
+        switch($search["order"]){
+            case "major":
+                $orderby = "ORDER BY short_name, full_name, student_id";
+                break;
+            case "id":
+                $orderby = "ORDER BY student_id, full_name, short_name";
+                break;
+            default:
+                $orderby = "ORDER BY full_name, student_id, short_name";
+                break;
+        }
+    }
+
     $sql = "
         SELECT
             student_id,
@@ -26,46 +41,39 @@ function get_all_students($search){
         INNER JOIN Major
             ON Major.major_id = Student.major_id
         INNER JOIN Faculty_Staff
-            ON Faculty_Staff.faculty_id = Student.faculty_id"
-    ;
-    $sql.= "
-        WHERE CAST(student_id AS CHAR) LIKE ?
-    ";
-    if(isset($search["major"])){
-        if($search["major"] === "it"){
-            $sql.= "
-                AND short_name LIKE 'IT'            
-            ";
-        } else if($search["major"] === "cs"){
-            $sql.= "
-                AND short_name LIKE 'CS'
-            ";
-        }
-    }
-    $sql.= "
+            ON Faculty_Staff.faculty_id = Student.faculty_id
+        WHERE student_id LIKE ?
+            AND short_name LIKE ?
         HAVING full_name LIKE ?
-    ";
-    $orderby = "";
-    if(isset($search["order"])){
-        switch($search["order"]){
-            case "name":
-                $orderby = "ORDER BY full_name, student_id, short_name";
-                break;
-            case "major":
-                $orderby = "ORDER BY short_name, full_name, student_id";
-                break;
-            case "id":
-                $orderby = "ORDER BY student_id, full_name, short_name";
-                break;
-        }
-    }
-    $sql.= "
         {$orderby}
     ";
-    return query_many($sql,"ss",[$id, $name]);
+    return query_many($sql,"sss",[$id, $major, $name]);
 }
 
-function get_all_faculty(){
+function get_all_faculty($search){
+
+    // initialize names and id, in case they were entered by user
+    $name = "%";
+    $name.= isset($search["name"])? $search["name"] : "";
+    $name.= "%";
+    $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
+    $role = isset($search["role"]) && $search["role"] !== "all"? $search["role"] : "%";
+    $orderby = "role, full_name";
+
+    if(isset($search["order"])){
+        switch($search["order"]){
+            case "id":
+                $orderby = "faculty_id, full_name";
+                break;
+            case "name":
+                $orderby = "full_name, faculty_id";
+                break;
+            default:
+                $orderby = "role, full_name";
+                break;
+        }
+    }
+
     $sql = "
         SELECT
             faculty_id,
@@ -78,6 +86,7 @@ function get_all_faculty(){
             faculty_password,
             faculty_active,
             CONCAT(Room.building,' ',Room.room_number) as room,
+            Faculty_Staff.role as role_num,
             CASE
                 WHEN role = (SELECT role_instructor FROM Constants) THEN 'Instructor'
                 WHEN role = (SELECT role_secretary FROM Constants) THEN 'Secretary'
@@ -88,9 +97,12 @@ function get_all_faculty(){
         FROM Faculty_Staff
         INNER JOIN Room
             ON Room.room_id = Faculty_Staff.room_id
-        ORDER BY role, faculty_lastname, faculty_firstname;
+        WHERE faculty_id LIKE ?
+            AND role LIKE ?
+        HAVING full_name LIKE ?
+        ORDER BY {$orderby}
     ";
-    return query_many_np($sql);  
+    return query_many($sql,"sss",[$id,$role,$name]);  
 }
 
 function get_all_advisors(){
@@ -119,7 +131,23 @@ function get_all_advisors(){
     return query_many_np($sql);
 }
 
-function get_all_classes(){
+function get_all_classes($search){
+
+    $instructor = isset($search["instructor"])? '%'.$search["instructor"].'%' : "%";
+    $crn = isset($search["crn"])? $search["crn"].'%': '%';
+    $days = isset($search["days"]) && $search["days"] !== "all"? $search["days"].'%': '%';
+    $order = "course_title";
+    $time = isset($search["time"]) && $search["time"] !== "all"? $search["time"]: '%';
+
+    if(isset($search["order"])){
+        switch($search["order"]){
+            case "title": $order = "course_name"; break;
+            case "course_n": $order = "course_title"; break;
+            case "time": $order = "time_"; break;
+            case "days": $order = "days"; break;
+            case "crn": $order = "Class.class_id"; break;
+        }
+    }
     $sql = "
         SELECT
             Class.class_id,
@@ -143,10 +171,14 @@ function get_all_classes(){
             ON Enrollment.class_id = Class.class_id
         LEFT JOIN Student
             ON Student.student_id = Enrollment.student_id
+        WHERE CAST(Class.class_id AS CHAR) LIKE ?
+            AND days LIKE ?
+            AND Timeslot.time_id LIKE ?
         GROUP BY Class.class_id
-        ORDER BY Major.short_name, Course.course_number
+        HAVING instructor LIKE ?
+        ORDER BY {$order}
     ";
-    return query_many_np($sql);
+    return query_many($sql,"ssss",[$crn, $days, $time, $instructor]);
 }
 
 function get_all_courses(){
@@ -159,7 +191,7 @@ function get_all_courses(){
         FROM Course
         INNER JOIN Major
             ON Major.major_id = Course.major_id
-        ORDER BY title    
+        ORDER BY title
     ";
     
     return query_many_np($sql);
@@ -204,7 +236,63 @@ function get_all_appointment_timeslots(){
 			time_type,
 			DATE_FORMAT(time_,'%h:%i %p') as time
 		FROM Timeslot
-		WHERE time_type = (SELECT time_appointment FROM Constants);
+		WHERE time_type = (SELECT time_appointment FROM Constants)
+        ORDER BY time_;
+	";
+	return query_many_np($sql);
+}
+
+function get_all_class_time(){
+	$sql = "
+		SELECT
+			time_id,
+			time_type,
+			DATE_FORMAT(time_,'%h:%i %p') as time
+		FROM Timeslot
+		WHERE time_type = (SELECT time_class FROM Constants)
+        ORDER BY time_;
+	";
+	return query_many_np($sql);
+}
+
+function get_all_offices(){
+	$sql = "
+		SELECT
+			room_id,
+    			room_number,
+    			room_type,
+   			building
+		FROM Room
+		WHERE room_type = (SELECT room_office FROM Constants);
+	";
+	return query_many_np($sql);
+}	
+
+function get_all_classrooms(){
+    $sql = "
+        SELECT
+            room_id,
+                room_number,
+                room_type,
+            building
+        FROM Room
+        WHERE room_type = (SELECT room_class FROM Constants);
+    ";
+    return query_many_np($sql);
+}
+
+function get_all_office_available(){
+	$sql = "
+		SELECT 
+			room_id,
+			room_number,
+			room_type,
+			building
+			FROM Room 
+		WHERE room_id 
+		NOT IN (SELECT room_id FROM Faculty_Staff) 
+		and room_type = (SELECT room_office FROM Constants)
+        ORDER BY room_number;
 	";
 	return query_many_np($sql);
 }

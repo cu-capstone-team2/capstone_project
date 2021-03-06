@@ -106,7 +106,8 @@ function get_class_by_id($id){
             CONCAT(Major.short_name, Course.course_number) as course_title,
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
             DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
-            COUNT(Student.student_id) as students
+            COUNT(Student.student_id) as students,
+            credits
         FROM Class
         INNER JOIN Course
             ON Course.course_id = Class.course_id

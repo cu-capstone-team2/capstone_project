@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/user.css">
     <link rel="stylesheet" href="css/input.css">
     <link rel="stylesheet" href="css/table.css">
+    <link rel="stylesheet" href="css/search_form.css">
 </head>
 <body>
     <header>
@@ -15,7 +16,7 @@
         </div>
         <nav class="main-nav">
             <p><?= $user["full_name"] ?></p>
-            <a class="mainlink" href="logout.php">Logout</a>
+            <a class="mainlink logout" href="logout.php">Logout</a>
             <div class="toggle-button">
                 <div></div>
                 <div></div>
@@ -30,6 +31,7 @@
     </div>
     <div class="dropdown-menu">
         <?php require("users/links/choose.php") ?>
+        <a class="mainlink logout-top-right" href="logout.php">Logout</a>
     </div>
     <main>
         <div class="main-content">

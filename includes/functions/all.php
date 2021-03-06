@@ -3,7 +3,7 @@
 require_once('includes/functions/constants.php');
 
 function check_select($array,$key,$compare){
-    if(isset($array[$key]) && $array[$key] === $compare)
+    if(isset($array[$key]) && $array[$key] == $compare)
         return "selected";
     return "";
 }
@@ -83,4 +83,7 @@ function check_student_active($isactive){
 		default: return "INVALID ACTIVE";
 	}
 }
+
+
+
 ?>

@@ -4,9 +4,9 @@
   width: 100%;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 700px) {
   .div-table {
-    max-height: 85%;
+    max-height: 60%;
   }
   .info-shown-div {
     flex-direction: column;

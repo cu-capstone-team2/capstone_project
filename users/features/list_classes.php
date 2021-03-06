@@ -3,7 +3,67 @@
 <h1>List Classes</h1>
 <hr>
 
-<?php $classes = get_all_classes() ?>
+<?php
+
+$classes = get_all_classes($_GET);
+$times = get_all_class_time();
+$days = ["MW","TR","MTWR","F","SS","MR"];
+$input = clean_array($_GET);
+$orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days","crn"=>"CRN"];
+?>
+
+
+
+<!-- Beginning of search form -->
+
+<button class="search-button">Search</button>
+
+<div class="backdrop"></div>
+
+<form method="GET" class="search-form">
+    <input type="text" name="feature" value="list_classes" hidden />
+
+    <div>
+        <label>CRN: </label>
+        <input type="text" name="crn" value="<?= show_value($input,'crn') ?>"/>
+    </div>
+    <div>
+        <label>Instructor: </label>
+        <input type="text" name="instructor" value="<?= show_value($input,'instructor') ?>"/>
+    </div>
+    <div>
+        <label>Days: </label>
+        <select name="days">
+            <option value="all">All</option>
+            <?php foreach($days as $day): ?>
+                <option value="<?= $day ?>" <?= check_select($input,'days',$day) ?>><?= $day ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+    <div>
+        <label>Time: </label>
+        <select name="time">
+            <option value="all">All</option>
+            <?php foreach($times as $time): ?>
+                <option value="<?= $time["time_id"] ?>" <?= check_select($input,'time',$time["time_id"]) ?>><?= $time["time"] ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+    <div>
+        <label>Order By: </label>
+        <select name="order">
+            <?php foreach($orders as $key=>$value): ?>
+                <option value="<?= $key ?>" <?= check_select($input,'order',$key) ?>><?= $value ?></option>
+            <?php endforeach ?>
+        </select>
+    </div>
+
+    <input type="submit" />
+</form>
+
+<script src="js/search_form.js"></script>
+
+<!-- End of search form -->
 
 <div class="div-table">
     <table>
@@ -35,7 +95,9 @@
                     <?php if($role === CHAIR): ?>
                         <a class="feature-url" href="user.php?feature=class_roster&class_id=<?= $class["class_id"] ?>">Class Roster</a>
                     <?php endif ?>
-	
+                    <?php if($role === ADMIN): ?>
+                        <a class="feature-url" href="user.php?feature=edit_class&class_id=<?= $class["class_id"] ?>">Edit Class</a>
+                    <?php endif ?>
                 </div>
                 </div>
             </td>
