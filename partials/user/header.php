@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/input.css">
     <link rel="stylesheet" href="css/table.css">
     <link rel="stylesheet" href="css/search_form.css">
+    <link rel="stylesheet" href="css/forms.css">
 </head>
 <body>
     <header>

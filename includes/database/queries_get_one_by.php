@@ -147,4 +147,49 @@ function get_credits_by_student($student_id){
     return (int)$row["credits"];
 }
 
+function get_timeslot_by_id($time_id){
+    $sql = "
+        SELECT * FROM Timeslot WHERE time_id = ?;
+    ";
+    return query_one($sql,"s",[$time_id]);
+}
+
+function get_room_by_id($room_id) {
+    $sql = "
+        SELECT * FROM Room WHERE room_id = ?;
+    ";
+    return query_one($sql,"s",[$room_id]);
+}
+
+function get_major_name_by_id($id){
+	$sql = "
+		SELECT major_name 
+		FROM Major 
+		WHERE = ?;
+	";
+	return query_one($sql, "s",[$id]);
+
+}
+
+function get_apply_info($id){
+	$sql = "
+	      SELECT 
+		apply_id,
+    		first_name,
+    		last_name,
+    		email,
+		Apply.major_id,
+    		Major.major_name as major_name,
+		CONCAT(last_name, ', ',first_name) as full_name
+    	      FROM Apply
+		INNER JOIN Major
+            		ON Major.major_id = Apply.major_id
+
+    	      WHERE apply_id = ?;
+	
+	";
+	 return query_one($sql, "s", [$id]);
+}
+
+
 ?>

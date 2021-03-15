@@ -1,3 +1,4 @@
+
 <?php check_user([ADMIN]) ?>
 
 <?php
@@ -67,46 +68,54 @@
 <h1>Add Faculty</h1>
 <hr>
 
-<form method="post">
-  <?= show_error($errors, "first_name")?>
-  <label>First Name:</label>
-  <input type="text" name="first_name" <?=show_value($input, "first_name") ?> required>
-  <br>
+<form method="post" class="form">
 
-  <?= show_error($errors, "last_name")?>
-  <label>Last Name:</label>
-  <input type="text" name="last_name" <?=show_value($input,"last_name")?> required>
-  <br>
+  <div class="form-group">
+	<label>First Name</label>
+    <input <?= error_outline($errors, "first_name") ?> type="text" name="first_name" <?=show_value($input, "first_name") ?> required>
+        <?= show_error($errors, "first_name")?>
+  </div>
 
-  <?= show_error($errors, "email")?>
-  <label>Email:</label>
-  <input type="email" name="email" <?=show_value($input,"email")?> required>
-  <br>
+  <div class="form-group">
+  <label>Last Name</label>
+  <input <?=error_outline($errors, "last_name")?> type="text" name="last_name" <?=show_value($input,"last_name")?> required>
+    <?= show_error($errors, "last_name")?>
+</div>
 
-  <?= show_error($errors, "phone")?>
-  <label>Phone:</label>
-  <input type="text" name="phone" <?=show_value($input,"phone")?> required>
-  <br>
+  <div class="form-group">
+  <label>Email</label>
+  <input <?=error_outline($errors, "email")?> type="email" name="email" <?=show_value($input,"email")?> required>
+    <?= show_error($errors, "email")?>
+  </div>
 
-  <?= show_error($errors, "role")?>
+ <div class="form-group">
+  <label>Phone</label>
+  <input <?=error_outline($errors, "phone")?> type="tel" name="phone" <?=show_value($input,"phone")?> required>
+    <?= show_error($errors, "phone")?>
+</div>
+
+  <div class="form-group">
   <label>Faculty Role:</label>
-  <select name="role" required>
+  <select <?= error_outline($errors, "role") ?>name="role" required>
       <option value="1">Instructor</option>
       <option value="2">Secretary</option>
       <option value="3">Administrator</option>
       <option value="4">Chair</option>
   </select>
-  <br>
+    <?= show_error($errors, "role")?>
+</div>
 
-  <?= show_error($errors, "location")?>
+<div class="form-group">
   <label>Offices Available:</label>
-  <select name="location" required>
+  <select <?=error_outline($errors, "location") ?> name="location" required>
     <?php foreach ($rooms as $room):?>
       <option value="<?=$room['room_id']?>">
   <?=$room["building"]?> <?=$room["room_number"]?>
           </option>
     <?php endforeach;?>
   </select>
-  <br>
+    <?= show_error($errors, "location")?>
+</div>
+
   <input type="submit" name="submit_new_faculty">
 </form>

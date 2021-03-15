@@ -14,6 +14,9 @@ $times_data = get_all_class_time();
 $room_data = get_all_classrooms();
 $days = ["MW","TR","MTWR","F","SS","MR"];
 $durations = [55,75];
+
+
+
 $instructor_data = get_all_advisors();
 function validate_new_class($input){
 	$errors = [];
@@ -21,7 +24,7 @@ function validate_new_class($input){
 		$errors["day"] = "No days were selected.";
 	}
 	if (empty($_POST["dur_id"])) {
-		$errors["dur"] = "No class duration was selected.";
+		$errors["dur_id"] = "No class duration was selected.";
 	}
 	if (empty($_POST["time_id"])) {
 		$errors["time"] = "No timeslot was selected.";

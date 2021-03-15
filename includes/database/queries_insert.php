@@ -48,4 +48,13 @@
 			";
 			return query($sql, "ssssissii" , [$faculty_firstname,$faculty_lastname,$faculty_email,$faculty_phone,$role,$faculty_username,$faculty_password,$faculty_active,$room_id]);
 	  }
+
+	  function insert_apply($first_name,$last_name,$email,$major_id){
+			$sql = "
+				INSERT into 
+				Apply(first_name,last_name,email,major_id)		
+				VALUES(?,?,?,?);
+			";
+			return query($sql, "sssi", [$first_name,$last_name,$email,$major_id]);
+	  }
 ?>

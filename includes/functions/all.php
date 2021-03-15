@@ -21,6 +21,14 @@ function show_error($array, $key){
     return "";
 }
 
+function error_outline($array, $key){
+    /* Adds classname to a input tag, if there is an error */
+    if(isset($array[$key])){
+        return "class='input-error'";
+    }
+    return "";
+}
+
 function clean_array($array){
     /* Create a new clean version of array to prevent JavaScript injection */
     $clean = [];

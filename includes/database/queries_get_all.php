@@ -1,6 +1,6 @@
 <?php
 
-function get_all_students($search){
+function get_all_students($search = [], $count = false, $pagination = null){
 
     // initialize names and id, in case they were entered by user
     $name = "%";
@@ -8,7 +8,7 @@ function get_all_students($search){
     $name.= "%";
     $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
     $major = isset($search["major"]) && $search["major"] !== "all"? $search["major"] : "%";
-    $orderby = "";
+    $orderby = "ORDER BY full_name, student_id, short_name";
 
     if(isset($search["order"])){
         switch($search["order"]){
@@ -47,10 +47,19 @@ function get_all_students($search){
         HAVING full_name LIKE ?
         {$orderby}
     ";
-    return query_many($sql,"sss",[$id, $major, $name]);
+
+    $params = [$id, $major, $name];
+    $types = "sss";
+
+    if($count)
+        return Pagination::get_count_query($sql, $types, $params);
+    else if($pagination !== null)
+        return $pagination->get_pagination_query($sql, $types, $params);
+    else
+        return query_many($sql, $types, $params);
 }
 
-function get_all_faculty($search){
+function get_all_faculty($search = [], $count = false, $pagination = null){
 
     // initialize names and id, in case they were entered by user
     $name = "%";
@@ -102,10 +111,40 @@ function get_all_faculty($search){
         HAVING full_name LIKE ?
         ORDER BY {$orderby}
     ";
-    return query_many($sql,"sss",[$id,$role,$name]);  
+    
+    $params = [$id, $role, $name];
+    $types = "sss";
+
+    if($count)
+        return Pagination::get_count_query($sql, $types, $params);
+    else if($pagination !== null)
+        return $pagination->get_pagination_query($sql, $types, $params);
+    else
+        return query_many($sql, $types, $params);
 }
 
-function get_all_advisors(){
+function get_all_advisors($search = [], $count = false, $pagination = null){
+    // initialize names and id, in case they were entered by user
+    $name = "%";
+    $name.= isset($search["name"])? $search["name"] : "";
+    $name.= "%";
+    $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
+    $orderby = "role, full_name";
+
+    if(isset($search["order"])){
+        switch($search["order"]){
+            case "id":
+                $orderby = "faculty_id, full_name";
+                break;
+			case "students":
+				$orderby = "students, full_name";
+				break;
+            case "name":
+            default:
+                $orderby = "full_name, faculty_id";
+                break;
+        }
+    }
     $sql = "
         SELECT
             Faculty_Staff.faculty_id,
@@ -125,20 +164,31 @@ function get_all_advisors(){
         LEFT JOIN Student
             ON Student.faculty_id = Faculty_Staff.faculty_id
         WHERE role = (SELECT role_instructor FROM Constants)
+			AND Faculty_Staff.faculty_id LIKE ?
         GROUP BY Faculty_Staff.faculty_id
-        ORDER BY faculty_lastname, faculty_firstname;
+        HAVING full_name LIKE ?
+        ORDER BY faculty_lastname, faculty_firstname
     ";
-    return query_many_np($sql);
+
+    $params = [$id, $name];
+    $types = "ss";
+
+    if($count)
+        return Pagination::get_count_query($sql, $types, $params);
+    else if($pagination !== null)
+        return $pagination->get_pagination_query($sql, $types, $params);
+    else
+        return query_many($sql, $types, $params);
 }
 
-function get_all_classes($search){
+function get_all_classes($search = [], $count = false, $pagination = null){
 
     $instructor = isset($search["instructor"])? '%'.$search["instructor"].'%' : "%";
-    $crn = isset($search["crn"])? $search["crn"].'%': '%';
+    $crn = isset($search["crn"]) && !empty($search["crn"])? $search["crn"]: '%';
     $days = isset($search["days"]) && $search["days"] !== "all"? $search["days"].'%': '%';
     $order = "course_title";
     $time = isset($search["time"]) && $search["time"] !== "all"? $search["time"]: '%';
-
+	$major = isset($search["major"]) && $search["major"] !== "all"? $search["major"]: '%';
     if(isset($search["order"])){
         switch($search["order"]){
             case "title": $order = "course_name"; break;
@@ -174,14 +224,35 @@ function get_all_classes($search){
         WHERE CAST(Class.class_id AS CHAR) LIKE ?
             AND days LIKE ?
             AND Timeslot.time_id LIKE ?
+			AND Major.major_id LIKE ?
         GROUP BY Class.class_id
         HAVING instructor LIKE ?
         ORDER BY {$order}
     ";
-    return query_many($sql,"ssss",[$crn, $days, $time, $instructor]);
+    $params = [$crn, $days, $time, $major, $instructor];
+    $types = "sssss";
+    if($count)
+        return Pagination::get_count_query($sql, $types, $params);
+    else if($pagination !== null)
+        return $pagination->get_pagination_query($sql, $types, $params);
+    else
+        return query_many($sql, $types, $params);
 }
 
-function get_all_courses(){
+function get_all_courses($search = [], $count = false, $pagination = null){
+    $course = isset($search["course"]) && !empty($search["course"])? $search["course"]: '%';
+    $order = "course_title";
+	$major = isset($search["major"]) && $search["major"] !== "all"? $search["major"]: '%';
+    if(isset($search["order"])){
+        switch($search["order"]){
+            case "title": $order = "course_name"; break;
+            case "course_n":
+			default:
+				$order = "course_title";
+				break;
+        }
+    }	
+
     $sql = "
         SELECT
             course_id,
@@ -191,10 +262,22 @@ function get_all_courses(){
         FROM Course
         INNER JOIN Major
             ON Major.major_id = Course.major_id
+		WHERE Major.major_id LIKE ?
+			AND Course.course_id LIKE ?
         ORDER BY title
     ";
+
+    $params = [$major, $course];
+    $types = "ss";
+
+    if($count)
+        return Pagination::get_count_query($sql, $types, $params);
+    else if($pagination !== null)
+        return $pagination->get_pagination_query($sql, $types, $params);
+    else
+        return query_many($sql, $types, $params);
     
-    return query_many_np($sql);
+    // return query_many($sql,'ss',[$major,$course]);
 }
 
 function get_all_constants(){
@@ -293,6 +376,23 @@ function get_all_office_available(){
 		NOT IN (SELECT room_id FROM Faculty_Staff) 
 		and room_type = (SELECT room_office FROM Constants)
         ORDER BY room_number;
+	";
+	return query_many_np($sql);
+}
+
+function get_apply_request(){
+	$sql = "
+		SELECT
+			apply_id,
+			first_name,
+			last_name,
+			email,
+			CONCAT(last_name, ', ', first_name) as full_name,
+			Major.major_name as major_name,
+			Major.short_name as short_name
+		FROM Apply
+        INNER JOIN Major
+        	ON Major.major_id = Apply.major_id;
 	";
 	return query_many_np($sql);
 }

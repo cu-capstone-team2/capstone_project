@@ -18,26 +18,21 @@ body {
   color: var(--text-color);
 }
 
-.error {
-  color: red;
-}
-
-.logout-top-right{
+.logout-top-right {
   position: absolute !important;
   top: 15px;
   right: 15px;
 }
 
 .dropdown-menu {
-  opacity: .5;
+  opacity: 0.5;
   position: fixed;
   background-color: var(--nav);
   top: 48px;
   width: 100vw;
   height: calc(100vh - 48px);
-  z-index: 5;
   transform: rotateX(-90deg);
-  transition: transform .25s, opacity .25s;
+  transition: transform 0.25s, opacity 0.25s;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,7 +61,7 @@ body {
   display: grid;
   width: 100vw;
   grid-template-areas: 'header header' 'side main' 'footer footer';
-  grid-template-rows: 48px minmax(auto, 1fr) 64px;
+  grid-template-rows: 48px 1fr 64px;
   grid-template-columns: 250px 1fr;
 }
 
@@ -208,7 +203,7 @@ header > .mainlinks {
   width: 100%;
   height: 5px;
   background-color: var(--text-color);
-  transition: transform .25s;
+  transition: transform 0.25s;
 }
 
 main {
@@ -252,7 +247,7 @@ footer {
   border-bottom: none;
   background-color: var(--dark-yellow);
   padding: 0;
-  z-index: 50;
+  z-index: 1;
 }
 .logo {
   height: 100%;
@@ -332,25 +327,24 @@ footer {
 }
 
 @media (max-width: 800px) {
-  .logout{
+  .logout {
     display: none;
   }
   body {
-    grid-template-rows: 48px minmax(90%, 1fr) auto;
+    grid-template-rows: 48px 1fr 390px;
+    /* grid-template-rows: 48px minmax(100vh, auto) 390px; */
     grid-template-areas: 'header header' 'main main' 'footer footer';
   }
   main {
     padding: 10px;
-    /* padding-bottom: 50px;
-        padding-top: 50px; */
   }
-  .toggle-button.active>div:nth-child(1) {
+  .toggle-button.active > div:nth-child(1) {
     transform: translateY(calc(15px - 50%)) rotateZ(45deg);
   }
-  .toggle-button.active>div:nth-child(2) {
+  .toggle-button.active > div:nth-child(2) {
     transform: translateX(100%);
   }
-  .toggle-button.active>div:nth-child(3) {
+  .toggle-button.active > div:nth-child(3) {
     transform: translateY(calc(-15px + 50%)) rotateZ(-225deg);
   }
   .aside {

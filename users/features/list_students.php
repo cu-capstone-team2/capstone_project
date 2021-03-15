@@ -2,9 +2,9 @@
 
 <?php 
 
-$students = get_all_students($_GET);
+$pagination = new Pagination(PAGES_STUDENTS, $_GET);
+$students = get_all_students($_GET, false, $pagination);
 $input = clean_array($_GET);
-
 
 ?>
 
@@ -14,6 +14,8 @@ $input = clean_array($_GET);
 <?php if($role === ADMIN): ?>
     <a class="feature-url"  href="user.php?feature=add_student">Add Student</a>
 <?php endif; ?>
+
+<h3 class='total-count'><?= $pagination->get_total_rows() ?> Students(s)</h3>
 
 <!-- Beginning of search form -->
 
@@ -74,10 +76,18 @@ $input = clean_array($_GET);
                 <div class="info-shown-div">
                 <div class="info-shown-div-info">
                     <p><strong>Email: </strong><?= $student["student_email"] ?></p>
-                    <p><strong>Classification: </strong><?= $student["classification"] ?></p>
+                    <p><strong>Classification: </strong><?= ucfirst($student["classification"]) ?></p>
                     <p><strong>PIN: </strong><?= $student["PIN"] ?></p>
                     <p><strong>Username: </strong><?= $student["student_username"] ?></p>
-                    <p><strong>Active Status: </strong><?= $student["student_active"] ?></p>
+                    <p><strong>Active Status: </strong>
+                        <?php 
+                            if ($student["student_active"] == "1") {
+                                echo "Active";
+                            } else {
+                                echo "Inactive";
+                            }
+                        ?>
+                    </p>
                 </div>
                 <div class="info-shown-div-links">
                     <?php if($role === CHAIR || $role === SECRETARY): ?>
@@ -103,6 +113,7 @@ $input = clean_array($_GET);
         </tr>
 	<?php endforeach; ?>
 	</table>
-
 </div>
+<?php $pagination->print_all_links() ?>
+
 <br>

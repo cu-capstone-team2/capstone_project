@@ -75,53 +75,60 @@
 <h1>Add Student</h1>
 <hr>
 
-<form method="post">
-    <?=show_error($errors, "first_name")?>
-    <label>First Name:</label>
-    <input type="text" name="first_name" value="<?=show_value($input, "first_name")?>" required>
-    <br>
+<form method="post" class="form">
+    <div class="form-group">
+        <label>First Name</label>
+        <input <?= error_outline($errors, "first_name") ?> type="text" name="first_name" value="<?=show_value($input, "first_name")?>" required>
+        <?=show_error($errors, "first_name")?>
+    </div>
 
-    <?=show_error($errors, "last_name")?>
-    <label>Last Name:</label>
-    <input type="text" name="last_name" value="<?=show_value($input, "last_name")?>" required>
-    <br>
+    <div class="form-group">
+        <label>Last Name</label>
+        <input <?= error_outline($errors, "last_name") ?> type="text" name="last_name" value="<?=show_value($input, "last_name")?>" required>
+        <?=show_error($errors, "last_name")?>
+    </div>
 
-    <?=show_error($errors, "email")?>
-    <label>Email:</label>
-    <input type="email" name="email" value="<?=show_value($input, "email")?>" required>
-    <br>
+    <div class="form-group">
+        <label>Email</label>
+        <input <?= error_outline($errors, "email") ?> type="email" name="email" value="<?=show_value($input, "email")?>" required>
+        <?=show_error($errors, "email")?>
+    </div>
 
-    <?=show_error($errors, "classification")?>
-    <label>Classification:</label>
-    <select name="classification" id="classification" required>
-        <option value="freshman">Freshman</option>
-        <option value="sophmore">Sophmore</option>
-        <option value="junior">Junior</option>
-        <option value="senior">Senior</option>
-    </select>
-    <br>
+    <div class="form-group">
+        <label>Classification</label>
+        <select <?= error_outline($errors, "classification") ?> name="classification" id="classification" required>
+            <option value="freshman">Freshman</option>
+            <option value="sophmore">Sophmore</option>
+            <option value="junior">Junior</option>
+            <option value="senior">Senior</option>
+        </select>
+        <?=show_error($errors, "classification")?>
+    </div>
 
-    <?=show_error($errors, "major_id")?>
-    <label>Major:</label>
-    <select name="major_id" required>
-        <?php foreach($majors as $major): ?>
-            <option value="<?=$major['major_id']?>">
-                <?=$major["major_name"]?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-    <br>
+    <div class="form-group">
+        <label>Major</label>
+        <select <?= error_outline($errors, "major_id") ?> name="major_id" required>
+            <?php foreach($majors as $major): ?>
+                <option value="<?=$major['major_id']?>">
+                    <?=$major["major_name"]?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <?=show_error($errors, "major_id")?>
+    </div>
 
-    <?=show_error($errors, "faculty_id")?>
-    <label>Advisor:</label>
-    <select name="faculty_id" required>
-        <?php foreach($advisors as $advisor): ?>
-            <option value="<?=$advisor['faculty_id']?>">
-                <?=$advisor["full_name"]?> - Advises <?=$advisor["students"]?> Student(s)
-            </option>
-        <?php endforeach; ?>
-    </select>
-    <br>
+    <div class="form-group">
+        <label>Advisor</label>
+        <select <?= error_outline($errors, "faculty_id") ?> name="faculty_id" required>
+            <?php foreach($advisors as $advisor): ?>
+                <option value="<?=$advisor['faculty_id']?>">
+                    <?=$advisor["full_name"]?> - Advises <?=$advisor["students"]?> Student(s)
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <?=show_error($errors, "faculty_id")?>
+    </div>
+
     <input type="submit" name="submit_new_student" >
 
 </form>

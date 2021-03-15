@@ -12,23 +12,29 @@
   transform: rotateX(90deg);
   display: block;
   position: fixed;
-  top: calc(50% - 200px);
+  top: calc(50% - 262.5px);
   left: calc(50% - 175px);
   width: 350px;
-  height: 400px;
+  height: 525px;
+  max-height: 95vh;
   background-color: white;
   border: 1px solid black;
   z-index: 500;
   padding: 15px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
-.search-form > div{
+.search-form > :is(div,input[type=submit]){
   width: 100%;
   display: flex;
   flex-direction: column;
+  margin: 6px 0;
+}
+
+.search-form > input[type=submit]){
+	margin-top: auto !important;
 }
 
 .search-form :is(input,select){

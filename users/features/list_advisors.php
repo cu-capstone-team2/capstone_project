@@ -3,7 +3,51 @@
 <h1>List Advisors</h1>
 <hr>
 
-<?php $advisors = get_all_advisors() ?>
+<?php
+
+$pagination = new Pagination(PAGES_ADVISORS, $_GET);
+$advisors = get_all_advisors($_GET, false, $pagination);
+$input = clean_array($_GET);
+$roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Secretary"];
+?>
+
+<h3 class='total-count'><?= $pagination->get_total_rows() ?> Advisors(s)</h3>
+
+
+<!-- Beginning of search form -->
+
+<button class="search-button">Search</button>
+
+<div class="backdrop"></div>
+
+<form method="GET" class="search-form">
+    <input name="feature" value="list_advisors" type="text" hidden/>
+
+    <div>
+      <label>Name: </label>
+      <input placeholder="Ex. Pierce, Ryan" type="text" name="name" value="<?= show_value($input,"name") ?>" />      
+    </div>
+    <div>
+      <label>ID: </label>
+      <input type="text" name="id" value="<?= show_value($input,"id") ?>" />
+    </div>
+    <div>
+      <label>Order by: </label>
+      <select name="order">
+          <option value="name" <?= check_select($input,"order","name") ?>>Name</option>
+          <option value="id" <?= check_select($input,"order","id") ?>>ID</option>
+		  <option value="students" <?= check_select($input,"order","students") ?>># of Advisees</option>
+      </select>
+    </div>
+
+    <input type="submit" />
+</form>
+
+<script src="js/search_form.js"></script>
+
+<!-- End of search form -->
+
+
 <div class="div-table">
         <table>
                 <tr>
@@ -37,6 +81,6 @@
                     </tr>
                 <?php endforeach; ?>
         </table>
+</div>
 
-
-<div>
+<?php $pagination->print_all_links() ?>

@@ -4,15 +4,16 @@
 <hr>
 
 <?php
-
-$classes = get_all_classes($_GET);
+$pagination = new Pagination(PAGES_CLASSES, $_GET);
+$classes = get_all_classes($_GET, false, $pagination);
 $times = get_all_class_time();
 $days = ["MW","TR","MTWR","F","SS","MR"];
 $input = clean_array($_GET);
 $orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days","crn"=>"CRN"];
+$majors = get_all_majors();
 ?>
 
-
+<h3 class='total-count'><?= $pagination->get_total_rows() ?> Classes(s)</h3>
 
 <!-- Beginning of search form -->
 
@@ -31,6 +32,15 @@ $orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days",
         <label>Instructor: </label>
         <input type="text" name="instructor" value="<?= show_value($input,'instructor') ?>"/>
     </div>
+	<div>
+		<label>Subject: </label>
+		<select name="major">
+		<option value="all">All</option>
+		<?php foreach($majors as $major): ?>
+			<option value="<?= $major["major_id"] ?>" <?= check_select($input,'major',$major["major_id"]) ?>><?= $major["short_name"] ?></option>
+		<?php endforeach ?>
+		</select>
+	</div>
     <div>
         <label>Days: </label>
         <select name="days">
@@ -97,6 +107,7 @@ $orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days",
                     <?php endif ?>
                     <?php if($role === ADMIN): ?>
                         <a class="feature-url" href="user.php?feature=edit_class&class_id=<?= $class["class_id"] ?>">Edit Class</a>
+                        <a class="feature-url" href="user.php?feature=delete_class&class_id=<?= $class["class_id"] ?>" onclick="return confirm('Are you sure you want to delete <?= $class["course_name"] ?>? Deleting a class will automatically unenroll every student from this class.')">Delete Class</a>
                     <?php endif ?>
                 </div>
                 </div>
@@ -105,3 +116,5 @@ $orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days",
         <?php endforeach; ?>
     </table>
 </div>
+
+<?php $pagination->print_all_links() ?>

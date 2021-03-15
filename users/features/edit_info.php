@@ -82,22 +82,25 @@ if(isset($_POST["submit_password"])){
 <h1>Edit Info</h1>
 <hr>
 
-<h4>Change Password</h4>
-<form method="post">
+<form class="form" method="post">
 
-	<?= show_error($errors,"old_password") ?>
+	<div class="form-group">
 	<label>Old Password</label>
-	<input type="password" name="old_password" value="<?= show_value($input,"old_password") ?>" />
-	<br>
-	
-	<?= show_error($errors,"new_password") ?>
-	<label>New Password</label>
-	<input type="password" name="new_password" value="<?= show_value($input,"new_password") ?>" />
-	<br>
-	
-	<?= show_error($errors,"confirm_password") ?>
-	<label>Confirm Password</label>
-	<input type="password" name="confirm_password" value="<?= show_value($input,"confirm_password") ?>" />
-	<br>
-	<input type="submit" name="submit_password" value="Update Password" />
+	<input <?= error_outline($errors,"old_password") ?> type="password" name="old_password" value="<?= show_value($input,"old_password") ?>" required />
+	<?= show_error($errors,"old_password") ?>
+	</div>
+
+	<div class="form-group">
+		<label>New Password</label>
+		<input <?= error_outline($errors,"new_password") ?> type="password" name="new_password" value="<?= show_value($input,"new_password") ?>" required />
+		<?= show_error($errors,"new_password") ?>
+	</div>
+
+	<div class="form-group">
+		<label>Confirm Password</label>
+		<input <?= error_outline($errors,"confirm_password") ?> type="password" name="confirm_password" value="<?= show_value($input,"confirm_password") ?>" required />
+		<?= show_error($errors,"confirm_password") ?>
+	</div>
+
+	<input type="submit" name="submit_password"/>
 </form>

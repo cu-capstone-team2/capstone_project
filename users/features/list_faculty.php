@@ -7,11 +7,15 @@
 <a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
 
 <?php
-$faculty = get_all_faculty($_GET);
+$pagination = new Pagination(PAGES_FACULTY, $_GET);
+$faculty = get_all_faculty($_GET, false, $pagination);
 $input = clean_array($_GET);
 $roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Secretary"];
 
 ?>
+
+<h3 class='total-count'><?= $pagination->get_total_rows() ?> Faculty Member(s)</h3>
+
 
 <!-- Beginning of search form -->
 
@@ -80,7 +84,15 @@ $roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Sec
                   <p><strong>Phone: </strong><?= $faculty["faculty_phone"] ?></p>
                   <p><strong>Location: </strong><?= $faculty["room"] ?></p>
                   <p><strong>Username: </strong><?= $faculty["faculty_username"] ?></p>
-                  <p><strong>Active Status: </strong><?= $faculty["faculty_active"] ?></p>
+                  <p><strong>Active Status: </strong>
+                    <?php
+                      if ($faculty["faculty_active"] == "1") {
+                          echo "Active";
+                      } else {
+                          echo "Inactive";
+                      }
+                    ?>
+                  </p>
               </div>
               <div class="info-shown-div-links">
                   <?php if ($role == ADMIN): ?>
@@ -92,4 +104,6 @@ $roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Sec
     </tr>
   <?php endforeach; ?>
 </table>
+</div>
 
+<?php $pagination->print_all_links() ?>
