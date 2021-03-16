@@ -8,7 +8,8 @@ function get_student_by_username($username){
         SELECT
             student_username,
             student_password,
-            student_id
+            student_id,
+            student_email
         FROM Student
         WHERE student_username = ?
     ";
@@ -21,6 +22,7 @@ function get_faculty_by_username($username){
             faculty_username,
             faculty_password,
             faculty_id,
+            faculty_email,
             role
         FROM Faculty_Staff
         WHERE faculty_username = ?;
@@ -191,5 +193,17 @@ function get_apply_info($id){
 	 return query_one($sql, "s", [$id]);
 }
 
+function get_reset_password_by_key($key){
+    $sql = "
+        SELECT 
+            password_key,
+            student_id,
+            faculty_id,
+            is_student
+        FROM Reset_Password
+        WHERE password_key = ?
+    ";
+    return query_one($sql, "s", [$key]);
+}
 
 ?>

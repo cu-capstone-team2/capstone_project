@@ -63,19 +63,6 @@ function get_role_name($role){
     }
 }
 
-function check_user($valid_users){
-    /* Check if user is valid */
-    global $role;
-    $valid = false;
-    foreach($valid_users as $user){
-        if($role === $user){
-            $valid = true;
-            break;
-        }
-    }
-    if(!$valid)
-        change_page("user.php");
-}
 
 function get_current_user_name(){
     global $user,$role;
@@ -92,6 +79,36 @@ function check_student_active($isactive){
 	}
 }
 
+function link_without($param){
+    $link = "user.php?";
+    $params = [];
+    foreach($_GET as $key=>$value){
+        if($key !== $param)
+            $params[] = $key."=".$value;
+    }
+    $link .= implode($params, "&");
+
+    return $link;
+}
+
+function get_random_char(){
+    $r = rand()%62;
+    if($r < 10){
+        return chr(48 + $r);
+    } else if($r < 36){
+        return chr(65 + $r - 10);
+    } else{
+        return chr(97 + $r - 36);
+    }
+}
+
+function generate_reset_password_key(){
+    $key = "";
+    for($i=0;$i<50;$i++){
+        $key .= get_random_char();
+    }
+    return $key;
+}
 
 
 ?>

@@ -120,9 +120,28 @@ function get_classes_by_instructor($instructor_id){
     return query_many($sql, "s", [$instructor_id]);
 }
 
-function get_appointments_by_instructor($instructor_id){
+function get_appointments_by_instructor($instructor_id, $search=[], $count = false, $pagination = null){
+    $appointments = "0%";
+    if(isset($search["appointments"])){
+        switch($search["appointments"]){
+            case "all":
+                $appointments = "%";
+                break;
+            default:
+                $appointments = $search["appointments"] . "%";
+                break;
+        }
+    }
+    $name = isset($search["name"]) && !empty($search["name"])? "%{$search["name"]}%" : "%";
+    $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
+    $order = "appointment_date, time_";
+    if(isset($search["order"]) && $search["order"] === "name"){
+        $order = "full_name, appointment_date, time_";
+    }
+
     $sql = "
         SELECT
+            appointment_id,
             Student.student_id,
             student_firstname,
             student_lastname,
@@ -134,16 +153,33 @@ function get_appointments_by_instructor($instructor_id){
                 WHEN LENGTH(comments) = 0 THEN 'No Comments'
                 ELSE comments
             END as comments,
-            DATEDIFF(appointment_date, now()) as days_away
+            DATEDIFF(appointment_date, now()) as days_away,
+            CASE
+                WHEN is_finished = 0 THEN 'Incomplete'
+                ELSE 'Completed'
+            END as status
         FROM Appointment
         INNER JOIN Student
             ON Student.student_id = Appointment.student_id
         INNER JOIN Timeslot
             ON Timeslot.time_id = Appointment.time_id
         WHERE Appointment.faculty_id = ?
-        ORDER BY appointment_date, time_
+            AND EXPORT_SET(is_finished,'1','0','',4) LIKE ?
+            AND Student.student_id LIKE ?
+        HAVING full_name LIKE ?
+        ORDER BY {$order}
     ";
-    return query_many($sql,"s",[$instructor_id]);
+    $params = [$instructor_id, $appointments, $id, $name];
+    $types = "ssss";
+
+    if($count)
+        return Pagination::get_count_query($sql,$types,$params);
+    else if($pagination !== null){
+        return $pagination->get_pagination_query($sql, $types, $params);
+    }
+    return query_many($sql,$types,$params);
+
 }
+
 
 ?>

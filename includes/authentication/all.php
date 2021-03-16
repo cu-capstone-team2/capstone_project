@@ -46,6 +46,20 @@ function is_faculty($role){
     }
 }
 
+function check_user($valid_users){
+    /* Check if user is valid */
+    global $role;
+    $valid = false;
+    foreach($valid_users as $user){
+        if($role === $user){
+            $valid = true;
+            break;
+        }
+    }
+    if(!$valid)
+        change_page("user.php");
+}
+
 function authenticate(){
     if(!is_logged_in()){
         change_page('index.php');

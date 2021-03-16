@@ -7,6 +7,7 @@ define('PAGES_FACULTY',2);
 define('PAGES_CLASSES',3);
 define('PAGES_COURSES',4);
 define('PAGES_ADVISORS',5);
+define('PAGES_APPOINTMENTS',6);
 
 class Pagination{
   private $list_type;
@@ -15,11 +16,13 @@ class Pagination{
   private $current_page;
   private $total_pages;
   private $total_rows;
+  private $id;
 
-  public function __construct($list_type, $input, $limit = 9){
+  public function __construct($list_type, $input, $id = -1, $limit = 9){
     $this->list_type = $list_type;
     $this->input = $input;
     $this->limit = $limit;
+    $this->id = $id;
     $this->set_total_pages();
     $this->set_current_page();
   }
@@ -53,7 +56,7 @@ class Pagination{
     return isset($row["cnt"])? (int)$row["cnt"] : 0;
   }
 
-  private function get_count(){
+  private function get_count($id = null){
     switch($this->list_type){
       case PAGES_STUDENTS:
         return get_all_students($_GET, true);
@@ -70,6 +73,8 @@ class Pagination{
       case PAGES_ADVISORS:
         return get_all_advisors($_GET, true);
         break;
+      case PAGES_APPOINTMENTS:
+        return get_appointments_by_instructor($this->id, $_GET, true);
       default:
         return -1;
     }

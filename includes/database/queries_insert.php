@@ -57,4 +57,21 @@
 			";
 			return query($sql, "sssi", [$first_name,$last_name,$email,$major_id]);
 	  }
+      function insert_reset_password($key, $id, $is_student){
+        // delete all other password keys if they exist
+        delete_password_reset($id, $is_student);
+        $sql;
+        if($is_student){
+        $sql = "
+            INSERT INTO Reset_Password(password_key, student_id, is_student)
+            VALUES(?,?,1);
+        ";
+        } else{
+            $sql = "
+            INSERT INTO Reset_Password(password_key, faculty_id, is_student)
+            VALUES(?,?,0);
+            ";
+        }
+        return query($sql, "si", [$key, $id]);
+      }
 ?>

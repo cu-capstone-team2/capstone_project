@@ -9,20 +9,16 @@ $input = [];
 
 if(isset($_POST["submit_login"])){
     $errors = validate_login($_POST);
-
     if(empty($errors)){
         login_user($_POST);
         change_page('user.php');
     }
-
     $input = clean_array($_POST);
 } else{
     logout();
 }
 
 ?>
-
-
 
 <div class="form__login login">
     <?= show_error($errors,"login") ?>
@@ -48,14 +44,10 @@ if(isset($_POST["submit_login"])){
             </select>
             <label>Role</label>
         </div>
-
-
         <input type="submit" name="submit_login" value="Login">
+        <a href="reset_password.php">Forgot your password?</a>
     </form>
 </div>
-
-
-
 
 <script>
 document.querySelector('input').focus();

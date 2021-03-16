@@ -1,20 +1,20 @@
 <?php
 
     function update_student_major($student_id,$major_id){
-        $sql = "
-            UPDATE Student
-                SET major_id = ?
-            WHERE student_id = ?
-        ";
-        return query($sql,"ii",[$major_id, $student_id]);
+			$sql = "
+				UPDATE Student
+						SET major_id = ?
+				WHERE student_id = ?
+			";
+			return query($sql,"ii",[$major_id, $student_id]);
     }
 
    function update_student_advisor($student_id,$faculty_id){
-	$sql = "
-		UPDATE Student
-		SET faculty_id = ?
-		WHERE student_id = ?
-	";
+		$sql = "
+			UPDATE Student
+			SET faculty_id = ?
+			WHERE student_id = ?
+		";
 	return query($sql, "ii",[$faculty_id,$student_id]);
    }
 
@@ -49,4 +49,23 @@
    		return query($sql, "siiiis", [$attrs[0],$attrs[1],$attrs[2],$attrs[3],$attrs[4], $class_id]);
    }
 
+	 function update_appointments_finished($instructor_id){
+		 $sql = "
+		 	UPDATE Appointment
+			SET is_finished = 1
+			WHERE faculty_id = ?
+				AND DATEDIFF(appointment_date, now()) < 0
+		 ";
+		 return query($sql,"s",[$instructor_id]);
+	 }
+
+	 function update_appointments_by_student_finished($faculty_id, $appointment_id){
+		$sql = "
+			UPDATE Appointment
+			SET is_finished = 1
+			WHERE faculty_id = ?
+				AND appointment_id = ?
+		";
+		return query($sql,"ss",[$faculty_id, $appointment_id]);
+	 }
 ?>
