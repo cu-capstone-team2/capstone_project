@@ -17,9 +17,9 @@ function get_students_by_advisor($advisor_id){
         INNER JOIN Major
             ON Major.major_id = Student.major_id
         WHERE Student.faculty_id = ?
+            AND student_active = 1
         ORDER BY student_lastname,student_firstname;
     ";
-
     return query_many($sql, "s", [$advisor_id]);
 }
 
@@ -44,6 +44,7 @@ function get_students_by_class($class_id){
         INNER JOIN Major
             ON Major.major_id = Student.major_id
         WHERE Class.class_id = ?
+            AND student_active = 1
         ORDER BY student_lastname, student_firstname;
     ";
 

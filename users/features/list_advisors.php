@@ -74,6 +74,9 @@ $roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Sec
                             <div class="info-shown-div-links">
                                 <a class="feature-url" href="user.php?feature=list_advisees&faculty_id=<?= $advisors["faculty_id"] ?>">List Advisees</a>
                                 <a class="feature-url" href="user.php?feature=contact_advisor&faculty_id=<?= $advisors["faculty_id"] ?>">Contact Advisor</a>
+                                <?php if($role === CHAIR): ?>
+                                    <a class="feature-url" href="user.php?feature=teaching_schedule&faculty_id=<?= $advisors["faculty_id"] ?>">View Schedule</a>
+                                <?php endif ?>
                             </div>
 
                         </div>

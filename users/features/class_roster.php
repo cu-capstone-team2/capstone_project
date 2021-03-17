@@ -14,8 +14,12 @@
 
 
 ?>
+<div class="who">
+    <h3><?= $class["course_name"] ?></h3>
+    <h3><?= $class["time"] ?> - <?= $class["days"] ?></h3>
+    <h3>by <?= $class["instructor"] ?></h3>
+</div>
 
-<h3><?= $class["course_name"] ?>, <?= $class["time"] ?>, <?= $class["days"] ?> by <?= $class["instructor"] ?></h3>
 <div class="div-table">
     <table>
         <tr>

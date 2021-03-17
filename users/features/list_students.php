@@ -2,6 +2,16 @@
 
 <?php 
 
+if($role === ADMIN){
+    if(isset($_GET["activate"])){
+        update_student_active($_GET["activate"], 1);
+        change_page(link_without("activate"));
+    } else if(isset($_GET["deactivate"])){
+        update_student_active($_GET["deactivate"], 0);
+        change_page(link_without("deactivate"));
+    }
+}
+
 $pagination = new Pagination(PAGES_STUDENTS, $_GET);
 $students = get_all_students($_GET, false, $pagination);
 $input = clean_array($_GET);
@@ -36,11 +46,21 @@ $input = clean_array($_GET);
     <div>
         <label>Major: </label>
         <select name="major">
-            <option value="all" <?= check_select($input,"major","all") ?>>All Students</option>
+            <option value="all" <?= check_select($input,"major","all") ?>>Any</option>
             <option value="it" <?= check_select($input,"major","it") ?>>IT Students</option>
             <option value="cs" <?= check_select($input,"major","cs") ?>>CS Students</option>
         </select>
     </div>
+    <?php if($role === ADMIN): ?>
+    <div>
+        <label>Status: </label>
+        <select name="status">
+            <option value="active" <?= check_select($input,"status",'active') ?>>Active</option>
+            <option value="inactive" <?= check_select($input,"status",'inactive') ?>>Inactive</option>
+            <option value="all" <?= check_select($input,"status",'all') ?>>Any</option>
+        </select>
+    </div>
+    <?php endif ?>
     <div>
         <label>Order by: </label>
         <select name="order">
@@ -103,10 +123,14 @@ $input = clean_array($_GET);
                         <a class="feature-url"  href="user.php?feature=enroll&student_id=<?= $student["student_id"] ?>">Enroll</a>
                         <a class="feature-url"  href="user.php?feature=view_schedule&student_id=<?= $student["student_id"] ?>">View Schedule</a>                        
                     <?php endif; ?>
-		    <?php if($role === ADMIN): ?>
-			<a class="feature-url"  href="user.php?feature=edit_student&student_id=<?= $student["student_id"] ?>">Edit Student</a>
-
-		    <?php endif; ?>
+                    <?php if($role === ADMIN): ?>
+                        <?php if($student["student_active"] == "0"): ?>
+                            <a onclick="return confirm('Are you sure you want to activate <?= $student['full_name'] ?>?')" class="feature-url" href="<?= link_without("") . "&activate={$student["student_id"]}" ?>">Activate Account</a>
+                        <?php else: ?>
+                            <a class="feature-url"  href="user.php?feature=edit_student&student_id=<?= $student["student_id"] ?>">Edit Student</a>
+                            <a onclick="return confirm('Are you sure you want to deactivate <?= $student['full_name'] ?>? The student will not be able to login and will be unenrolled from all courses.')" class="feature-url" href="<?= link_without("") . "&deactivate={$student["student_id"]}" ?>">Deactive Account</a>
+                        <?php endif ?>
+                    <?php endif; ?>
                 </div>
                 </div>
             </td>

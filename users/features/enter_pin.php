@@ -31,10 +31,12 @@ if(isset($_POST["submit_pin"])){
 
 ?>
 
-<?= show_error($errors,'PIN') ?>
 
-<form method="POST">
-  <label>Your Enrollment PIN</label>
-  <input type="password" name="PIN" value="<?= show_value($input,"PIN") ?>" required/>
+<form method="POST" class="form">
+  <div class="form-group">
+    <label>Your Enrollment PIN</label>
+    <input <?= error_outline($errors, 'PIN') ?> type="password" name="PIN" value="<?= show_value($input,"PIN") ?>" required/>
+    <?= show_error($errors,'PIN') ?>
+  </div>
   <input type="submit" name="submit_pin" />
 </form>

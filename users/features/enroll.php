@@ -22,6 +22,9 @@
 
 ?>
 
+<div class="who">
+
+
 <h3>Student: <?php echo $student["full_name"]?></h3>
 <h3>ID: <?php echo $student["student_id"] ?></h3>
 
@@ -52,8 +55,8 @@
 
 <?php $classes = get_classes_by_student($student["student_id"]) ?>
 
-<h2>Currently enrolled credit hours: <?= $credits ?> </h2>
-
+<h2>Credit Hours: <?= $credits ?> </h2>
+</div>
 <?php if(!isset($student["student_id"])): ?>
     <h3>Schedule of <?= $student["student_firstname"] ?> <?= $student["student_lastname"] ?></h3>
 <?php endif ?>
@@ -97,8 +100,9 @@
 </div>
 
 <?= show_error($errors,"enrollment") ?>
-
-<h1>Offered Classes</h1>
+<div class="who">
+    <h1>Offered Classes</h1>
+</div>
 <?php 
 $offered_classes = get_all_classes($_GET);
 $times = get_all_class_time();

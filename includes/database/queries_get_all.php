@@ -1,7 +1,7 @@
 <?php
 
 function get_all_students($search = [], $count = false, $pagination = null){
-
+    global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
     $name.= isset($search["name"])? $search["name"] : "";
@@ -10,6 +10,14 @@ function get_all_students($search = [], $count = false, $pagination = null){
     $major = isset($search["major"]) && $search["major"] !== "all"? $search["major"] : "%";
     $orderby = "ORDER BY full_name, student_id, short_name";
 
+    $status = "1%";
+    if($role === ADMIN && isset($search["status"])){
+        if($search["status"] === "all"){
+            $status = "%";
+        } else if($search["status"] === "inactive"){
+            $status = "0%";
+        }
+    }
     if(isset($search["order"])){
         switch($search["order"]){
             case "major":
@@ -44,12 +52,13 @@ function get_all_students($search = [], $count = false, $pagination = null){
             ON Faculty_Staff.faculty_id = Student.faculty_id
         WHERE student_id LIKE ?
             AND short_name LIKE ?
+            AND EXPORT_SET(student_active,'1','0','',4) LIKE ?
         HAVING full_name LIKE ?
         {$orderby}
     ";
 
-    $params = [$id, $major, $name];
-    $types = "sss";
+    $params = [$id, $major, $status, $name];
+    $types = "ssss";
 
     if($count)
         return Pagination::get_count_query($sql, $types, $params);
@@ -60,14 +69,23 @@ function get_all_students($search = [], $count = false, $pagination = null){
 }
 
 function get_all_faculty($search = [], $count = false, $pagination = null){
-
+    global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
     $name.= isset($search["name"])? $search["name"] : "";
     $name.= "%";
     $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
-    $role = isset($search["role"]) && $search["role"] !== "all"? $search["role"] : "%";
+    $Role = isset($search["role"]) && $search["role"] !== "all"? $search["role"] : "%";
     $orderby = "role, full_name";
+
+    $status = "1%";
+    if($role === ADMIN && isset($search["status"])){
+        if($search["status"] === "all"){
+            $status = "%";
+        } else if($search["status"] === "inactive"){
+            $status = "0%";
+        }
+    }
 
     if(isset($search["order"])){
         switch($search["order"]){
@@ -108,12 +126,13 @@ function get_all_faculty($search = [], $count = false, $pagination = null){
             ON Room.room_id = Faculty_Staff.room_id
         WHERE faculty_id LIKE ?
             AND role LIKE ?
+            AND EXPORT_SET(faculty_active,'1','0','',4) LIKE ?
         HAVING full_name LIKE ?
         ORDER BY {$orderby}
     ";
     
-    $params = [$id, $role, $name];
-    $types = "sss";
+    $params = [$id, $Role, $status, $name];
+    $types = "ssss";
 
     if($count)
         return Pagination::get_count_query($sql, $types, $params);
@@ -137,7 +156,7 @@ function get_all_advisors($search = [], $count = false, $pagination = null){
                 $orderby = "faculty_id, full_name";
                 break;
 			case "students":
-				$orderby = "students, full_name";
+				$orderby = "students DESC, full_name";
 				break;
             case "name":
             default:
@@ -165,9 +184,10 @@ function get_all_advisors($search = [], $count = false, $pagination = null){
             ON Student.faculty_id = Faculty_Staff.faculty_id
         WHERE role = (SELECT role_instructor FROM Constants)
 			AND Faculty_Staff.faculty_id LIKE ?
+            AND faculty_active = 1
         GROUP BY Faculty_Staff.faculty_id
         HAVING full_name LIKE ?
-        ORDER BY faculty_lastname, faculty_firstname
+        ORDER BY {$orderby}
     ";
 
     $params = [$id, $name];
@@ -241,14 +261,14 @@ function get_all_classes($search = [], $count = false, $pagination = null){
 
 function get_all_courses($search = [], $count = false, $pagination = null){
     $course = isset($search["course"]) && !empty($search["course"])? $search["course"]: '%';
-    $order = "course_title";
+    $order = "title";
 	$major = isset($search["major"]) && $search["major"] !== "all"? $search["major"]: '%';
     if(isset($search["order"])){
         switch($search["order"]){
             case "title": $order = "course_name"; break;
             case "course_n":
 			default:
-				$order = "course_title";
+				$order = "title";
 				break;
         }
     }	
@@ -264,7 +284,7 @@ function get_all_courses($search = [], $count = false, $pagination = null){
             ON Major.major_id = Course.major_id
 		WHERE Major.major_id LIKE ?
 			AND Course.course_id LIKE ?
-        ORDER BY title
+        ORDER BY {$order}
     ";
 
     $params = [$major, $course];

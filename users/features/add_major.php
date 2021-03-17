@@ -18,14 +18,14 @@ function validate_new_major($input){
 $input = [];
 $errors = [];
 
-  if(isset($_POST["submit_major"])){
-    $errors = validate_new_major($_POST);
-    if(empty($errors)){
-      insert_major($_POST["major_name"],$_POST["short_name"]);
-      echo "<h3 style:'color:green'>Major Added!</h3>";
-      echo "<a href='user.php?featur=list_major' style='color:green'>Go back to Major</a>";
-    }
+if(isset($_POST["submit_major"])){
+  $errors = validate_new_major($_POST);
+  if(empty($errors)){
+    insert_major($_POST["major_name"],$_POST["short_name"]);
+    echo "<h3 style:'color:green'>Major Added!</h3>";
+    echo "<a href='user.php?featur=list_major' style='color:green'>Go back to Major</a>";
   }
+}
 
 ?>
 <h1>Add Major</h1>
@@ -35,11 +35,13 @@ $errors = [];
   <div class="form-group">
     <label>Major Name</label>
     <input <?=error_outline($errors,"major_name")?> type="text" name="major_name"<?=show_value($input,"major_name")?> required>
+    <?= show_error($errors, "major_name") ?>
+  </div>
 
+  <div class="form-group">
     <label>Abbreviation</label>
     <input <?=error_outline($errors,"short_name")?> type="text" name="short_name"<?=show_value($input,"short_name")?> required>
-
-
+    <?= show_error($errors, "short_name") ?>
   </div>
   <input type="submit" name="submit_major">
 </form>

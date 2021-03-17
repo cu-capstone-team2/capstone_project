@@ -16,15 +16,15 @@ if(!$student)
 <h1>View Student Class Schedule</h1>
 <hr>
 
+<div class="who">
 <?php if(!isset($user["student_id"])): ?>
     <h3>Schedule of <?= $student["student_firstname"] ?> <?= $student["student_lastname"] ?></h3>
 <?php endif ?>
 
-<?php
-$total_credits = get_credits_by_student($student["student_id"]);
-?>
+<?php $total_credits = get_credits_by_student($student["student_id"]); ?>
 
-<h3>Total Credits: <?= $total_credits ?></h3>
+    <h3>Total Credits: <?= $total_credits ?></h3>
+</div>
 
 <div class="div-table">
     <table>

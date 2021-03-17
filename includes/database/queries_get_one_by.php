@@ -12,6 +12,7 @@ function get_student_by_username($username){
             student_email
         FROM Student
         WHERE student_username = ?
+            AND student_active = 1
     ";
     return query_one_no_clean($sql,"s",[$username]);
 }
@@ -25,7 +26,8 @@ function get_faculty_by_username($username){
             faculty_email,
             role
         FROM Faculty_Staff
-        WHERE faculty_username = ?;
+        WHERE faculty_username = ?
+            AND faculty_active = 1
     ";
     return query_one_no_clean($sql,"s",[$username]);
 }
@@ -41,7 +43,8 @@ function get_student_by_id($id){
             ON Major.major_id = Student.major_id
         INNER JOIN Faculty_Staff
             ON Faculty_Staff.faculty_id = Student.faculty_id
-        WHERE student_id = ?;
+        WHERE student_id = ?
+            AND student_active = 1
     ";
     return query_one($sql,"s",[$id]);
 }
@@ -55,7 +58,8 @@ function get_faculty_by_id($id){
         FROM Faculty_Staff
         INNER JOIN Room
             ON Room.room_id = Faculty_Staff.room_id
-        WHERE faculty_id = ?;
+        WHERE faculty_id = ?
+            AND faculty_active = 1
     ";
     return query_one($sql,"s",[$id]);
 }
@@ -69,7 +73,8 @@ function get_chair(){
         FROM Faculty_Staff
         INNER JOIN Room
             ON Room.room_id = Faculty_Staff.room_id
-        WHERE role = (SELECT role_chair FROM Constants);
+        WHERE role = (SELECT role_chair FROM Constants)
+            AND faculty_active = 1
     ";
     return query_one_np($sql);
 }

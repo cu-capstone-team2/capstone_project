@@ -24,9 +24,6 @@
         if(!isset($input['comments']) || strlen($input["comments"]) > 255){
             $errors['comments'] = "Over 255 Characters";
         }
-
-        
-
         return $errors;
     }
 
@@ -51,29 +48,39 @@
 <h1>Add Appointment</h1>
 <hr>
 
-<h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
-<form method="post">
+<div class="who">
+    <h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
+</div>
 
-    <?=show_error($errors, "appointment_date")?>
-    <label>Date</label>
-    <input type="date" name="appointment_date" required>
-    <br>
-    <?=show_error($errors, "time_id")?>
-    <label>Time</label>
-    <select name="time_id" required>
-        <?php foreach($times as $time): ?>
-            <option value="<?=$time['time_id']?>">
-                <?=$time["time"]?>
-            </option>
-        <?php endforeach; ?>
-    </select>
-    <br>
-    <?=show_error($errors, "comments")?>
-    <label>Comments(Max:255)</label>
-    <br>
-    <textarea id="comments" name="comments"></textarea>
-    <p>Character Count: <span id="char-count">0</span></p>
-    <br>
+
+<form method="post" class="form">
+
+    <div class="form-group">
+        <label>Date</label>
+        <input <?= error_outline($errors, "appointment_date") ?> type="date" name="appointment_date" required>
+        <?=show_error($errors, "appointment_date")?>
+    </div>
+
+    <div class="form-group">
+        <label>Time</label>
+        <select <?= error_outline($errors, "time_id") ?> name="time_id" required>
+            <?php foreach($times as $time): ?>
+                <option value="<?=$time['time_id']?>">
+                    <?=$time["time"]?>
+                </option>
+            <?php endforeach; ?>
+        </select>    
+        <?=show_error($errors, "time_id")?>
+    </div>
+
+    <div class="form-group">
+        <label>Comments (Max:255)</label>
+        <textarea <?= error_outline($errors,"comments") ?> id="comments" name="comments"></textarea>
+        <p>Character Count: <span id="char-count">0</span></p>
+        <?=show_error($errors, "comments")?>
+    </div>
+
+
     <input type="submit" name="submit_new_appointment" >
 </form>
 

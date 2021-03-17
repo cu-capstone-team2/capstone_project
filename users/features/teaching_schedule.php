@@ -2,8 +2,24 @@
 <h1>Teaching Schedule</h1>
 <hr>
 
-<h3>For <?= $user["full_name"] ?></h3>
-<?php $classes = get_classes_by_instructor($user["faculty_id"]); ?>
+<?php 
+
+$instructor_id = isset($_GET["faculty_id"])? $_GET["faculty_id"] : "";
+
+if($role === INSTRUCTOR)
+    $instructor_id = $user["faculty_id"];
+
+$instructor = get_faculty_by_id($instructor_id);
+if(!$instructor)
+    change_page("user.php");
+
+?>
+
+<div class="who">
+    <h3>For <?= $instructor["full_name"] ?></h3>
+</div>
+
+<?php $classes = get_classes_by_instructor($instructor["faculty_id"]); ?>
 
 <div class="div-table">
     <table>

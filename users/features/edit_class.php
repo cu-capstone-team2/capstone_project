@@ -2,6 +2,8 @@
 
 check_user([ADMIN]);
 
+/* NO FORM VALIDATIONS WERE DONE ON THIS PAGE */
+
 $class_id = isset($_GET["class_id"])? $_GET["class_id"] : "";
 
 	$class = get_class_by_id($class_id);
@@ -27,8 +29,11 @@ function validate_new_class($input){
 
 <h1>Edit Class</h1>
 <hr>
-<h3> <?php echo $class["course_name"] ?></h3>
-<br>
+
+<div class="who">
+	<h3> <?php echo $class["course_name"] ?></h3>
+</div>
+
 <?php
 if(isset($_POST["submit_edit_to_class"])){
 		echo var_dump($_POST);
@@ -65,7 +70,8 @@ if(isset($_POST["submit_edit_to_class"])){
 }
 ?>
 
-<form method = "post">
+<form method = "post" class="form">
+	<div class="form-group">
 		<label>Days - Current: <?= $class["days"] ?> / New:</label>
 		<select name="days" required>
 				<option value="<?= $class["days"] ?>"> <?php echo "Unchanged"?> </option>
@@ -73,38 +79,46 @@ if(isset($_POST["submit_edit_to_class"])){
 				<option value="<?= $day ?>"> <?php echo $day?> </option>
 			<?php endforeach; ?>
 		</select>
-		<br>
+	</div>
+
+	<div class="form-group">
 		<label>Timeslot - Current: <?= get_timeslot_by_id($class["time_id"])["time_"] ?> / New:</label>
 		<select name="time_id" required>
 			<option value="<?= $class["time_id"] ?>"> <?php echo "Unchanged"?> </option>
 			<?php foreach ($times_data as $timeslot): ?>
 				<option value="<?= $timeslot["time_id"] ?>"> <?php echo $timeslot["time"]?> </option>
 			<?php endforeach; ?>
-		</select>
-		<br>
+		</select>	
+	</div>
+
+	<div class="form-group">
 		<label>Duration - Current: <?= $class["minutes"] ?> / New:</label>
 		<select name="minutes" required>
 			<option value="<?= $class["minutes"] ?>"> <?php echo "Unchanged"?> </option>
 			<?php foreach ($durations as $duration): ?>
 				<option value="<?= strval($duration) ?>"> <?php echo strval($duration)?> </option>
 			<?php endforeach; ?>
-		</select>
-		<br>
+		</select>	
+	</div>
+
+	<div class="form-group">
 		<label>Location - Current: <?= get_room_by_id($class["room_id"])["building"]." ".get_room_by_id($class["room_id"])["room_number"] ?> / New:</label>
 		<select name="room_id" required>
 			<option value="<?= $class["room_id"] ?>"> <?php echo "Unchanged"?> </option>
 			<?php foreach ($room_data as $room): ?>
 				<option value="<?= $room["room_id"] ?>"> <?php echo $room["building"]." ".$room["room_number"]?> </option>
 			<?php endforeach; ?>
-		</select>
-		<br>
+		</select>	
+	</div>
+
+	<div class="form-group">
 		<label>Instructor - Current: <?= $class["instructor"] ?> / New:</label>
 		<select name="faculty_id" required>
 			<option value="<?= $class["faculty_id"] ?>"> <?php echo "Unchanged"?> </option>
 			<?php foreach ($instructor_data as $instructor): ?>
 				<option value="<?= $instructor["faculty_id"] ?>"> <?php echo $instructor["full_name"]?> </option>
 			<?php endforeach; ?>
-		</select>
-		<br>
-		<input type="submit" name="submit_edit_to_class">
+		</select>	
+	</div>
+	<input type="submit" name="submit_edit_to_class">
 </form>

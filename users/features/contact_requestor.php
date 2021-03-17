@@ -39,16 +39,28 @@ if(isset($_POST['submit_requestor'])){
 <h1>Contact Requestor</h1>
 <hr>
 
-<h2> <?php echo $request["full_name"]?></h2>
-<h3> <?php echo "Email: ".$r_email?></h3>
+<div class="who">
+	<h2> <?php echo $request["full_name"]?></h2>
+	<h3> <?php echo "Email: ".$r_email?></h3>
+</div>
 
 
-<form method="POST" action="">
 
-	<?= show_error($error, 'subject') ?><br>
-	Subject: <input type="text" name="subject" value="<?= show_value($input, 'subject')?>" ><br><br>
-	<?= show_error($error, 'message') ?><br>
-	Message: <textarea name="message"><?= show_value($input, 'message')?></textarea><br><br>
+<form method="POST" action="" class="form">
+<div class="form-group">
+	<label>Subject</label>
+	<input <?= error_outline($error, "subject") ?> type="text" name="subject" value="<?= show_value($input, 'subject')?>" >
+	<?= show_error($error, 'subject') ?>
+</div>
+
+<div class="form-group">
+	<label>Message</label>
+	<textarea <?= error_outline($error,"message") ?> name="message"><?= show_value($input, 'message')?></textarea>
+	<?= show_error($error, 'message') ?>
+</div>
+
+
+
 	<input type="submit" name="submit_requestor">
 
 </form>

@@ -14,7 +14,7 @@ $majors = get_all_majors();
 
 function validate_new_major($input){
     $errors = [];
-    if(!isset($input['major_id'])){
+    if(!isset($input['major_id']) || empty($input["major_id"])){
         $errors['major_id'] = "Major id was incorrect";
     }
     return $errors;
@@ -35,18 +35,25 @@ if(isset($_POST["submit_new_major"])){
 
 ?>
 
+
 <h1>Pick Major</h1>
 <hr>
 
-<h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
-<form method="post">
-    <label>New Major</label>
-    <select name="major_id" required>
-        <?php foreach($majors as $major): ?>
-            <option value="<?= $major["major_id"] ?>" <?= check_select($student,"major_id",$major["major_id"]) ?>>
-                <?= $major["short_name"] ?> - <?= $major["major_name"] ?>
-            </option>
-        <?php endforeach; ?>
-    </select>
+<div class="who">
+    <h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
+</div>
+
+<form method="post" class="form">
+    <div class="form-group">
+        <label>New Major</label>
+        <select <?= error_outline($errors,"major_id") ?> name="major_id" required>
+            <?php foreach($majors as $major): ?>
+                <option value="<?= $major["major_id"] ?>" <?= check_select($student,"major_id",$major["major_id"]) ?>>
+                    <?= $major["short_name"] ?> - <?= $major["major_name"] ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <?= show_error($errors,'major_id') ?>
+    </div>
     <input type="submit" name="submit_new_major" >
 </form>

@@ -20,7 +20,9 @@ $advisees = get_students_by_advisor($faculty_id);
 <hr>
 
 <?php if($role !== INSTRUCTOR): ?>
-    <h3> <?= COUNT($advisees) ?> Students advised by <?= $faculty["faculty_firstname"] ?> <?= $faculty["faculty_lastname"] ?></h3>
+    <div class="who">
+        <h3><?= COUNT($advisees) ?> Students advised by <?= $faculty["faculty_firstname"] ?> <?= $faculty["faculty_lastname"] ?></h3>
+    </div>
 <?php endif; ?>
 <div class="div-table">
     <table>

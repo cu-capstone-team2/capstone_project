@@ -12,7 +12,7 @@ $advisors = get_all_advisors();//retreive all adivsors
 function validate_new_advisors($input){
 	$errors = [];
 
-	if(!isset($input['faculty_id'])){
+	if(!isset($input['faculty_id']) || empty($input["faculty_id"])){
 		$errors['faculty_id'] = "Advisor is Incorrect";
 	}		
 return $errors;
@@ -34,15 +34,20 @@ if(isset($_POST["submit_new_advisors"])){
 ?>
 <h1>Change Advisor</h1>
 <hr>
-<h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
-<form method = "post">
-	<label>New Advisor</label>
-	<select name="faculty_id" required>
-		<?php foreach ($advisors as $advisor): ?>
-			<option value="<?= $advisor["faculty_id"]?>" <?=check_select($student,"faculty_id",$advisor["faculty_id"])?>>
-				<?=$advisor["full_name"] ?> - tutors <?=$advisor["students"] ?> student(s)
-		</option>
-	<?php endforeach; ?>
-	</select>
+<div class="who">
+	<h3>for <?= "{$student["student_firstname"]} {$student["student_lastname"]}" ?>, ID = <?= $student["student_id"] ?></h3>
+</div>
+<form method = "post" class="form">
+	<div class="form-group">
+		<label>New Advisor</label>
+		<select <?= error_outline($errors, 'faculty_id') ?> name="faculty_id" required>
+			<?php foreach ($advisors as $advisor): ?>
+				<option value="<?= $advisor["faculty_id"]?>" <?=check_select($student,"faculty_id",$advisor["faculty_id"])?>>
+					<?=$advisor["full_name"] ?> - Advises <?=$advisor["students"] ?> Student(s)
+			</option>
+		<?php endforeach; ?>
+		</select>
+		<?= show_error($errors, 'faculty_id') ?>
+	</div>
 	<input type="submit" name="submit_new_advisors">
 </form>

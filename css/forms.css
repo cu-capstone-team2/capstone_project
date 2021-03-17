@@ -3,6 +3,12 @@
   flex-direction: column;
 }
 
+/* The person who is being edited */
+.who > * {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
 .form-group {
   margin: 10px 0;
   display: flex;
@@ -10,13 +16,22 @@
   width: 100%;
 }
 
-.form-group > :is(input, select) {
+.form-group > :is(input, select, textarea) {
   padding: 5px;
   font-size: 1rem;
   color: var(--text-color);
+  width: 100%;
+  /* max-width: 100%;
+  min-width: 100%; */
 }
 
-.form-group > :is(input, select):focus {
+.form-group > textarea {
+  font-size: 1rem !important;
+  height: 150px;
+  resize: none;
+}
+
+.form-group > :is(input, select, textarea):focus {
   outline: none;
 }
 

@@ -12,27 +12,24 @@
 
 	function validate_contact_advisors($input){
 		$errors = [];
-	
- 	 	if(!isset($input['subject']) || empty($input['subject'])){
-     		$errors['subject']="subject is required";
+		if(!isset($input['subject']) || empty($input['subject'])){
+			$errors['subject']="subject is required";
 		}
-
-  		if(!isset($input['message'])){
-     		$errors['message'] ="message is requires";
+		if(!isset($input['message'])){
+			$errors['message'] ="message is required";
 		}
-	
-       return $errors;
+		return $errors;
 	}
 
 	$errors = [];
 	$input = [];
 
 
- 	if(isset($_POST['submit_new_advisors'])){
+ 	if(isset($_POST['submit_new_email'])){
     	$errors = validate_contact_advisors($_POST);
   		if(empty($errors)){
     		mail($faculty['faculty_email'],$_POST['subject'],$_POST['message']);
-			echo "<h3 style='color:green'>Message Sent!</h3>";
+				echo "<h3 style='color:green'>Message Sent!</h3>";
   		}
 		$input = clean_array($_POST);
  	}
@@ -40,16 +37,26 @@
 
 ?>
 
- <h3> Advisor : <?php echo $faculty["full_name"] ?>
- </h3>
+<div class="who">
+ <h3> Advisor : <?php echo $faculty["full_name"] ?></h3>
 
-<form method="post">
+</div>
 
-	<?=show_error($errors, "subject")?>
-	subject:   <input type="text" name="subject"> <br>
-	<?=show_error($errors, "message")?>
-	Message : <textarea name="message"></textarea> <br>
-        <input type="submit" name="submit_new_advisors">	 
+<form method="post" class='form'>
+
+	 <div class="form-group">
+		 <label>Subject</label>
+		<input <?= error_outline($errors,'subject') ?> type="text" name="subject">
+		<?=show_error($errors, "subject")?>
+	</div>
+
+	<div class="form-group">
+		<label>Message</label>
+		<textarea <?= error_outline($errors,'message') ?> name="message"></textarea>
+		<?=show_error($errors, "message")?>
+	</div>
+
+        <input type="submit" name="submit_new_email">	 
 	
 </form>
  

@@ -8,6 +8,33 @@ function delete_enrollment($student_id, $class_id){
     ";
     return query($sql, "ii", [$student_id, $class_id]);
 }
+
+function delete_all_student_upcoming_appointments($student_id){
+    $sql = "
+        DELETE FROM Appointment
+        WHERE is_finished = 0
+            AND student_id = ?
+    ";
+    return query($sql, "i", [$student_id]);
+}
+
+function delete_all_instructor_upcoming_appointments($faculty_id){
+    $sql = "
+        DELETE FROM Appointment
+        WHERE is_finished = 0
+            AND faculty_id = ?
+    ";
+    return query($sql, "i", [$faculty_id]);
+}
+
+function delete_all_student_enrollments($student_id){
+    $sql = "
+        DELETE FROM Enrollment
+        WHERE student_id = ?
+    ";
+    return query($sql, "i", [$student_id]);
+}
+
 function delete_class($class_id){
     $sql = "
         DELETE FROM Class 
