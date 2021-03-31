@@ -15,6 +15,9 @@
 		$this->Ln();
 		$this->SetFont('Times', '', '20');
 		$this->Cell(50,10,'Cynthia Dy',0,0,'C');
+		$this->Ln();
+		$this->SetFont('Times', '', '15');
+		$this->Cell(60,10,'cyndy@cameron.edu',0,0,'C');
         $this->Ln(20);
     }
 
@@ -28,43 +31,58 @@
 
 
 
-	//Academic information
+	//Academic header
 	function academicInfo()
 	{
-		$this->SetFont('Times','B','12');
-		$this->Cell(50,10,'Current Academic Information',0,0,'C');
+		$this->SetFont('Times','','12');
+		$this->Cell(60,10,'Current Academic Information',0,0,'C');
 		$this->Ln();
+		
 		$this->SetLineWidth(1);
-        $this->Line(10,40,$this->getPageWidth()-10,40);
-		$this->Cell(60,10,'Level',1,0,'C');
-		$this->Cell(40,10,'Class',1,0,'C');
-		$this->Cell(80,10,'Minor',1,0,'C');
+       	$this->Line(10,40,$this->getPageWidth()-10,40);
+		$this->Cell(40,10,'Class.',1,0,'C');
 		$this->Cell(80,10,'Major',1,0,'C');
-		$this->Ln(30);
-
+		$this->Ln();
+		
+		$this->Cell(40,10,'Freshman','LR',0, 'L');
+		$this->Cell(80,10,'Computer Science','LR',0, 'L');
+		$this->Ln();
+		$this->Cell(120,0,' ','T');
+		$this->Ln(15);
 	}
 
 
-
-	//Table header
-	function scheduleHeader()
+	//Schedule
+	function scheduleTable($header, $data)
 	{
+		//schedule header
+		$this->SetFont('Times','','12');
+		$this->Cell(40,10,'Spring Schedule 2021',0,0,'C');
+		$this->Ln();	
+		
+		
+		//width columns
+		$w = array(15,20,55,20,20,35,25);
+		//Header
+		for($i=0;$i<count($header);$i++)
+			$this->Cell($w[$i],7,$header[$i],1,0,'C');
+		$this->Ln();
+		//Data
+		foreach($data as $row)
 		{
-			$this->SetFont('Times','B','14');
-			$this->Cell(40,10,'Spring 2021 Schedule',0,0,'C');
-			$this->Ln();
-			$this->Cell(20,10,'CRN',1,0,'C');
-			$this->Cell(30,10,'Course',1,0,'C');
-			$this->Cell(40,10,'Title',1,0,'C');
-			$this->Cell(40,10,'Time',1,0,'C');
-			$this->Cell(15,10,'Days',1,0,'C');
-			$this->Cell(30,10,'Dates',1,0,'C');
-			$this->Cell(20,10,'Period',1,0,'C');
-			$this->Cell(40,10,'Location',1,0,'C');
-			$this->Cell(40,10,'Instructor',1,0,'C');
+			$this->Cell($w[0],6,$row[0],'LR');
+			$this->Cell($w[1],6,$row[1],'LR');
+			$this->Cell($w[2],6,$row[2],'LR',0, 'L');
+			$this->Cell($w[3],6,$row[3],'LR',0, 'C');
+			$this->Cell($w[4],6,$row[4],'LR',0, 'C');
+			$this->Cell($w[5],6,$row[5],'LR',0, 'C');
+			$this->Cell($w[6],6,$row[6],'LR',0, 'L');
+			
+
 			$this->Ln();
 	
 		}
+		$this->Cell(array_sum($w),0,' ','T');
 	
 
 	}
@@ -74,8 +92,21 @@
 	
 	$pdf = new studentPDF();
 	$pdf->AliasNbPages();
-	$pdf->AddPage('L', 'A4', 0);
+	
+	
+	$header= array('CRN', 'Course', 'Title', 'Time', 'Days', 'Location', 'Instructor');
+	$data= [
+		['123', 'CS 4231', 'Operating Systems', '12-1:45', 'MW', 'Howell Hall 204', 'Zhao'],
+		['234', 'CS 4112', 'Algorithms Analysis ', '11-12:15', 'TTR', 'Howell Hall 206', 'Monian'],
+		['765', 'IT 3603', 'Human Computer Interface', '11-12:15', 'MW', 'Howell Hall 207', 'Johari'],
+		['643', 'CS 2154', 'Discrete Math', '9-10:45', 'TTR', 'Howell Hall 209', 'Drissi'],
+		['543', 'IT 4342', 'Worksplace Safety', '-','-','Online', 'Hickerson']
+	];
+
+
+	//$pdf->AddPage('L', 'A4', 0);
+	$pdf->AddPage();
 	$pdf->academicInfo();
-	$pdf->scheduleHeader();
+	$pdf->scheduleTable($header, $data);
 	$pdf->Output();
 ?>

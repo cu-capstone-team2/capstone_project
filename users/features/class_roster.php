@@ -11,8 +11,6 @@
 
     $students = get_students_by_class($class["class_id"]);
 
-
-
 ?>
 <div class="who">
     <h3><?= $class["course_name"] ?></h3>

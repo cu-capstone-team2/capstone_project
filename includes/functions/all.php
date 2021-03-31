@@ -13,6 +13,7 @@ function action(){
     return htmlspecialchars($_SERVER["PHP_SELF"]);
 }
 
+
 function show_error($array, $key){
     /* Only show error if the error exists in the array */
     if(isset($array[$key])){

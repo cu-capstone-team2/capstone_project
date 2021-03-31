@@ -3,7 +3,8 @@
 <h1>List Classes</h1>
 <hr>
 
-<?php
+<?php 
+
 $pagination = new Pagination(PAGES_CLASSES, $_GET);
 $classes = get_all_classes($_GET, false, $pagination);
 $times = get_all_class_time();
@@ -35,7 +36,7 @@ $majors = get_all_majors();
 	<div>
 		<label>Subject: </label>
 		<select name="major">
-		<option value="all">All</option>
+    		<option value="all">All</option>
 		<?php foreach($majors as $major): ?>
 			<option value="<?= $major["major_id"] ?>" <?= check_select($input,'major',$major["major_id"]) ?>><?= $major["short_name"] ?></option>
 		<?php endforeach ?>
@@ -97,7 +98,7 @@ $majors = get_all_majors();
                 <div class="info-shown-div">
                 <div class="info-shown-div-info">
                     <p><strong>Instructor: </strong><?= $class["instructor"] ?></p>
-                    <p><strong>Location: </strong>Howell Hall</p>
+                    <p><strong>Location: </strong><?=$class["classroom"]?></p>
                     <p><strong>Credits: </strong><?= $class["credits"] ?></p>
                     <p><strong># of Students: </strong><?= $class["students"] ?></p>
                 </div>

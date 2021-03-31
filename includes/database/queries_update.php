@@ -21,6 +21,20 @@ function update_student_advisor($student_id,$faculty_id){
 	return query($sql, "ii",[$faculty_id,$student_id]);
 }
 
+function update_student_info($student_id,$first_name,$last_name,$email,$classification,$major_id,$advisor_id){
+	$sql = "
+		UPDATE Student SET
+			student_firstname = ?,
+			student_lastname = ?,
+			student_email = ?,
+			classification = ?,
+			major_id = ?,
+			faculty_id = ?
+		WHERE student_id = ?
+	";
+	return query($sql,"ssssiii",[$first_name,$last_name,$email,$classification,$major_id,$advisor_id,$student_id]);
+}
+
 function update_student_password($student_id, $password){
 	$sql = "
 		UPDATE Student SET
@@ -123,6 +137,31 @@ function update_class_details($class_id, $attrs){
 	return query($sql, "siiiis", [$attrs[0],$attrs[1],$attrs[2],$attrs[3],$attrs[4], $class_id]);
 }
 
+function update_course_details($course_id, $course_name, $credits, $course_number, $major_id){
+	$sql = "
+		UPDATE Course SET
+		course_name = ?,
+    	credits = ?,
+    	course_number = ?,
+    	major_id = ?
+    	WHERE course_id = ?;
+	";
+	return query($sql, "siiii", [$course_name, $credits, $course_number, $major_id, $course_id]);
+}
+
+function update_faculty_details($faculty_id, $first_name, $last_name, $email, $phone, $role){
+	$sql = "
+		UPDATE Faculty_Staff SET
+		faculty_firstname = ?,
+		faculty_lastname = ?,
+		faculty_email = ?,
+		faculty_phone = ?,
+		role = ?
+		WHERE faculty_id = ?
+	";
+	return query($sql, "ssssi", [$first_name, $last_name, $email, $phone, $role, $faculty_id]);
+}
+
 function update_appointments_finished($instructor_id){
 	$sql = "
 	UPDATE Appointment
@@ -141,5 +180,34 @@ $sql = "
 		AND appointment_id = ?
 ";
 return query($sql,"ss",[$faculty_id, $appointment_id]);
+}
+
+function update_appointment($appointment_id,$date,$time_id,$comments){
+	$sql = "
+		UPDATE Appointment
+		SET appointment_date = ?,
+		comments = ?,
+		time_id = ?
+		WHERE appointment_id = ?
+	";
+	return query($sql,"ssss",[$date, $comments, $time_id, $appointment_id]);
+}
+
+function close_request($apply_id){
+	$sql = "
+		UPDATE Apply
+		Set is_Completed = 1
+		WHERE apply_id = ?;
+	";
+	return query($sql, "s",[$apply_id]);
+}
+
+function close_contact($id){
+	$sql = "
+		UPDATE Contact
+		Set is_Contacted = 1
+		WHERE ID = ?;
+	";
+	return query($sql, "s",[$id]);
 }
 ?>

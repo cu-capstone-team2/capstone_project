@@ -28,15 +28,15 @@
             $errors['email'] = "Email is not Valid";
         }
 
-        if(!isset($input['classification'])){
+        if(!isset($input['classification']) || empty($input["classification"])){
             $errors['classification'] = "Classification is incorrect";
         }
 
-        if(!isset($input['major_id'])){
+        if(!isset($input['major_id']) || empty($input["major_id"])){
             $errors['major_id'] = "Major is incorrect";
         }
 
-        if(!isset($input['faculty_id'])){
+        if(!isset($input['faculty_id']) || empty($input["faculty_id"])){
             $errors['faculty_id'] = "Advisor is incorrect";
         }
 
@@ -62,6 +62,8 @@
             mail($_POST['email'], "Student Login Information", $msg);
 
             change_page("user.php?feature=add_student");
+			
+			echo "<h3 style='color:green'>Successfully added student</h3>";
         }
         $input = clean_array($_POST);
     }
@@ -97,6 +99,7 @@
     <div class="form-group">
         <label>Classification</label>
         <select <?= error_outline($errors, "classification") ?> name="classification" id="classification" required>
+			<option selected disabled hidden></option>
             <option value="freshman">Freshman</option>
             <option value="sophmore">Sophmore</option>
             <option value="junior">Junior</option>
@@ -108,6 +111,7 @@
     <div class="form-group">
         <label>Major</label>
         <select <?= error_outline($errors, "major_id") ?> name="major_id" required>
+			<option selected disabled hidden></option>
             <?php foreach($majors as $major): ?>
                 <option value="<?=$major['major_id']?>">
                     <?=$major["major_name"]?>
@@ -120,6 +124,7 @@
     <div class="form-group">
         <label>Advisor</label>
         <select <?= error_outline($errors, "faculty_id") ?> name="faculty_id" required>
+			<option selected disabled hidden></option>
             <?php foreach($advisors as $advisor): ?>
                 <option value="<?=$advisor['faculty_id']?>">
                     <?=$advisor["full_name"]?> - Advises <?=$advisor["students"]?> Student(s)

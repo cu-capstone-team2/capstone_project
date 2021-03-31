@@ -1,17 +1,13 @@
+
 <?php check_user([INSTRUCTOR]) ?>
 
 <?php
-
-
+	$appointment_id = isset($_GET["appoint"])? $_GET["appoint"] : "";
 	
-    $student_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
-    $student = get_student_by_id($student_id);
+	$appointment = get_appointment_by_id($appointment_id);
 
-    $times = get_all_appointment_timeslots();
-
-    if(!$student){
-		change_page("user.php?feature=list_advisees");
-    }
+	if(!$appointment)
+		change_page('user.php');
 
     function validate_new_appointment($input){
         $errors = [];
@@ -46,9 +42,7 @@
 
 ?>
 
-
-
-<h1>Add Appointment</h1>
+<h1>Edit Appointment</h1>
 <hr>
 
 <div class="who">
@@ -67,7 +61,6 @@
     <div class="form-group">
         <label>Time</label>
         <select <?= error_outline($errors, "time_id") ?> name="time_id" required>
-            <option disabled hidden selected></option>
             <?php foreach($times as $time): ?>
                 <option <?= check_select($input,"time_id",$time["time_id"]) ?> value="<?=$time['time_id']?>">
                     <?=$time["time"]?>

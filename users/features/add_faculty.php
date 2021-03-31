@@ -97,6 +97,7 @@
   <div class="form-group">
   <label>Faculty Role:</label>
   <select <?= error_outline($errors, "role") ?>name="role" required>
+			<option selected disabled hidden></option>
       <option value="1">Instructor</option>
       <option value="2">Secretary</option>
       <option value="3">Administrator</option>
@@ -108,6 +109,7 @@
 <div class="form-group">
   <label>Offices Available:</label>
   <select <?=error_outline($errors, "location") ?> name="location" required>
+		<option selected disabled hidden></option>
     <?php foreach ($rooms as $room):?>
       <option value="<?=$room['room_id']?>">
   <?=$room["building"]?> <?=$room["room_number"]?>

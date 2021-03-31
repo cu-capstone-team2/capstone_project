@@ -38,7 +38,7 @@ function validate_new_student($input){
           mail($_POST['email'], "Student Login Information", $msg);
           echo "<h3 style ='color:green'>Faculty Added!</h3>";
           echo "<a href ='user.php?feature=apply_request' style = 'color:green'> Go back to Faculty</a> ";
-          delete_request($request["apply_id"]);
+          close_request($request["apply_id"]);
       }
       $input = clean_array($_POST);
  }

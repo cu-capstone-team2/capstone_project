@@ -182,5 +182,99 @@ function get_appointments_by_instructor($instructor_id, $search=[], $count = fal
 
 }
 
+function get_many_class_overlap($days,$time_id,$room_id){
+    $sql = "
+        SELECT
+            Class.class_id,
+            course_name,
+            CONCAT(Major.short_name, Course.course_number) as course_title,
+            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+            days,
+            credits,
+            CONCAT(Room.building,' ',Room.room_number) as room
+        FROM Class
+        INNER JOIN Numbers
+            ON INSTR(days, SUBSTR(?,number,1)) > 0
+                AND number <= LENGTH(?)
+        INNER JOIN Timeslot
+            ON Timeslot.time_id = Class.time_id
+        INNER JOIN Room
+            ON Room.room_id = Class.room_id
+        INNER JOIN Course
+            ON Course.course_id = Class.course_id
+        INNER JOIN Major
+            ON Major.major_id = Course.major_id
+        WHERE Class.time_id = ?
+            AND Class.room_id = ?
+        GROUP BY class_id
+    ";
+    return query_many($sql, "ssss", [$days, $days, $time_id, $room_id]);
+}
+
+function get_many_class_faculty_overlap($faculty_id, $days,$time_id){
+    $sql = "
+        SELECT
+            Class.class_id,
+            course_name,
+            CONCAT(Major.short_name, Course.course_number) as course_title,
+            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+            days,
+            credits,
+            CONCAT(Room.building,' ',Room.room_number) as room,
+            CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor
+        FROM Class
+        INNER JOIN Room
+            ON Room.room_id = Class.room_id
+        INNER JOIN Numbers
+            ON INSTR(days, SUBSTR(?,number,1)) > 0
+                AND number <= LENGTH(?)
+        INNER JOIN Timeslot
+            ON Class.time_id = Timeslot.time_id
+        INNER JOIN Faculty_Staff
+            ON Class.faculty_id = Faculty_Staff.faculty_id
+        INNER JOIN Course
+            ON Course.course_id = Class.course_id
+        INNER JOIN Major
+            ON Major.major_id = Course.major_id
+        WHERE Class.time_id = ?
+            AND Class.faculty_id = ?
+        GROUP BY class_id
+    ";
+    return query_many($sql, "ssss", [$days, $days, $time_id, $faculty_id]);
+}
+
+function get_many_class_student_overlap($student_id, $days, $time_id){
+    $sql = "
+        SELECT
+            Class.class_id,
+            course_name,
+            CONCAT(Major.short_name, Course.course_number) as course_title,
+            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+            days,
+            credits,
+            CONCAT(Room.building,' ',Room.room_number) as room,
+            CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor
+        FROM Class
+        INNER JOIN Room
+            ON Room.room_id = Class.room_id
+        INNER JOIN Numbers
+            ON INSTR(days, SUBSTR(?,number,1)) > 0
+                AND number <= LENGTH(?)
+        INNER JOIN Timeslot
+            ON Class.time_id = Timeslot.time_id
+        INNER JOIN Faculty_Staff
+            ON Class.faculty_id = Faculty_Staff.faculty_id
+        INNER JOIN Course
+            ON Course.course_id = Class.course_id
+        INNER JOIN Major
+            ON Major.major_id = Course.major_id
+        INNER JOIN Enrollment
+            ON Enrollment.class_id = Class.class_id
+        WHERE Enrollment.student_id = ?
+            AND Class.time_id = ?
+        GROUP BY class_id
+    ";
+    return query_many($sql,"ssss",[$days, $days, $student_id, $time_id]);
+}
 
 ?>

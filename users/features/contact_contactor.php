@@ -5,20 +5,15 @@
 	$error = [];
 	$input = [];
 	
-	if($_GET["apply_id"]){
-		$r_id = $_GET["apply_id"];
-			$request = get_apply_info($r_id);
-			$r_email = $request["email"];
-	
-	}else if($_GET["contact_id"]){
+
+
 		$r_id = $_GET["contact_id"];
-		$request = get_contact_info($r_id);
-		$r_email = $request["email"];
-	}
+		$contact = get_contact_user($r_id);
+		$r_email = $contact["email"];
+	
 
 
-
-function validate_contact_requestor($input){
+function validate_contact_contactor($input){
 	$errors = [];
 	if(!isset($input['subject']) || empty($input['subject'])){
 		$errors['subject'] = "Input in subject";
@@ -31,12 +26,14 @@ function validate_contact_requestor($input){
 	return $errors;
 }
 
-if(isset($_POST['submit_requestor'])){
-	$error = validate_contact_requestor($_POST);
+if(isset($_POST['submit_contactor'])){
+	$error = validate_contact_contactor($_POST);
 
 	if(empty($error)){
-				mail($request['email'], $_POST['subject'],$_POST['message']);
+				mail($contact["email"], $_POST["subject"],$_POST["message"]);
+				
 				echo "Message was sent";
+				close_contact($contact["ID"]);
 	}
 	$input = clean_array($_POST);
 }
@@ -49,7 +46,7 @@ if(isset($_POST['submit_requestor'])){
 <hr>
 
 <div class="who">
-	<h2> <?php echo $request["full_name"]?></h2>
+	<h2> <?php echo $contact["full_name"]?></h2>
 	<h3> <?php echo "Email: ".$r_email?></h3>
 </div>
 
@@ -71,7 +68,7 @@ if(isset($_POST['submit_requestor'])){
 
 
 
-	<input type="submit" name="submit_requestor">
+	<input type="submit" name="submit_contactor">
 
 </form>
 

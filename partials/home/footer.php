@@ -10,8 +10,8 @@
             </div>
             <div class="box2"><img class="logo" src="images/design_logo.png" alt="Logo Text"></div>
             <div class="mainlinks">
-                <a class="mainlink"  href="#">Contact Us</a>
-                <a class="mainlink"  href="#">Facebook</a>
+                <a class="mainlink"  href="contact.php">Contact Us</a>
+                <a class="mainlink"  href="https://www.facebook.com/CameronUniversity">Facebook</a>
             </div>
 </footer>
 </div>

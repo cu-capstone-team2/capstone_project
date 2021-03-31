@@ -87,6 +87,7 @@ $input = clean_array($_GET);
                 <p><strong>Comments: </strong><?= $appoint["comments"] ?></p>
             </div>
               <div class="info-shown-div-links">
+				<a class="feature-url" href="user.php?feature=edit_appointment&appoint=<?= $appoint["appointment_id"] ?>">Edit Time</a>
                   <a class="feature-url" href="user.php?feature=enroll&student_id=<?= $appoint["student_id"] ?>">Enroll</a>
                   <a class="feature-url" href="user.php?feature=contact_student&student_id=<?= $appoint["student_id"] ?>">Contact Student</a>
                   <a class="feature-url" href="user.php?feature=view_schedule&student_id=<?= $appoint["student_id"] ?>">View Schedule</a>

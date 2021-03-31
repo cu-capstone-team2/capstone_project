@@ -37,9 +37,19 @@
 
 		if ($class_to_enroll) {
 	 		$is_already_enrolled = get_enrollment_by_student_class($student["student_id"],$class_to_enroll["class_id"]);
-	 		if ($is_already_enrolled != false) {
+             if($credits + $class_to_enroll["credits"] > 18){
+                $errors["enrollment"] = "Too many credits too enroll in this course";
+             } else if ($is_already_enrolled != false) {
 	 			$errors['enrollment'] = "Already enrolled in this class.";
-	 		} 
+	 		} else{
+                 $classes = get_many_class_student_overlap($s_id, $class_to_enroll["days"], $class_to_enroll["time_id"]);
+                 if(!empty($classes)){
+                    $errors["overlaps"] = "<BR>Class Overlaps with:<BR>";
+                    foreach($classes as $classe){
+				        $errors['overlaps'] .= "CRN: {$classe['class_id']}, {$classe['course_name']}, {$classe['time']}, {$classe['days']}, {$classe['room']}<BR>";
+			        }
+                 }
+             }
 	 		if(empty($errors)){
 	 			insert_enrollment($student["student_id"],$class_to_enroll["class_id"]);
 	 			$credits = get_credits_by_student($student["student_id"]);
@@ -100,6 +110,7 @@
 </div>
 
 <?= show_error($errors,"enrollment") ?>
+<?= show_error($errors,"overlaps") ?>
 <div class="who">
     <h1>Offered Classes</h1>
 </div>
@@ -201,7 +212,15 @@ $majors = get_all_majors();
 	                </div>
 	                <div class="info-shown-div-links">
 	                    <?php if(($role === CHAIR || $role === STUDENT) && ($credits + $class["credits"] <= 18)): ?>
-	                        <a class="feature-url" href="user.php?feature=enroll&student_id=<?=$student["student_id"] ?>&enroll=<?= $class["class_id"] ?>">Enroll</a>
+                            <?php if(get_enrollment_by_student_class($student["student_id"],$class["class_id"])): ?>
+                                <p class="error">Already enrolled</p>
+                            <?php elseif(get_many_class_student_overlap($s_id, $class["days"], $class["time_id"])): ?>
+                                <p class="error">Class overlaps with another</p>
+                            <?php else: ?>
+    	                        <a class="feature-url" href="user.php?feature=enroll&student_id=<?=$student["student_id"] ?>&enroll=<?= $class["class_id"] ?>">Enroll</a>
+                            <?php endif ?>
+                        <?php else: ?>
+                            <p class="error">Too Many Credits to Enroll, (Max: 18)</p>
 	                    <?php endif ?>
 	                </div>
                 </div>

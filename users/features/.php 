@@ -1,5 +1,5 @@
 <?php check_user([ADMIN]) ?>
-<h1>Add Course</h1>
+<h1>Edit Course</h1>
 <hr>
 <?php
 

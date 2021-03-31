@@ -64,6 +64,25 @@ function get_faculty_by_id($id){
     return query_one($sql,"s",[$id]);
 }
 
+
+function get_appointment_by_id($id){
+	$sql = "
+	SELECT
+		appointment_id,
+		comments,
+		is_finished,
+		appointment_date,
+		time_id,
+		CONCAT(student_lastname,', ', student_firstname) as full_name,
+		Appointment.student_id
+	FROM Appointment
+	INNER JOIN Student
+		ON Student.student_id = Appointment.student_id
+	WHERE appointment_id = ?;
+	";
+	return query_one($sql,"s",[$id]);
+}
+
 function get_chair(){
     $sql = "
         SELECT
@@ -114,7 +133,8 @@ function get_class_by_id($id){
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
             DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
             COUNT(Student.student_id) as students,
-            credits
+            credits,
+			CONCAT (Room.building , ' ' , Room.room_number) as room
         FROM Class
         INNER JOIN Course
             ON Course.course_id = Class.course_id
@@ -124,6 +144,8 @@ function get_class_by_id($id){
             ON Timeslot.time_id = Class.time_id
         INNER JOIN Major
             ON Major.major_id = Course.major_id
+        INNER JOIN Room
+            ON Room.room_id = Class.room_id
         LEFT JOIN Enrollment
             ON Enrollment.class_id = Class.class_id
         LEFT JOIN Student
@@ -170,8 +192,8 @@ function get_room_by_id($room_id) {
 
 function get_major_name_by_id($id){
 	$sql = "
-		SELECT major_name 
-		FROM Major 
+		SELECT major_name
+		FROM Major
 		WHERE = ?;
 	";
 	return query_one($sql, "s",[$id]);
@@ -180,7 +202,7 @@ function get_major_name_by_id($id){
 
 function get_apply_info($id){
 	$sql = "
-	      SELECT 
+	      SELECT
 		apply_id,
     		first_name,
     		last_name,
@@ -193,14 +215,14 @@ function get_apply_info($id){
             		ON Major.major_id = Apply.major_id
 
     	      WHERE apply_id = ?;
-	
+
 	";
 	 return query_one($sql, "s", [$id]);
 }
 
 function get_reset_password_by_key($key){
     $sql = "
-        SELECT 
+        SELECT
             password_key,
             student_id,
             faculty_id,
@@ -209,6 +231,21 @@ function get_reset_password_by_key($key){
         WHERE password_key = ?
     ";
     return query_one($sql, "s", [$key]);
+}
+
+function get_contact_user($id){
+ $sql = "
+		SELECT
+			ID,
+			first_name,
+			last_name,
+			email,
+			message,
+			CONCAT(last_name, ', ', first_name) as full_name
+		from Contact
+		where ID = ?;
+	";
+	return query_one($sql, "s", [$id]);
 }
 
 ?>

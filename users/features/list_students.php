@@ -3,6 +3,7 @@
 <?php 
 
 if($role === ADMIN){
+    // activate and deactive accounts if admin
     if(isset($_GET["activate"])){
         update_student_active($_GET["activate"], 1);
         change_page(link_without("activate"));

@@ -9,7 +9,7 @@
 		$requests = get_apply_request();
 		$majors = get_all_majors();
 		function validate_apply($input){
-			$error = [];
+			$errors = [];
 
 			if(!isset($input['first_name']) || empty($input['first_name'])){
 				$errors['first_name'] = "First Name is Required";
@@ -32,20 +32,19 @@
 			if(!isset($input['major']) || empty($input['major'])){
 				$errors['major'] = "Major is required";
 			}
-
+				return $errors;
 		}
 
 
-	
+
 	 if(isset($_POST["submit_apply"])){
    		$errors = validate_apply($_POST);
              if(empty($errors)){
-		insert_apply($_POST["first_name"],$_POST["last_name"], $_POST["email"],$_POST["major"]);
-		 echo "<h3 style ='color:green'>Request Made!</h3>";
+							 	insert_apply($_POST["first_name"],$_POST["last_name"], $_POST["email"],$_POST["major"]);
+		 						echo "<h3 style ='color:green'>Request Made!</h3>";
                  echo "<a href ='index.php' style = 'color:green'> Go back to Home</a> ";
-
-		
-	     }
+				     }
+			 $input = clean_array($_POST);
 	 }
 
 
@@ -59,24 +58,27 @@
 
         <div class="container__input">
 
+					<?= show_error($error, 'first_name') ?>
 
 	<input type="text" name="first_name" value="<?= show_value($input, 'first_name')?>">
 		<label>First Name</label>
 	</div>
 
         <div class="container__input">
+					<?= show_error($error, 'last_name') ?>
 	<input type="text" name = "last_name"value="<?=show_value($input, 'last_name')?>">
 	<label>Last Name</label>
 	</div>
 
         <div class="container__input">
-	<input type="text" name= "email"value="<?=show_value($input, 'email')?>">
+					<?= show_error($error, 'email') ?>
+	<input type="email" name= "email" value="<?=show_value($input, 'email')?>">
 	<label>Personal Email</label>
 	</div>
 
         <div class="container__select">
-
-	<select name="major" >
+<?= show_error($error, 'major') ?>
+	<select name="major" required>
 	  <?php foreach($majors as $major):?>
 	  	<option hidden disabled selected></option>
 		<option value =<?=$major['major_id']?>"><?=$major["short_name"]?> - <?=$major["major_name"]?></option>

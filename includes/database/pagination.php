@@ -8,6 +8,7 @@ define('PAGES_CLASSES',3);
 define('PAGES_COURSES',4);
 define('PAGES_ADVISORS',5);
 define('PAGES_APPOINTMENTS',6);
+define('PAGES_APPLY', 6);
 
 class Pagination{
   private $list_type;
@@ -21,12 +22,24 @@ class Pagination{
   public function __construct($list_type, $input, $id = -1, $limit = 9){
     $this->list_type = $list_type;
     $this->input = $input;
-    $this->limit = $limit;
+    echo "<script src='js/pagination.js'></script>";
+    $this->limit = $this->get_list_limit();
     $this->id = $id;
     $this->set_total_pages();
     $this->set_current_page();
   }
-  
+
+  public function get_list_limit(){
+      $w_height =  $_COOKIE["windowHeight"];
+      // I only changed this line of code, instead of using intval(), I casted
+      // $w_height as an integer instead of a string, then it worked. I also changed
+      // 70 to 30 to fit more on a page
+      // height is equal to screen height - navbar - h1 - hr - h3 - button - pagination-link - footer
+      $height = $w_height - 48 - 30 - 41 - 33 - 19 - 45 - 55 - 64;
+      $list_limit = round((int)$height/30) - 1;
+      return $list_limit > 9? $list_limit : 9;
+  }
+
   public function get_limit(){
     return $this->limit;
   }
@@ -75,6 +88,8 @@ class Pagination{
         break;
       case PAGES_APPOINTMENTS:
         return get_appointments_by_instructor($this->id, $_GET, true);
+      case PAGE_APPLY:
+	return get_apply_request($_GET,true);
       default:
         return -1;
     }

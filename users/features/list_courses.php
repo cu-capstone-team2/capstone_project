@@ -80,6 +80,7 @@ $majors = get_all_majors();
 				<div class="info-shown-div-links">
 					<?php if($role === ADMIN): ?>
 						<a class="feature-url" href="user.php?feature=add_class&course_id=<?= $course["course_id"] ?>">Add Class</a>
+						<a class="feature-url" href="user.php?feature=edit_course&course_id=<?= $course["course_id"] ?>">Edit Course</a>
 					<?php endif; ?>
 				</div>
 			</div>

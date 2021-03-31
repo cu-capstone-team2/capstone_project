@@ -73,4 +73,12 @@ function delete_password_reset($id, $is_student){
     return query($sql,"s",[$id]);
 }
 
+function delete_contact($id){
+	$sql = "
+		DELETE FROM Contact
+		WHERE ID = ?;
+	";
+	
+	return query($sql, "i", [$id]);
+}
 ?>

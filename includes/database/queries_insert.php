@@ -32,7 +32,7 @@
         ";
         return query($sql, "ssiii", [$comments, $appointment_date, $student_id, $faculty_id, $time_id]);
     }
-	
+
 	  function insert_student($first_name, $last_name, $student_email, $classification, $PIN, $student_username, $student_password, $major_id, $faculty_id){
 			$sql = "
 				INSERT INTO Student(student_firstname, student_lastname, student_email, classification, PIN, student_username, student_password, major_id, faculty_id)
@@ -40,7 +40,7 @@
 			";
 			return query($sql, "ssssissii" ,[$first_name, $last_name, $student_email, $classification, $PIN, $student_username, $student_password, $major_id, $faculty_id]);
 	  }
-	  
+
 	  function insert_faculty_staff($faculty_firstname,$faculty_lastname,$faculty_email,$faculty_phone,$role,$faculty_username,$faculty_password,$faculty_active,$room_id){
 			$sql = "
 				INSERT INTO Faculty_Staff(faculty_firstname,faculty_lastname,faculty_email,faculty_phone,role,faculty_username,faculty_password,faculty_active,room_id)
@@ -51,12 +51,13 @@
 
 	  function insert_apply($first_name,$last_name,$email,$major_id){
 			$sql = "
-				INSERT into 
-				Apply(first_name,last_name,email,major_id)		
-				VALUES(?,?,?,?);
+				INSERT into
+				Apply(first_name,last_name,email,major_id,date_requested)
+				VALUES(?,?,?,?,CURDATE());
 			";
 			return query($sql, "sssi", [$first_name,$last_name,$email,$major_id]);
 	  }
+
       function insert_reset_password($key, $id, $is_student){
         // delete all other password keys if they exist
         delete_password_reset($id, $is_student);
@@ -74,4 +75,12 @@
         }
         return query($sql, "si", [$key, $id]);
       }
+
+    function insert_contact($first_name, $last_name, $email, $message){
+        $sql = "
+          INSERT INTO Contact (first_name, last_name, email, message,date_request)
+          VALUES(?,?,?,?,CURDATE());
+        ";
+        return query($sql, "ssss", [$first_name, $last_name, $email, $message]);
+    }
 ?>
