@@ -4,6 +4,10 @@
 
 <?php
 
+if(isset($_POST["request_pin"])){
+	send_pin();
+}
+
 function validate_pin($input){
   global $user;
   $errors = [];
@@ -31,7 +35,13 @@ if(isset($_POST["submit_pin"])){
 
 ?>
 
-
+<?php if(!isset($_POST["request_pin"])): ?>
+<form class="form" method="POST">
+	<input style='align-self: end' type='submit' name='request_pin' value='Request PIN' />
+</form>
+<?php else: ?>
+<p style='color: green'>PIN Sent. Check your email.</p>
+<?php endif ?>
 <form method="POST" class="form">
   <div class="form-group">
     <label>Your Enrollment PIN</label>

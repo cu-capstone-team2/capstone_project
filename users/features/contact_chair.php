@@ -1,21 +1,24 @@
 <?php check_user([INSTRUCTOR]) ?>
-<h1>Contact Chair</h1>
-<hr>
 
 <?php
 
 $chair = get_chair();
+if(!$chair){
+	change_page('user.php');
+}
 $error = [];
 $input = [];
 
 function validate_contact_chair($input){
 	$errors = [];
 	if(!isset($input['subject']) || empty($input['subject'])){
-		$errors['subject'] = "Please input in subject";
+		$errors['subject'] = "Please input a subject";
+	} else if(strlen($input['subject']) > 50){
+		$errors['subject'] = "Subject is limited to 50 characters";
 	}
 	
 	if(!isset($input['message']) || empty($input['message'])){
-		$errors['message'] = "Please input in message";
+		$errors['message'] = "Please input a message";
 	}
 	
 	return $errors;
@@ -23,14 +26,18 @@ function validate_contact_chair($input){
 
 if(isset($_POST['submit_new_chair'])){
 	$error=validate_contact_chair($_POST);
+	$input = clean_array($_POST);
 	if(empty($error)){
 		mail($chair['faculty_email'], $_POST['subject'],$_POST['message']);
-		echo "Message was sent";
+		echo "<h3 style='color:green'>Message was sent</h3>";
+		$input = [];
 	}
-	$input = clean_array($_POST);
 }
 
 ?>
+
+<h1>Contact Chair</h1>
+<hr>
 
 <div class="who">
 	<h3>Chair: <?php echo $chair["full_name"] ?> </h3>
@@ -46,27 +53,11 @@ if(isset($_POST['submit_new_chair'])){
 	</div>
 	<div class="form-group">
 		<?= show_error($error, 'message') ?>
-		<label>Message (Max: 255)</label>
+		<label>Message</label>
 		<textarea id="comments" <?= error_outline($error, 'subject') ?> name="message" required><?= show_value($input, 'message')?></textarea>
-		<p>Character Count: <span id="char-count">0</span></p>
 	</div>
 
 <input type="submit" name="submit_new_chair">
 
 </form>
 
-<script>
-const charCount = document.querySelector('#char-count');
-const comments = document.querySelector('#comments');
-
-const updateCharCount = (e) => {
-    if(comments.value.length > 255){
-        comments.value = comments.value.substring(0,255);
-    }
-    charCount.innerHTML = comments.value.length;
-}
-
-updateCharCount();
-comments.oninput = updateCharCount;
-
-</script>

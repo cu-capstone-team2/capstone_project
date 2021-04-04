@@ -8,7 +8,8 @@ define('PAGES_CLASSES',3);
 define('PAGES_COURSES',4);
 define('PAGES_ADVISORS',5);
 define('PAGES_APPOINTMENTS',6);
-define('PAGES_APPLY', 6);
+define('PAGES_APPLY', 7);
+define('PAGES_CONTACT', 8);
 
 class Pagination{
   private $list_type;
@@ -88,8 +89,10 @@ class Pagination{
         break;
       case PAGES_APPOINTMENTS:
         return get_appointments_by_instructor($this->id, $_GET, true);
-      case PAGE_APPLY:
-	return get_apply_request($_GET,true);
+      case PAGES_APPLY:
+		return get_apply_request($_GET,true);
+      case PAGES_CONTACT:
+		return get_contact_info($_GET,true);	
       default:
         return -1;
     }

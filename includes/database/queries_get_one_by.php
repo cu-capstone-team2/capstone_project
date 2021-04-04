@@ -36,6 +36,7 @@ function get_student_by_id($id){
     $sql = "
         SELECT
             Student.*,
+			Major.*,
             CONCAT(student_lastname,', ',student_firstname) as full_name,
             CONCAT(faculty_lastname,', ',faculty_firstname) as advisor
         FROM Student
@@ -47,6 +48,51 @@ function get_student_by_id($id){
             AND student_active = 1
     ";
     return query_one($sql,"s",[$id]);
+}
+
+function get_next_appointment_by_student($id){
+	$sql = "
+		SELECT
+			appointment_id,
+			comments,
+			CONCAT(DATE_FORMAT(appointment_date,'on %M %e, %Y'),', at ',TIME_FORMAT(time_, '%h:%i %p')) as total_time,
+			appointment_date
+		FROM Appointment
+		INNER JOIN Timeslot
+			ON Timeslot.time_id = Appointment.time_id
+		WHERE is_finished = 0
+			AND student_id = ?
+		ORDER BY appointment_date
+		LIMIT 1
+	";
+	$appointment = query_one($sql,"s",[$id]);
+	if(!$appointment)
+		return "No Upcoming Appointments";
+	return $appointment["total_time"];
+}
+
+function get_next_appointment_by_advisor($id){
+	$sql = "
+		SELECT
+			appointment_id,
+			comments,
+			CONCAT(DATE_FORMAT(appointment_date,'on %M %e, %Y'),', ',TIME_FORMAT(time_, '%h:%i %p')) as total_time,
+			appointment_date,
+			CONCAT(Student.student_lastname,', ',Student.student_firstname) as student
+		FROM Appointment
+		INNER JOIN Timeslot
+			ON Timeslot.time_id = Appointment.time_id
+		INNER JOIN Student
+			ON Student.student_id = Appointment.student_id
+		WHERE is_finished = 0
+			AND Appointment.faculty_id = ?
+		ORDER BY appointment_date
+		LIMIT 1
+	";
+	$appointment = query_one($sql,"s",[$id]);
+	if(!$appointment)
+		return "No Upcoming Appointments";
+	return "w/ " . $appointment["student"] . " " . $appointment["total_time"];
 }
 
 function get_faculty_by_id($id){
@@ -214,10 +260,19 @@ function get_apply_info($id){
 		INNER JOIN Major
             		ON Major.major_id = Apply.major_id
 
-    	      WHERE apply_id = ?;
-
+    	WHERE apply_id = ?
+			AND is_Completed = 0
 	";
 	 return query_one($sql, "s", [$id]);
+}
+
+function get_apply_by_email($email){
+	$sql = "
+		SELECT email
+		FROM Apply
+		WHERE email = ?
+	";
+	return query_one($sql,"s",[$email]);
 }
 
 function get_reset_password_by_key($key){

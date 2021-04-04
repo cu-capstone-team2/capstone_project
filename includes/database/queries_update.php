@@ -159,7 +159,7 @@ function update_faculty_details($faculty_id, $first_name, $last_name, $email, $p
 		role = ?
 		WHERE faculty_id = ?
 	";
-	return query($sql, "ssssi", [$first_name, $last_name, $email, $phone, $role, $faculty_id]);
+	return query($sql, "ssssss", [$first_name, $last_name, $email, $phone, $role, $faculty_id]);
 }
 
 function update_appointments_finished($instructor_id){

@@ -7,7 +7,7 @@ $student_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
 $student = get_student_by_id($student_id);
 
 if(!$student){
-    change_page("user.php?feature=list_students");
+    change_page("user.php");
 }
 
 $majors = get_all_majors();
@@ -25,12 +25,13 @@ $input = [];
 
 if(isset($_POST["submit_new_major"])){
     $errors = validate_new_major($_POST);
+	$input = clean_array($_POST);
     if(empty($errors)){
         update_student_major($student_id,$_POST["major_id"]);
         $student = get_student_by_id($student_id);
         echo "<h3 style='color:green'>Changed Major!</h3>";
-        echo "<a href='user.php?feature=list_students'>Go back to Students</a>";
     }
+	
 }
 
 ?>

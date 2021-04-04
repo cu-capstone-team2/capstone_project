@@ -14,18 +14,24 @@
             $errors['first_name'] = "First Name Required";
         }else if(!ctype_alpha($input['first_name'])){
             $errors['first_name'] = "First Name can only contain characters";
+        }else if(strlen($input['first_name']) > 50){
+            $errors['first_name'] = "Max 50 characters for First Name";
         }
 
         if(!isset($input['last_name']) || empty($input['last_name'])){
             $errors['last_name'] = "Last Name Required";
         }else if(!ctype_alpha($input['last_name'])){
             $errors["last_name"] = "Last Name can only contain characters";
+        }else if(strlen($input['last_name']) > 50){
+            $errors['last_name'] = "Max 50 characters for Last Name";
         }
 
         if(!isset($input['email']) || empty($input['email'])){
             $errors['email'] = "Email is required";
         }else if(!filter_var($input['email'], FILTER_VALIDATE_EMAIL)){
             $errors['email'] = "Email is not Valid";
+        }else if(strlen($input['email']) > 50){
+            $errors['email'] = "Max 50 characters for Email";
         }
 
         if(!isset($input['classification']) || empty($input["classification"])){
@@ -48,6 +54,7 @@
 
     if(isset($_POST["submit_new_student"])){
         $errors = validate_new_student($_POST);
+        $input = clean_array($_POST);
         if(empty($errors)){
             $username = generate_username($_POST["first_name"], $_POST["last_name"]);
             $password = generate_random_password();
@@ -57,15 +64,15 @@
 
             insert_student($_POST["first_name"], $_POST["last_name"], $_POST["email"], $_POST["classification"], $PIN, $username, $hash_password, $_POST["major_id"], $_POST["faculty_id"]);
             
-            $msg = "Username:{$username} Password:{$password}";
+            $msg = "Username:{$username}\nPassword:{$password}";
 
             mail($_POST['email'], "Student Login Information", $msg);
 
-            change_page("user.php?feature=add_student");
+            $input = [];
 			
 			echo "<h3 style='color:green'>Successfully added student</h3>";
         }
-        $input = clean_array($_POST);
+
     }
 
 
@@ -99,11 +106,11 @@
     <div class="form-group">
         <label>Classification</label>
         <select <?= error_outline($errors, "classification") ?> name="classification" id="classification" required>
-			<option selected disabled hidden></option>
-            <option value="freshman">Freshman</option>
-            <option value="sophmore">Sophmore</option>
-            <option value="junior">Junior</option>
-            <option value="senior">Senior</option>
+            <option selected disabled hidden></option>
+            <option <?= check_select($student,"classification","freshman") ?> value="freshman">Freshman</option>
+            <option <?= check_select($student,"classification","sophomore") ?> value="sophomore">Sophomore</option>
+            <option <?= check_select($student,"classification","junior") ?> value="junior">Junior</option>
+            <option <?= check_select($student,"classification","senior") ?> value="senior">Senior</option>
         </select>
         <?=show_error($errors, "classification")?>
     </div>
@@ -113,7 +120,7 @@
         <select <?= error_outline($errors, "major_id") ?> name="major_id" required>
 			<option selected disabled hidden></option>
             <?php foreach($majors as $major): ?>
-                <option value="<?=$major['major_id']?>">
+                <option <?= check_select($student,"major_id",$major["major_id"]) ?>  value="<?=$major['major_id']?>">
                     <?=$major["major_name"]?>
                 </option>
             <?php endforeach; ?>

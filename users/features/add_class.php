@@ -1,5 +1,5 @@
 <?php
-
+//GOOD TO GO
 check_user([ADMIN]);
 
 $course_id = isset($_GET["course_id"])? $_GET["course_id"] : "";
@@ -10,7 +10,7 @@ $course_id = isset($_GET["course_id"])? $_GET["course_id"] : "";
 		change_page("user.php");
 	}
 
-$times_data = get_all_class_time();
+$times_data = get_all_timeslots();
 $room_data = get_all_classrooms();
 $days = ["MW","TR","MTWR","F","SS","MR"];
 $durations = [55,75];

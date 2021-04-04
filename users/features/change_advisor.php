@@ -4,10 +4,8 @@
 $student_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
 $student = get_student_by_id($student_id);
 if(!$student){
-		change_page("user.php?feature=list_students");
-		change_page("user.php?feature=list_advisees");
+		change_page("user.php");
 }
-$advisors = get_all_advisors();//retreive all adivsors
 
 function validate_new_advisors($input){
 	$errors = [];
@@ -27,9 +25,10 @@ if(isset($_POST["submit_new_advisors"])){
 			update_student_advisor($student_id, $_POST["faculty_id"]);
 			$student = get_student_by_id($student_id);
 			echo "<h3 style='color:green'>Advisor Changed!</h3>";
-			echo "<a href = 'user.php?feature=list_students'>Go back to Students</a>";
 		}	
 }
+
+$advisors = get_all_advisors();//retreive all adivsors
 
 ?>
 <h1>Change Advisor</h1>

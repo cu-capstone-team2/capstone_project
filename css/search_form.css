@@ -1,10 +1,21 @@
 .search-button{
   color: blue;
+	padding: 5px;
+	background-color: var(--light-yellow);
+	color: var(--darkest-yellow);
+	border: 1px solid var(--darkest-yellow);
+	outline: none;
+	margin: 5px auto;
   transition: transform .25s;
   transform: rotateX(360deg);
 }
 
+.search-button.focus{
+	outline: none;
+}
+
 .search-button.active{
+	outline: none;
   transform: rotateX(-90deg);
 }
 

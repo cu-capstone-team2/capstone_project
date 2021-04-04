@@ -4,6 +4,9 @@
 }
 
 /* The person who is being edited */
+.who{
+	margin: 15px 0;
+}
 .who > * {
   font-size: 1.1rem;
   text-align: center;
@@ -46,8 +49,7 @@
   padding: 5px 10px;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-basis: 0;
-  width: 75px;
+	flex: basis;
 
   padding: 0.3rem 0.7rem;
   border-radius: 0.15rem;

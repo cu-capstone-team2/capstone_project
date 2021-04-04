@@ -3,7 +3,9 @@
 <hr>
 
 <?php
-    $class = get_class_by_id($_GET["class_id"]);
+	$class_id = isset($_GET["class_id"])? $_GET["class_id"] : "";
+
+    $class = get_class_by_id($class_id);
 
     if(!$class){
         change_page("user.php?feature=teaching_schedule");

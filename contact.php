@@ -2,7 +2,7 @@
 <?php require_once("partials/home/header.php")?>
 
 <?php
-      $errors = [];
+      $error = [];
       $input = [];
 
       function validate_contact($input){
@@ -33,12 +33,13 @@
       }
 
       	 if(isset($_POST["submit_contact"])){
-            $errors = validate_contact($_POST);
-             if(empty($errors)){
+            $error = validate_contact($_POST);
+			$input = clean_array($_POST);
+             if(empty($error)){
 		             insert_contact($_POST["first_name"],$_POST["last_name"], $_POST["email"],$_POST["message"]);
-		               echo "<h3 style ='color:green'>Request Made!</h3>";
+		               echo "<h3 style ='color:green'>Message Sent!</h3>";
                  echo "<a href ='index.php' style = 'color:green'> Go back to Home</a> ";
-
+					$input = [];
                }
           }
  ?>
@@ -47,28 +48,28 @@
   <h1>Contact Us</h1>
   <form action="<?=action()?>" method="post">
       <div class = "container__input">
-          	<?= show_error($error, 'first_name') ?>
           <input type="text" name="first_name" value="<?=show_value($input,'first_name')?>">
             <label>First Name</label>
+			<?= show_error($error, 'first_name') ?>
       </div>
 
       <div class="container__input">
-          	<?= show_error($error, 'last_name') ?>
           <input type="text" name = "last_name"value="<?=show_value($input, 'last_name')?>">
           <label>Last Name</label>
+		  	<?= show_error($error, 'last_name') ?>
       </div>
 
       <div class="container__input">
-        		<?= show_error($error, 'email') ?>
         <input type="email" name= "email"value="<?=show_value($input, 'email')?>">
         <label>Personal Email</label>
+			<?= show_error($error, 'email') ?>
       </div>
 
       <div class="container__input">
-        <?= show_error($error, 'message') ?>
+  
         <textarea id= "message" name="message" rows="4" cols="46" required><?= show_value($input, 'message')?></textarea>
         <label>Message (Max:255)</label>
-
+		   <?= show_error($error, 'message') ?>
       </div>
       <p>Character Count: <span id="char-count">0</span></p>
       <input type="submit" name = "submit_contact">

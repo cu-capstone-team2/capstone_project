@@ -237,5 +237,29 @@ body {
 
 .apply-format{
   text-decoration: none;
+	color: var(--darkest-yellow);
+	font-size: 1.2rem;
+	animation-name: wiggle;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	transition: all 1s ease;
+}
 
+.apply-format:hover{
+	font-size: 1.4rem;
+}
+
+@keyframes wiggle{
+	0%{
+		transform: rotateZ(0);
+	}
+	33%{
+		transform: rotateZ(1deg);
+	}
+	67%{
+		transform: rotateZ(-2deg);
+	}
+	100%{
+		transform: rotateZ(0);
+	}
 }

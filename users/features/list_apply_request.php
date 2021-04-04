@@ -1,9 +1,19 @@
 <?php check_user([ADMIN]);
+
+
+if(isset($_GET["delete"])){
+	delete_request($_GET["delete"]);
+	change_page(link_without("delete"));
+}
+
+
 $pagination = new Pagination(PAGES_APPLY, $_GET);
 $requests = get_apply_request($_GET, false, $pagination);
 $input = clean_array($_GET);
 $majors = get_all_majors();
 $cnt = 1;
+
+
 ?>
 
 
@@ -80,7 +90,7 @@ $cnt = 1;
                <div class="info-shown-div">
                <div class="info-shown-div-info">
                        <p><strong>Email: </strong><?= $request["email"]?></p>
-                       <p><strong>Major of Intrest: </strong><?= $request["major_name"]?></p>
+                       <p><strong>Interest: </strong><?= $request["major_name"]?></p>
 					   <p><strong>Status: </strong><?php if($request["is_Completed"] == 1){
 											echo "Closed";
 										}else{
@@ -88,11 +98,12 @@ $cnt = 1;
 										}?></p>
                 </div>
                        <div class="info-shown-div-links">
-                            <a class="feature-url" href="user.php?feature=add_student_request&apply_id=<?= $request["apply_id"]?>">Add Student</a>
-                            <a class="feature-url" href="user.php?feature=contact_requestor&apply_id=<?=$request["apply_id"]?>">Contact</a>
-                            <a class="feature-url" href="user.php?feature=close_request&apply_id=<?=$request["apply_id"]?>" onclick="return confirm('Are you sure you want to Close <?= $request["full_name"] ?> Request? Closing will remove requestor from the list.')">Close Request</a>
+							<?php if($request["is_Completed"] == 0): ?>
+								<a class="feature-url" href="user.php?feature=add_student_request&apply_id=<?= $request["apply_id"]?>">Add Student</a>
+								<a class="feature-url" href="user.php?feature=contact_requestor&apply_id=<?=$request["apply_id"]?>">Contact</a>
+							<?php endif ?>
+                            <a class="feature-url" href="<?= link_without("") ?>&delete=<?=$request["apply_id"]?>" onclick="return confirm('Are you sure you want to Close <?= $request["full_name"] ?> Request? Closing will remove requestor from the list.')">Delete Request</a>
                        </div>
-
              </div>
           </tr>
   <?php endforeach;?>

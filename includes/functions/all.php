@@ -111,5 +111,11 @@ function generate_reset_password_key(){
     return $key;
 }
 
+function send_pin(){
+	global $user,$role;
+	if($role !== STUDENT)
+		return;
+	mail($user["student_email"],"Enrollment PIN Request","\nYour PIN: {$user['PIN']}");
+}
 
 ?>

@@ -7,7 +7,7 @@
 if(isset($_GET["cancel"])){
     delete_appointment($user["faculty_id"], $_GET["cancel"]);
     $link = link_without("cancel");
-    change_page($link); 
+    change_page($link);
 } else if(isset($_GET["finished"])){
     update_appointments_by_student_finished($user["faculty_id"], $_GET["finished"]);
     $link = link_without("finished");
@@ -87,12 +87,12 @@ $input = clean_array($_GET);
                 <p><strong>Comments: </strong><?= $appoint["comments"] ?></p>
             </div>
               <div class="info-shown-div-links">
-				<a class="feature-url" href="user.php?feature=edit_appointment&appoint=<?= $appoint["appointment_id"] ?>">Edit Time</a>
                   <a class="feature-url" href="user.php?feature=enroll&student_id=<?= $appoint["student_id"] ?>">Enroll</a>
                   <a class="feature-url" href="user.php?feature=contact_student&student_id=<?= $appoint["student_id"] ?>">Contact Student</a>
                   <a class="feature-url" href="user.php?feature=view_schedule&student_id=<?= $appoint["student_id"] ?>">View Schedule</a>
                     <?php if($appoint["is_finished"] === "0"): ?>
-                        <a class="feature-url" href="<?= link_without("") . "&finished={$appoint["appointment_id"]}" ?>">Mark as Complete</a>
+			<a class="feature-url" href="user.php?feature=edit_appointment&appoint=<?= $appoint["appointment_id"] ?>">Edit Appointment</a>
+                        <a onClick="return confirm('Are you sure you want to mark this appointment as complete?')" class="feature-url" href="<?= link_without("") . "&finished={$appoint["appointment_id"]}" ?>">Mark as Complete</a>
                         <a onClick="return confirm('Are you sure you want to cancel your appointment with <?= $appoint["full_name"] ?>?')" class="feature-url" href="<?= link_without("") . "&cancel={$appoint["appointment_id"]}" ?>">Cancel</a>
                     <?php endif ?>
               </div>

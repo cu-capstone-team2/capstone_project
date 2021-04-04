@@ -26,6 +26,8 @@ if(!$student)
     <h3>Total Credits: <?= $total_credits ?></h3>
 </div>
 
+<a target="_blank" href="student_schedule.php?student_id=<?= $student["student_id"] ?>">PDF Schedule</a>
+
 <div class="div-table">
     <table>
     <tr>
@@ -50,7 +52,7 @@ if(!$student)
                 <div class="info-shown-div">
                 <div class="info-shown-div-info">
                     <p><strong>Instructor: </strong><?= $class["instructor"] ?></p>
-                    <p><strong>Location: </strong>Howell Hall</p>
+                    <p><strong>Location: </strong><?= $class["room"] ?></p>
                     <p><strong>Credits: </strong><?= $class["credits"] ?></p>
                     <p><strong># of Students: </strong><?= get_class_count($class["class_id"]) ?></p>
                 </div>

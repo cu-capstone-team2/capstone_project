@@ -103,7 +103,7 @@ $majors = get_all_majors();
                     <p><strong># of Students: </strong><?= $class["students"] ?></p>
                 </div>
                 <div class="info-shown-div-links">
-                    <?php if($role === CHAIR): ?>
+                    <?php if($role === CHAIR || $role === INSTRUCTOR): ?>
                         <a class="feature-url" href="user.php?feature=class_roster&class_id=<?= $class["class_id"] ?>">Class Roster</a>
                     <?php endif ?>
                     <?php if($role === ADMIN): ?>

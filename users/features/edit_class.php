@@ -27,14 +27,14 @@ function validate_new_class($input){
 	}
 
 	if(empty($errors)){
-		$classes = get_many_class_overlap($class["days"],$class["time_id"],$input["room_id"]);
+		$classes = get_many_class_overlap($class["days"],$class["time_id"],$input["room_id"],$class["class_id"]);
 		if(!empty($classes)){
 			$errors["overlaps"] = "<BR>Overlap with the following classes:<br>";
 			foreach($classes as $classe){
 				$errors['overlaps'] .= "CRN: {$classe['class_id']}, {$classe['course_name']}, {$classe['time']}, {$classe['days']}, {$classe['room']}<BR>";
 			}
 		}
-		$classes = get_many_class_faculty_overlap($input['faculty_id'], $class['days'],$class["time_id"]);
+		$classes = get_many_class_faculty_overlap($input['faculty_id'], $class['days'],$class["time_id"],$class["class_id"]);
 		if(!empty($classes)){
 			$errors['faculty_overlaps'] = "<BR>{$classes[0]['instructor']} already teaches classes at the following times:<br>";
 			foreach($classes as $classe){
@@ -47,14 +47,6 @@ function validate_new_class($input){
 }
 ?>
 
-<h1>Edit Class</h1>
-<hr>
-
-<div class="who">
-    <h3><?= $class["course_name"] ?></h3>
-    <h3><?= $class["time"] ?> - <?= $class["days"] ?> - <?= $class["room"] ?></h3>
-    <h3>by <?= $class["instructor"] ?></h3>
-</div>
 
 <?php
 
@@ -64,13 +56,24 @@ $input = [];
 if(isset($_POST["submit_edit_to_class"])){
 		$errors = validate_new_class($_POST);
 		if(empty($errors)){
-			$attrs = [$_POST["days"],$_POST["time_id"],$_POST["minutes"],$_POST["room_id"],$_POST["faculty_id"]];
+			$attrs = [$class["days"],$class["time_id"],$class["minutes"],$_POST["room_id"],$_POST["faculty_id"]];
 			update_class_details($class["class_id"], $attrs);
 			$class = get_class_by_id($class_id);
 			echo "<h3 style='color:green'>Successfully edited class.</h3>";
 		}
 }
 ?>
+
+<h1>Edit Class</h1>
+<hr>
+
+<div class="who">
+    <h3>CRN: <?= $class["class_id"] ?></h3>
+    <h3><?= $class["course_name"] ?></h3>
+    <h3><?= $class["time"] ?> - <?= $class["days"] ?> - <?= $class["room"] ?></h3>
+    <h3>by <?= $class["instructor"] ?></h3>
+</div>
+
 
 <form method = "post" class="form">
 	<!--
@@ -124,7 +127,7 @@ if(isset($_POST["submit_edit_to_class"])){
 
 	<div class="form-group">
         <label>Instructor</label>
-        <select <?= error_outline($errors, "instructor") ?> name="faculty_id" required>
+        <select <?= error_outline($errors, "faculty_id") ?> name="faculty_id" required>
             <?php foreach($instructor_data as $instructor): ?>
                 <option <?= check_select($class,"faculty_id",$instructor["faculty_id"]) ?>  value="<?=$instructor["faculty_id"]?>">
                     <?=$instructor["full_name"]?>

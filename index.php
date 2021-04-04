@@ -3,7 +3,7 @@
 <?php logout() ?>
 
 <?php require_once("partials/home/header.php") ?>
-	<a href="apply.php"><h1>Apply Now!</h1></a>
+	<a href="apply.php" class="apply-format">Apply Now!</a>
 	<br>
     <div class="welcome_image"></div><br><br>
       <div class="welcome">

@@ -17,6 +17,31 @@ main a:active {
   text-decoration: none;
 }
 
+.info-table{
+	width: 100%;
+}
+
+.info-table caption{
+	font-size: 1.2rem;
+	font-weight: 700;
+}
+
+.info-table table{
+	border-collapse: collapse;
+	width: 100%;
+	margin: 25px 0;
+}
+
+.info-table tr td:nth-child(1){
+	background-color: var(--dark-yellow);
+}
+
+.info-table td{
+	width: 50%;
+	border: 1px solid black;
+	padding: 5px;
+}
+
 .div-table {
   border: 1px solid black;
   background-color: var(--lightest-yellow);

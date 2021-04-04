@@ -51,6 +51,23 @@ function get_students_by_class($class_id){
     return query_many($sql, "s", [$class_id]);
 }
 
+function student_already_enrolled($student_id,$course_id){
+	$sql = "
+		SELECT Enrollment.*
+		FROM Enrollment
+		INNER JOIN Student
+			ON Student.student_id = Enrollment.student_id
+		INNER JOIN Class
+			ON Class.class_id = Enrollment.class_id
+		INNER JOIN Course
+			ON Course.course_id = Class.course_id
+		WHERE Course.course_id = ?
+			AND Student.student_id = ?
+	";
+	$course = query_one($sql,"ss",[$course_id,$student_id]);
+	return !!$course;
+}
+
 function get_class_count($class_id){
 	$sql = "
 		SELECT
@@ -73,11 +90,16 @@ function get_classes_by_student($student_id){
         SELECT
             Enrollment.class_id,
             Course.course_name,
+	    Course.course_id,
             CONCAT(Major.short_name, Course.course_number) as course_title,
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
+            CONCAT(Faculty_Staff.faculty_lastname,', ',SUBSTR(Faculty_Staff.faculty_firstname,1,1)) as instructor_short,	   
             DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
             days,
-            credits
+            credits,
+            CONCAT(building, ' ', room_number) as room,
+            room_number,
+            building
         FROM Enrollment
         INNER JOIN Class
             ON Class.class_id = Enrollment.class_id
@@ -89,6 +111,8 @@ function get_classes_by_student($student_id){
             ON Timeslot.time_id = Class.time_id
         INNER JOIN Major
             ON Major.major_id = Course.major_id
+        INNER JOIN Room
+            ON Room.room_id = Class.room_id
         WHERE Enrollment.student_id = ?
         ORDER BY Enrollment.class_id
     ";
@@ -104,7 +128,10 @@ function get_classes_by_instructor($instructor_id){
             DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
             days,
             credits,
-            COUNT(Enrollment.student_id) as students
+            COUNT(Enrollment.student_id) as students,
+            CONCAT(building, ' ', room_number) as room,
+            room_number,
+            building
         FROM Class
         INNER JOIN Course
             ON Course.course_id = Class.course_id
@@ -112,6 +139,8 @@ function get_classes_by_instructor($instructor_id){
             ON Major.major_id = Course.major_id
         INNER JOIN Timeslot
             ON Timeslot.time_id = Class.time_id
+        INNER JOIN Room
+            ON Room.room_id = Class.room_id
         LEFT JOIN Enrollment
             ON Enrollment.class_id = Class.class_id
         WHERE Class.faculty_id = ?
@@ -179,10 +208,22 @@ function get_appointments_by_instructor($instructor_id, $search=[], $count = fal
         return $pagination->get_pagination_query($sql, $types, $params);
     }
     return query_many($sql,$types,$params);
-
 }
 
-function get_many_class_overlap($days,$time_id,$room_id){
+function get_appointments_by_date($faculty_id,$date,$time_id,$appoint_id = -1){
+	$sql = "
+		SELECT *
+		FROM Appointment
+		WHERE faculty_id = ?
+			AND appointment_date = ?
+			AND time_id = ?
+			AND NOT(appointment_id = ?)	
+			AND is_finished = 0;
+	";
+	return query_many($sql,"ssss",[$faculty_id,$date,$time_id,$appoint_id]);
+}
+
+function get_many_class_overlap($days,$time_id,$room_id, $class_id = -1){
     $sql = "
         SELECT
             Class.class_id,
@@ -206,12 +247,13 @@ function get_many_class_overlap($days,$time_id,$room_id){
             ON Major.major_id = Course.major_id
         WHERE Class.time_id = ?
             AND Class.room_id = ?
+            AND Class.class_id != ?
         GROUP BY class_id
     ";
-    return query_many($sql, "ssss", [$days, $days, $time_id, $room_id]);
+    return query_many($sql, "sssss", [$days, $days, $time_id, $room_id, $class_id]);
 }
 
-function get_many_class_faculty_overlap($faculty_id, $days,$time_id){
+function get_many_class_faculty_overlap($faculty_id, $days,$time_id, $class_id = -1){
     $sql = "
         SELECT
             Class.class_id,
@@ -238,9 +280,10 @@ function get_many_class_faculty_overlap($faculty_id, $days,$time_id){
             ON Major.major_id = Course.major_id
         WHERE Class.time_id = ?
             AND Class.faculty_id = ?
+            AND Class.class_id != ?
         GROUP BY class_id
     ";
-    return query_many($sql, "ssss", [$days, $days, $time_id, $faculty_id]);
+    return query_many($sql, "sssss", [$days, $days, $time_id, $faculty_id, $class_id]);
 }
 
 function get_many_class_student_overlap($student_id, $days, $time_id){

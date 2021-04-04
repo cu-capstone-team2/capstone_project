@@ -1,8 +1,6 @@
 <?php check_user([INSTRUCTOR]) ?>
 
 <?php
-
-
 	
     $student_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
     $student = get_student_by_id($student_id);
@@ -14,18 +12,28 @@
     }
 
     function validate_new_appointment($input){
+	global $user;
         $errors = [];
-	if(!isset($input['time_id']) || empty($input["time_id"])){
+	    if(!isset($input['time_id']) || empty($input["time_id"])){
             $errors['time_id'] = "Time is incorrect";
         }
 
-        if(!isset($input['appointment_date']) || empty($input["appointment_date"]) || strtotime($input['appointment_date']) < strtotime('today midnight')){
+        if(!isset($input['appointment_date']) || empty($input["appointment_date"])){
+            $errors['appointment_date'] = "Date is Required";
+        }else if(strtotime($input['appointment_date']) < strtotime('today midnight')){
             $errors['appointment_date'] = "Date's before today are invalid";
-        }
+        } else if(isset($input['time_id']) && count(get_appointments_by_date($user['faculty_id'],$input['appointment_date'],$input['time_id'])) > 0){
+		$errors['time_conflict'] = "There is already an appointment at this date and time.";
+	}
 
-        if(!isset($input['comments']) || strlen($input["comments"]) > 255){
+        if(!isset($input['comments'])){
+            $errors['comments'] = "Comments Invalid";
+        }else if(strlen($input["comments"]) > 255){
             $errors['comments'] = "Comment must be under 255 characters";
         }
+
+	
+
         return $errors;
     }
 
@@ -39,8 +47,7 @@
             insert_appointment($_POST["comments"], $_POST["appointment_date"], $student_id, $user["faculty_id"], $_POST["time_id"]);
 
             echo "<h3 style='color:green'>Appointment Added!</h3>";
-            echo "<a href='user.php?feature=list_advisees'>Go Back to Advisees</a>";
-			$input = [];
+	$input = [];
         }
     }
 
@@ -58,6 +65,7 @@
 
 <form method="post" class="form">
 
+	<?= show_error($errors,"time_conflict") ?>
     <div class="form-group">
         <label>Date</label>
         <input value="<?= show_value($input,"appointment_date") ?>" <?= error_outline($errors, "appointment_date") ?> type="date" name="appointment_date" required>

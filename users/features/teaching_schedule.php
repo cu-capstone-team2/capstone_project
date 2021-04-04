@@ -19,6 +19,8 @@ if(!$instructor)
     <h3>For <?= $instructor["full_name"] ?></h3>
 </div>
 
+<a target="_blank" href="faculty_schedule.php?faculty_id=<?= $instructor["faculty_id"] ?>">PDF Schedule</a>
+
 <?php $classes = get_classes_by_instructor($instructor["faculty_id"]); ?>
 
 <div class="div-table">
@@ -43,7 +45,7 @@ if(!$instructor)
             <td colspan="100%">
                 <div class="info-shown-div">
                 <div class="info-shown-div-info">
-                    <p><strong>Location: </strong>Howell Hall</p>
+                    <p><strong>Location: </strong><?= $class["room"] ?></p>
                     <p><strong>Credits: </strong><?= $class["credits"] ?></p>
                     <p><strong># of Students: </strong><?= $class["students"] ?></p>
                 </div>

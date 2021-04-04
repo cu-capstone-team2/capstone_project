@@ -5,17 +5,23 @@
 	$error = [];
 	$input = [];
 	
-	if($_GET["apply_id"]){
+	
+		
+	if(isset($_GET["apply_id"])){
 		$r_id = $_GET["apply_id"];
 			$request = get_apply_info($r_id);
 			$r_email = $request["email"];
 	
-	}else if($_GET["contact_id"]){
+	}else if(isset($_GET["contact_id"])){
 		$r_id = $_GET["contact_id"];
 		$request = get_contact_info($r_id);
 		$r_email = $request["email"];
+	} else{
+		change_page('user.php');
 	}
 
+	if(!$request)
+		change_page('user.php');
 
 
 function validate_contact_requestor($input){
@@ -34,11 +40,12 @@ function validate_contact_requestor($input){
 if(isset($_POST['submit_requestor'])){
 	$error = validate_contact_requestor($_POST);
 
-	if(empty($error)){
-				mail($request['email'], $_POST['subject'],$_POST['message']);
-				echo "Message was sent";
-	}
 	$input = clean_array($_POST);
+	if(empty($error)){
+		mail($request['email'], $_POST['subject'],$_POST['message']);
+		echo "<h3 style='color: green'>Message was sent</h3>";
+		$input = [];
+	}
 }
 
 
@@ -58,14 +65,13 @@ if(isset($_POST['submit_requestor'])){
 <form method="POST" action="" class="form">
 <div class="form-group">
 	<label>Subject</label>
-	<input <?= error_outline($error, "subject") ?> type="text" name="subject" value="<?= show_value($input, 'subject')?>" >
+	<input <?= error_outline($error, "subject") ?> type="text" name="subject" value="<?= show_value($input, 'subject')?>" required>
 	<?= show_error($error, 'subject') ?>
 </div>
 
 <div class="form-group">
-	<label>Message (Max: 255)</label>
-	<textarea <?= error_outline($error,"message") ?> id="message" name="message"><?= show_value($input, 'message')?></textarea>
-	<p>Character Count: <span id="char-count">0</span></p>
+	<label>Message</label>
+	<textarea <?= error_outline($error,"message") ?> id="message" name="message" required><?= show_value($input, 'message')?></textarea>
 	<?= show_error($error, 'message') ?>
 </div>
 
@@ -75,19 +81,3 @@ if(isset($_POST['submit_requestor'])){
 
 </form>
 
-<script>
-const charCount = document.querySelector('#char-count');
-const comments = document.querySelector('#message');
-
-const updateCharCount = (e) => {
-    if(comments.value.length > 255){
-        comments.value = comments.value.substring(0,255);
-    }
-    charCount.innerHTML = comments.value.length;
-}
-
-updateCharCount();
-comments.oninput = updateCharCount;
-
-
-</script>

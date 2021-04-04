@@ -19,7 +19,6 @@
 	if (!$student) {
 		change_page("user.php?feature=list_advisees");
 	}
-
 ?>
 
 <div class="who">
@@ -36,9 +35,9 @@
 		$class_to_enroll = get_class_by_id($enrolled_crn);
 
 		if ($class_to_enroll) {
-	 		$is_already_enrolled = get_enrollment_by_student_class($student["student_id"],$class_to_enroll["class_id"]);
+			$is_already_enrolled = student_already_enrolled($s_id, $class_to_enroll["course_id"]);
              if($credits + $class_to_enroll["credits"] > 18){
-                $errors["enrollment"] = "Too many credits too enroll in this course";
+                $errors["enrollment"] = "Too many credits to enroll in this course";
              } else if ($is_already_enrolled != false) {
 	 			$errors['enrollment'] = "Already enrolled in this class.";
 	 		} else{
@@ -207,12 +206,13 @@ $majors = get_all_majors();
                 <div class="info-shown-div">
 	                <div class="info-shown-div-info">
 	                    <p><strong>Instructor: </strong><?= $class["instructor"] ?></p>
-	                    <p><strong>Location: </strong>Howell Hall</p>
+	                    <p><strong>Location: </strong><?=$class["classroom"]?></p>
 	                    <p><strong>Credits: </strong><?= $class["credits"] ?></p>
+	                    <p><strong># of Students: </strong><?= get_class_count($class["class_id"]) ?></p>
 	                </div>
 	                <div class="info-shown-div-links">
-	                    <?php if(($role === CHAIR || $role === STUDENT) && ($credits + $class["credits"] <= 18)): ?>
-                            <?php if(get_enrollment_by_student_class($student["student_id"],$class["class_id"])): ?>
+	                    <?php if(($role === CHAIR || $role === STUDENT || INSTRUCTOR) && ($credits + $class["credits"] <= 18)): ?>
+				<?php if(student_already_enrolled($s_id, $class["course_id"])): ?>
                                 <p class="error">Already enrolled</p>
                             <?php elseif(get_many_class_student_overlap($s_id, $class["days"], $class["time_id"])): ?>
                                 <p class="error">Class overlaps with another</p>

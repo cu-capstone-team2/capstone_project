@@ -223,6 +223,7 @@ function get_all_classes($search = [], $count = false, $pagination = null){
             Class.class_id,
             Class.time_id,
             Course.course_name,
+		Course.course_id,
             CONCAT(Major.short_name, Course.course_number) as course_title,
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
 			CONCAT (Room.building , ' ' , Room.room_number) as classroom,
@@ -394,15 +395,15 @@ function get_all_classrooms(){
 
 function get_all_office_available(){
 	$sql = "
-		SELECT
-			room_id,
-			room_number,
-			room_type,
-			building
-			FROM Room
+		SELECT *
+		FROM Room
 		WHERE room_id
 		NOT IN (SELECT room_id FROM Faculty_Staff)
 		and room_type = (SELECT room_office FROM Constants)
+	UNION
+		SELECT *
+		FROM Room
+		WHERE room_id = 12
         ORDER BY room_number;
 	";
 	return query_many_np($sql);
@@ -460,7 +461,7 @@ function get_apply_request($search = [], $count = false, $pagination = null){
         INNER JOIN Major
         	ON Major.major_id = Apply.major_id
 			WHERE apply_id LIKE ?
-            AND short_name LIKE ?
+            AND Major.major_id LIKE ?
             AND EXPORT_SET(is_Completed,'1','0','',4) LIKE ?
         HAVING full_name LIKE ?
 		  {$orderby}
@@ -475,16 +476,16 @@ function get_apply_request($search = [], $count = false, $pagination = null){
         return query_many($sql, $types, $params);
 }
 
-function get_contact_info($search = []){
-	  global $role;
+function get_contact_info($search = [],$count = false, $pagination = null){
+	 global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
     $name.= isset($search["name"])? $search["name"] : "";
     $name.= "%";
+    $id = isset($search["id"]) && !empty($search["id"])? $search["id"] : "%";
+    $orderby = "ORDER BY full_name, ID,date";
 
-    $orderby = "ORDER BY full_name, date";
-	
-	 $status = "0%";
+    $status = "0%";
     if($role === ADMIN && isset($search["status"])){
         if($search["status"] === "all"){
             $status = "%";
@@ -495,16 +496,16 @@ function get_contact_info($search = []){
     if(isset($search["order"])){
         switch($search["order"]){
             case "major":
-                $orderby = "ORDER BY full_name, apply_id";
+                $orderby = "ORDER BY full_name, ID";
                 break;
             case "id":
-                $orderby = "ORDER BY apply_id, full_name";
+                $orderby = "ORDER BY ID, full_name";
                 break;
             case "date":
                 $orderby = "ORDER BY date";
                 break;
             default:
-                $orderby = "ORDER BY full_name, ID,date";
+                $orderby = "ORDER BY full_name, ID";
                 break;
         }
     }
@@ -521,20 +522,20 @@ function get_contact_info($search = []){
      			 date_request,
 			DATE_FORMAT(date_request, '%b/%d/%Y') as date,
 			CONCAT(last_name, ', ', first_name) as full_name
-		from Contact
-		WHERE ID LIKE ?
-		AND EXPORT_SET(is_Contacted,'1','0','',4) LIKE ?
-        HAVING full_name LIKE ?
-		  {$orderby}
-	";
+			from Contact
+			where ID like ?
+			AND EXPORT_SET(is_Contacted,'1','0','',4) LIKE ?
+			HAVING full_name like ?
+			  {$orderby}
+		";
 	
-	$params = [$id, $status, $name];
-    $types = "sss";
-    /*if($count)
+			$params = [$id, $status, $name];
+			$types = "sss";
+    if($count)
         return Pagination::get_count_query($sql, $types, $params);
     else if($pagination !== null)
         return $pagination->get_pagination_query($sql, $types, $params);
-    else*/
-        return query_many($sql, $types, $params);
+    else
+	return query_many($sql, $types, $params);
 }
 ?>
