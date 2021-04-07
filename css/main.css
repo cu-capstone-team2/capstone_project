@@ -8,7 +8,6 @@
   --light-yellow: #ffe5a0;
   --lightest-yellow: #fff3d3;
   --nav: #ffffcc;
-
   --text-color: rgb(39, 39, 39);
   --shadow: black 0.1em 0.3em 0.9em;
 }
@@ -24,7 +23,7 @@ html {
 }
 body,
 html {
-  height: 100%;
+  height: 100% !important;
   overflow-x: hidden;
 }
 body {
@@ -35,15 +34,18 @@ body {
   text-align: center;
 }
 /* The grid container */
-.container {
+body {
   display: grid;
+  width: 100vw;
+  grid-template-columns: 100vw;
   grid-template-areas: 'header' 'main' 'footer';
   grid-template-rows: 48px 1fr 64px;
-  grid-template-columns: 100vw;
-  height: 100%;
 }
-.header {
-  grid-area: header;
+header {
+  position: fixed;
+  z-index: 500;
+  width: 100vw;
+  height: 48px;
   background-color: var(--dark-yellow);
   padding-left: 30px;
   padding-right: 30px;
@@ -51,19 +53,20 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow);
 }
-.main {
-  background-color: var(--light-yellow);
+main {
+  grid-area: main;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--light-yellow);
   padding-bottom: 50px;
-  min-height: calc(100vh - 8rem);
+  padding: 10px;
 }
 /* Style the footer */
-.footer {
+footer {
   grid-area: footer;
   background-color: var(--dark-yellow);
   padding-left: 30px;
@@ -73,6 +76,9 @@ body {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  flex-direction: row;
+  box-shadow: var(--shadow);
+  z-index: 100;
 }
 /* image container */
 .box2 {
@@ -123,10 +129,9 @@ body {
   font-size: 45px;
 }
 .mainlinks {
-  display: flex;
-  flex-direction: row;
   height: 50px;
   align-items: center;
+  display: flex;
 }
 .mainlink {
   color: var(--text-color);
@@ -187,14 +192,12 @@ body {
 }
 
 @media (max-width: 700px) {
-  .container {
+  body {
     grid-template-rows: 48px 1fr auto;
   }
 
   .main {
     padding: 10px;
-    padding-bottom: 50px;
-    padding-top: 50px;
   }
   .welcome_text {
     font-size: 30px;
@@ -235,31 +238,203 @@ body {
   }
 }
 
-.apply-format{
+.apply-format {
   text-decoration: none;
-	color: var(--darkest-yellow);
-	font-size: 1.2rem;
-	animation-name: wiggle;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;
-	transition: all 1s ease;
+  color: var(--darkest-yellow);
+  font-size: 1.2rem;
+  animation-name: wiggle;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  transition: all 1s ease;
 }
 
-.apply-format:hover{
-	font-size: 1.4rem;
+.apply-format:hover {
+  font-size: 1.4rem;
 }
 
-@keyframes wiggle{
-	0%{
-		transform: rotateZ(0);
-	}
-	33%{
-		transform: rotateZ(1deg);
-	}
-	67%{
-		transform: rotateZ(-2deg);
-	}
-	100%{
-		transform: rotateZ(0);
-	}
+@keyframes wiggle {
+  0% {
+    transform: rotateZ(0);
+  }
+  33% {
+    transform: rotateZ(1deg);
+  }
+  67% {
+    transform: rotateZ(-2deg);
+  }
+  100% {
+    transform: rotateZ(0);
+  }
+}
+
+/*************************
+ABOUT PAGE
+*************************/
+
+.about-content {
+  padding: 15px;
+  width: 100%;
+  background-color: white;
+}
+
+.about-info {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  border: 1px solid black;
+  padding: 10px;
+  background-color: white;
+}
+
+h2.center{
+  margin: 15px 0;
+}
+
+
+.persons {
+  display: flex;
+  flex-direction: column;
+}
+
+.person {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 100%;
+  margin: 25px 0;
+}
+
+.person:nth-child(2n + 1) {
+  align-self: flex-start;
+}
+
+.person:nth-child(2n + 1) .profile-pic {
+  order: 1;
+}
+
+.person:nth-child(2n + 1) .profile-info {
+  order: 2;
+}
+
+.person:nth-child(2n) {
+  align-self: flex-end;
+  text-align: right;
+}
+
+.person:nth-child(2n) .profile-pic {
+  order: 2;
+}
+
+.person:nth-child(2n) .profile-info {
+  order: 1;
+}
+
+.profile-pic,
+.profile-info {
+  width: 40vw;
+  height: 40vw;
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.profile-pic {
+  background-image: url(http://eliasproctor.com/admin/user_images/selfie.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border: 1px solid black;
+}
+
+.person:hover .profile-pic {
+  transform: rotateY(360deg);
+  transition: all 0.75s;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.role-privileges li {
+  margin-left: 50px;
+}
+
+/****************
+OVERALL FEATURES TABLE in ABOUT PAGE
+*****************/
+
+.feature-table-div {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.feature-table-div table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  background-color: var(--light-yellow);
+}
+
+.feature-table-div tr:nth-child(1) > td{
+  background-color: var(--dark-yellow);
+}
+
+.feature-table-div tr > td:nth-child(1){
+  background-color: var(--dark-yellow);
+}
+
+.feature-table-div td {
+  border: 1px solid black;
+  padding: 3px;
+}
+
+.cell {
+}
+
+
+.fill-cell {
+  background-color: #ff3434;
+}
+
+
+
+h2.center{
+}
+
+.show-more-button, .about-info-content, .about-info-content + h2, .about-info hr{
+  margin: 15px 0;
+}
+
+h2.center{
+  margin-bottom: 0;
+}
+
+.show-more-button {
+  height: 45px;
+  width: 45px;
+  clip-path: polygon(25% 0%, 75% 0%, 75% 50%, 100% 50%, 50% 100%, 0% 50%, 25% 50%);
+  transition: all .25s;
+  color: var(--dark-yellow);
+  background-color: var(--dark-yellow);
+  outline: none;
+  border: none;
+  margin-top: 0;
+}
+
+.show-more-button + .about-info-content {
+  display: none;
+}
+
+.show-more-button.showing {
+  transform: rotateZ(-180deg);
+}
+
+.show-more-button.showing + .about-info-content {
+  display: unset;
 }

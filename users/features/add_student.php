@@ -107,10 +107,10 @@
         <label>Classification</label>
         <select <?= error_outline($errors, "classification") ?> name="classification" id="classification" required>
             <option selected disabled hidden></option>
-            <option <?= check_select($student,"classification","freshman") ?> value="freshman">Freshman</option>
-            <option <?= check_select($student,"classification","sophomore") ?> value="sophomore">Sophomore</option>
-            <option <?= check_select($student,"classification","junior") ?> value="junior">Junior</option>
-            <option <?= check_select($student,"classification","senior") ?> value="senior">Senior</option>
+            <option <?= check_select($input,"classification","freshman") ?> value="freshman">Freshman</option>
+            <option <?= check_select($input,"classification","sophomore") ?> value="sophomore">Sophomore</option>
+            <option <?= check_select($input,"classification","junior") ?> value="junior">Junior</option>
+            <option <?= check_select($input,"classification","senior") ?> value="senior">Senior</option>
         </select>
         <?=show_error($errors, "classification")?>
     </div>
@@ -120,7 +120,7 @@
         <select <?= error_outline($errors, "major_id") ?> name="major_id" required>
 			<option selected disabled hidden></option>
             <?php foreach($majors as $major): ?>
-                <option <?= check_select($student,"major_id",$major["major_id"]) ?>  value="<?=$major['major_id']?>">
+                <option <?= check_select($input,"major_id",$major["major_id"]) ?>  value="<?=$major['major_id']?>">
                     <?=$major["major_name"]?>
                 </option>
             <?php endforeach; ?>
@@ -133,7 +133,7 @@
         <select <?= error_outline($errors, "faculty_id") ?> name="faculty_id" required>
 			<option selected disabled hidden></option>
             <?php foreach($advisors as $advisor): ?>
-                <option value="<?=$advisor['faculty_id']?>">
+                <option <?= check_select($input,"faculty_id",$advisor['faculty_id']) ?>  value="<?=$advisor['faculty_id']?>">
                     <?=$advisor["full_name"]?> - Advises <?=$advisor["students"]?> Student(s)
                 </option>
             <?php endforeach; ?>

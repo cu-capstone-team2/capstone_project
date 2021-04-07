@@ -96,8 +96,8 @@ function validate_new_faculty($input){
   </div>
 
  <div class="form-group">
-  <label>Phone</label>
-  <input <?=error_outline($errors, "phone")?> type="tel" name="phone" value="<?=show_value($faculty,"faculty_phone") ?>" required>
+  <label>Phone - format: 555-555-5555</label>
+  <input <?=error_outline($errors, "phone")?> type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<?=show_value($faculty,"faculty_phone") ?>" required>
     <?= show_error($errors, "phone")?>
 </div>
 

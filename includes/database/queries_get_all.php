@@ -404,7 +404,7 @@ function get_all_office_available(){
 		SELECT *
 		FROM Room
 		WHERE room_id = 12
-        ORDER BY room_number;
+	ORDER BY room_number;
 	";
 	return query_many_np($sql);
 }

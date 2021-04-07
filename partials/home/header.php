@@ -7,15 +7,14 @@
     <title>College Enrollment System</title>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+        <header class="header">
             <div class="mainlinks">
                 <a class="mainlink" href="index.php">Home</a>
 		</div>
             <div class="mainlinks">		
                 <a class="mainlink" href="login.php">Login</a>
             </div>
-        </div>
-        <div class="main">
+        </header>
+        <main class="main">
 
 

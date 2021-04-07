@@ -3,7 +3,7 @@
 function validate_login($input){
     $errors = [];
 
-    $error_msg = "Something went wrong";
+    $error_msg = "Could not login";
 
     if(!isset($input["username"])|| !isset($input["password"])|| !isset($input["role"])){
         $errors['login'] = $error_msg;

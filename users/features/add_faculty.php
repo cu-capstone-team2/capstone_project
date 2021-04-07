@@ -55,7 +55,7 @@
 
   if(isset($_POST["submit_new_faculty"])){
     $errors = validate_new_faculty($_POST);
-
+	$input = clean_array($_POST);
     if(empty($errors)){
        $faculty_active = 1;
        $username = generate_username($_POST["first_name"], $_POST["last_name"]);
@@ -65,8 +65,8 @@
        $msg = "Username:{$username}\nPassword:{$password}";
        mail($_POST['email'], "Faculty Login Information", $msg);
       echo "<h3 style ='color:green'>Faculty Added</h3>";
+		$input = [];
     }
-    $input = clean_array($_POST);
   }
 
  ?>
@@ -79,25 +79,25 @@
 
   <div class="form-group">
 	<label>First Name</label>
-    <input <?= error_outline($errors, "first_name") ?> type="text" name="first_name" <?=show_value($input, "first_name") ?> required>
+    <input <?= error_outline($errors, "first_name") ?> type="text" name="first_name" value="<?=show_value($input, "first_name") ?>" required>
         <?= show_error($errors, "first_name")?>
   </div>
 
   <div class="form-group">
   <label>Last Name</label>
-  <input <?=error_outline($errors, "last_name")?> type="text" name="last_name" <?=show_value($input,"last_name")?> required>
+  <input <?=error_outline($errors, "last_name")?> type="text" name="last_name" value="<?=show_value($input,"last_name")?>" required>
     <?= show_error($errors, "last_name")?>
 </div>
 
   <div class="form-group">
   <label>Email</label>
-  <input <?=error_outline($errors, "email")?> type="email" name="email" <?=show_value($input,"email")?> required>
+  <input <?=error_outline($errors, "email")?> type="email" name="email" value="<?=show_value($input,"email")?>" required>
     <?= show_error($errors, "email")?>
   </div>
 
  <div class="form-group">
-  <label>Phone</label>
-  <input <?=error_outline($errors, "phone")?> type="tel" name="phone" <?=show_value($input,"phone")?> required>
+  <label>Phone - format: 555-555-5555</label>
+  <input <?=error_outline($errors, "phone")?> type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" value="<?=show_value($input,"phone")?>" required>
     <?= show_error($errors, "phone")?>
 </div>
 
@@ -118,7 +118,7 @@
   <select <?=error_outline($errors, "location") ?> name="location" required>
 		<option selected disabled hidden></option>
     <?php foreach ($rooms as $room):?>
-      <option value="<?=$room['room_id']?>">
+      <option <?= check_select($input,"location",$room["room_id"]) ?> value="<?=$room['room_id']?>">
   <?=$room["building"]?> <?=$room["room_number"]?>
           </option>
     <?php endforeach;?>
