@@ -83,4 +83,12 @@
         ";
         return query($sql, "ssss", [$first_name, $last_name, $email, $message]);
     }
+	
+	function insert_major($major_name, $short_name){
+		$sql = "
+			INSERT INTO Major(major_name, short_name)
+			VALUES (?, ?);
+		";
+		return query($sql,"ss",[$major_name, $short_name]);
+	}
 ?>

@@ -7,10 +7,17 @@
 
 <?php
 
+if(isset($_GET["delete"])){
+	if(can_course_be_deleted($_GET["delete"])){
+		delete_course($_GET["delete"]);
+	}
+	change_page(link_without("delete"));
+}
+
 $pagination = new Pagination(PAGES_COURSES, $_GET);
 $courses = get_all_courses($_GET, false, $pagination);
 $input = clean_array($_GET);
-$orders = ["course_n"=>"Course#","title"=>"Title"];
+$orders = ["course_n"=>"Title","title"=>"Name"];
 $majors = get_all_majors();
 
 ?>
@@ -56,8 +63,6 @@ $majors = get_all_majors();
 
 <!-- End of search form -->
 
-
-
 	<div class="div-table">
 		<table>
 	<tr>
@@ -70,17 +75,21 @@ $majors = get_all_majors();
 			<td><?= $course["course_id"] ?></td>
 			<td><?= $course["title"] ?></td>
 			<td><?= $course["course_name"] ?></td>
-
 		</tr>
 		<td colspan="100%">
 			<div class="info-shown-div">
 				<div class="info-shown-div-info">
 					<p><strong>Credits: </strong><?= $course["credits"] ?></p>
+					<p><strong># of Classes: </strong><?= $course["classes"] ?></p>
 				</div>
 				<div class="info-shown-div-links">
 					<?php if($role === ADMIN): ?>
-						<a class="feature-url" href="user.php?feature=add_class&course_id=<?= $course["course_id"] ?>">Add Class</a>
 						<a class="feature-url" href="user.php?feature=edit_course&course_id=<?= $course["course_id"] ?>">Edit Course</a>
+						<?php if(can_course_be_deleted($course['course_id'])): ?>
+							<a onclick="return confirm('Are you sure you want to delete <?= $course['title'] ?>, <?= $course['course_name'] ?>?')" class='feature-url' href="user.php?feature=list_courses&delete=<?= $course['course_id'] ?>">Delete</a>
+						<?php else: ?>
+							<p class='error'>Cannot delete</p>
+						<?php endif ?>
 					<?php endif; ?>
 				</div>
 			</div>

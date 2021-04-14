@@ -62,7 +62,7 @@ function get_next_appointment_by_student($id){
 			ON Timeslot.time_id = Appointment.time_id
 		WHERE is_finished = 0
 			AND student_id = ?
-		ORDER BY appointment_date
+		ORDER BY appointment_date, time_
 		LIMIT 1
 	";
 	$appointment = query_one($sql,"s",[$id]);
@@ -177,7 +177,7 @@ function get_class_by_id($id){
             Course.course_name,
             CONCAT(Major.short_name, Course.course_number) as course_title,
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
-            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+	        CONCAT(DATE_FORMAT(time_,'%l:%i-'), DATE_FORMAT(DATE_ADD(ADDTIME(TIMESTAMP(CURRENT_DATE),time_), INTERVAL minutes minute),'%l:%i%p')) as time,
             COUNT(Student.student_id) as students,
             credits,
 			CONCAT (Room.building , ' ' , Room.room_number) as room
@@ -271,6 +271,7 @@ function get_apply_by_email($email){
 		SELECT email
 		FROM Apply
 		WHERE email = ?
+			AND is_Completed = 0
 	";
 	return query_one($sql,"s",[$email]);
 }
@@ -301,6 +302,52 @@ function get_contact_user($id){
 		where ID = ?;
 	";
 	return query_one($sql, "s", [$id]);
+}
+
+function get_major_students($major_id){
+    $sql = "
+        SELECT
+            COUNT(Student.student_id) as students
+        FROM Major
+        LEFT JOIN Student
+            ON Student.major_id = Major.major_id
+        WHERE Major.major_id = ?
+            AND student_active = 1
+        ORDER BY short_name
+    ";
+    $row = query_one($sql,"s",[$major_id]);
+    if(!$row) return 0;
+    return (int)$row['students'];
+}
+
+function get_major_courses($major_id){
+    $sql = "
+        SELECT
+            COUNT(Course.course_id) as courses
+        FROM Major
+        LEFT JOIN Course
+            ON Course.major_id = Major.major_id
+        WHERE Major.major_id = ?
+    ";
+    $row = query_one($sql,"s",[$major_id]);
+    if(!$row) return 0;
+    return (int)$row['courses'];
+}
+
+function get_major_classes($major_id){
+    $sql = "
+        SELECT
+            COUNT(Class.class_id) as classes
+        FROM Major
+        LEFT JOIN Course
+            ON Course.major_id = Major.major_id
+        LEFT JOIN Class
+            ON Class.course_id = Course.course_id
+        WHERE Major.major_id = ?
+    ";
+    $row = query_one($sql,"s",[$major_id]);
+    if(!$row) return 0;
+    return (int)$row['classes'];
 }
 
 ?>

@@ -2,8 +2,8 @@
 
 <?php logout() ?>
 
-<?php require_once("partials/home/header.php") ?>
 
+<?php require_once("partials/home/header.php") ?>
 
 
 <div class="about-info">
@@ -11,13 +11,16 @@
 	<hr>
 
 	<h2 class='center'>Purpose</h2>
+	<div class='show-container'>
 	<button class='show-more-button'></button>
 	<div class='about-info-content'>
 		<p>The purpose of our team is to design and create a working web application for Dr. Chao Zhao. This application includes a MySQL database and login authentication using PHP, along with other features Dr. Zhao requests. Each member was assigned specific roles to complete this project. We showcased the skills we learned at Cameron as Computer Science majors.</p>
 	</div>
+	</div>
 
 	<hr>	
-	<h2 class='center'>User Roles / Priviliges</h2>
+	<h2 class='center'>User Requirements</h2>
+	<div class='show-container'>
 	<button class='show-more-button'></button>
 	<div class='about-info-content'>
 		<h3>Student</h3>
@@ -75,23 +78,27 @@
 			<li>Contact those who contacted us</li>
 		</ul>
 	</div>
-
-
-	<hr>	
-	<h2 class='center'>Languages and OS</h2>
-	<button class='show-more-button'></button>
-	<div class='about-info-content'>
-		<ul class='role-privileges'>
-			<li>HTML/CSS/JavaScript for front end Web forms.</li>
-			<li>PHP middleware.</li>
-			<li>SQL backend with MySQL database server.</li>
-			<li>Linux/Unix.</li>
-			<li><a target="_blank" href="https://github.com/cu-capstone-team2/capstone_project/">Github Repository</a></li>
-		</ul>
 	</div>
 
 	<hr>
+	<h2 class='center'>Design</h2>
+	<div class='show-container'>
+	<button class='show-more-button'></button>
+	<div class='about-info-content'>
+		<div class='use-case-buttons'>
+		<button class='use-case-button' imgsrc="use-case-student.png">Students</button>
+		<button class='use-case-button' imgsrc="use-case-instructor.png">Instructors</button>
+		<button class='use-case-button' imgsrc="use-case-secretary.png">Secretary</button>
+		<button class='use-case-button' imgsrc="use-case-secretary.png">Chair</button>
+		<button class='use-case-button' imgsrc="use-case-admin.png">Admin</button>
+		</div>
+	</div>
+	</div>
+
+	
+	<hr>
 	<h2 class='center'>Overall Features</h2>
+	<div class='show-container'>
 	<button class='show-more-button'></button>
 	<div class='about-info-content'>
 	<?php
@@ -165,9 +172,27 @@
 			</table>
 		</div>
 	</div>
+	</div>
 
+	<hr>	
+	<h2 class='center'>Languages and OS</h2>
+	<div class='show-container'>
+	<button class='show-more-button'></button>
+	<div class='about-info-content'>
+		<ul class='role-privileges'>
+			<li>HTML/CSS/JavaScript for front end Web forms.</li>
+			<li>PHP middleware.</li>
+			<li>SQL backend with MySQL database server.</li>
+			<li>Linux/Unix.</li>
+			<li><a target="_blank" href="https://github.com/cu-capstone-team2/capstone_project/">Github Repository</a></li>
+		</ul>
+	</div>
+	</div>
+
+	
 	<hr>
 	<h2 class='center'>Developers</h2>
+	<div class='show-container'>
 	<button class='show-more-button'></button>
 <div class="about-info-content persons">
 	<div class="person">
@@ -228,8 +253,20 @@
 	</div>
 </div>
 </div>
+</div>
 
-<script src='js/about.js'></script>
 
 
 <?php require_once("partials/home/footer.php") ?>
+<div class='backdrop'></div>
+<div class='use-case-design'>
+	<div class='change-use-case-buttons''>
+		<button class='use-case-close-button'>&#10005</button>
+		<div class='use-case-change-index-buttons'>
+			<button id="left">&lt;</button>
+			<button id="right">&gt;</button>
+		</div>
+	</div>
+</div>
+
+<script src='js/about.js'></script>

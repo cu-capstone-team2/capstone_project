@@ -74,6 +74,7 @@ function validate_new_faculty($input){
 <div class="who">
 	<h3>ID: <?= $faculty["faculty_id"] ?></h3>
 	<h3>Name: <?= $faculty["full_name"] ?></h3>
+	<h3>Username: <?= $faculty["faculty_username"] ?></h3>
 </div>
 
 <form method="post" class="form">

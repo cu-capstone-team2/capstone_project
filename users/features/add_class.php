@@ -1,25 +1,19 @@
 <?php
-//GOOD TO GO
 check_user([ADMIN]);
 
-$course_id = isset($_GET["course_id"])? $_GET["course_id"] : "";
-
-	$course = get_course_by_id($course_id);
-
-	if(!$course){
-		change_page("user.php");
-	}
-
-$times_data = get_all_timeslots();
+$times_data = get_all_class_time();
 $room_data = get_all_classrooms();
-$days = ["MW","TR","MTWR","F","SS","MR"];
+$days = get_all_days();
 $durations = [55,75];
-
+$courses = get_all_courses();
 
 
 $instructor_data = get_all_advisors();
 function validate_new_class($input){
 	$errors = [];
+	if (!isset($input['course_id']) || empty($input['course_id'])){
+		$errors['course_id'] = "No course was selected";
+	}
 	if (!isset($input["day_id"]) || empty($input["day_id"])) {
 		$errors["day_id"] = "No days were selected.";
 	}
@@ -39,53 +33,55 @@ function validate_new_class($input){
 	if(empty($errors)){
 		$classes = get_many_class_overlap($input["day_id"],$input["time_id"],$input["room_id"]);
 		if(!empty($classes)){
-			$errors["overlaps"] = "<BR>Overlap with the following classes:<br>";
+			$errors["room_id"] = "Room overlaps with the following:<br>";
 			foreach($classes as $class){
-				$errors['overlaps'] .= "CRN: {$class['class_id']}, {$class['course_name']}, {$class['time']}, {$class['days']}, {$class['room']}<BR>";
+				$errors['room_id'] .= "CRN: {$class['class_id']}, {$class['course_name']}, {$class['time']}, {$class['days']}, {$class['room']}<BR>";
 			}
 		}
 		$classes = get_many_class_faculty_overlap($input['faculty_id'], $input['day_id'],$input["time_id"]);
 		if(!empty($classes)){
-			$errors['faculty_overlaps'] = "<BR>{$classes[0]['instructor']} already teaches classes at the following times:<br>";
+			$errors['faculty_id'] = "<BR>{$classes[0]['instructor']} already teaches classes at the following times:<br>";
 			foreach($classes as $class){
-				$errors['faculty_overlaps'] .= "CRN: {$class['class_id']}, {$class['course_name']}, {$class['time']}, {$class['days']}, {$class['room']}";
+				$errors['faculty_id'] .= "CRN: {$class['class_id']}, {$class['course_name']}, {$class['time']}, {$class['days']}, {$class['room']}";
 			}
 		}
 	}
 
 	return $errors;
 }
-?>
-
-<h1>Add Class</h1>
-<hr>
-
-<div class="who">
-	<h3> <?php echo $course["course_name"] ?></h3>
-	<h3> <?php echo "Course ID: ".$course["course_id"] ?></h3>
-</div>
-
-
-<?php
 
 $errors = [];
 $input = [];
 
 if(isset($_POST["submit_new_class"])){
 		$errors = validate_new_class($_POST);
+		$input = clean_array($_POST);
 		if(empty($errors)){
-			insert_class($_POST["day_id"],$_POST["dur_id"],$_POST["time_id"],$_POST["room_id"],$course["course_id"],$_POST["faculty_id"]);
+			insert_class($_POST["day_id"],$_POST["dur_id"],$_POST["time_id"],$_POST["room_id"],$_POST["course_id"],$_POST["faculty_id"]);
 			echo "<h3 style='color:green'>Class created successfully.</h3>";
 			$input = [];
 		}
-		$input = clean_array($_POST);
 }
 ?>
+
+<h1>Add Class</h1>
+<hr>
 
 <form method = "post" class="form">
 
 	<?= show_error($errors,'overlaps') ?>
 	<?= show_error($errors,'faculty_overlaps') ?>
+
+	<div class="form-group">
+		<label>Course:</label>
+		<select <?= error_outline($errors, 'course_id') ?> name="course_id" id="" required>
+			<option selected disabled hidden></option>
+			<?php foreach($courses as $course): ?>
+				<option <?= check_select($input,"course_id",$course["course_id"]) ?> value="<?= $course["course_id"] ?>"><?= $course["title"] ?> - <?= $course["course_name"] ?></option>
+			<?php endforeach ?>
+		</select>
+		<?= show_error($errors,'course_id') ?>
+	</div>
 
 	<div class="form-group">
 		<label>Days:</label>
@@ -98,7 +94,7 @@ if(isset($_POST["submit_new_class"])){
 		<?= show_error($errors, 'day_id'); ?>
 	</div>
 	<div class="form-group">
-		<label>Timeslot:</label>
+		<label>Time:</label>
 		<select <?= error_outline($errors, 'time_id') ?> name="time_id" required>
 			<option selected disabled hidden></option>
 			<?php foreach ($times_data as $timeslot): ?>

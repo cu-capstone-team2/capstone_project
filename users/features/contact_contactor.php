@@ -51,6 +51,7 @@ if(isset($_POST['submit_contactor'])){
 <div class="who">
 	<h2> <?php echo $contact["full_name"]?></h2>
 	<h3> <?php echo "Email: ".$r_email?></h3>
+	<h3> <?php echo "Message: ".$contact["message"]?></h3>
 </div>
 
 <?php if(!$contact_closed): ?>

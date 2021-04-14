@@ -12,7 +12,7 @@ if(!$class){
 
 $times_data = get_all_class_time();
 $room_data = get_all_classrooms();
-$days = ["MW","TR","MTWR","F","SS","MR"];
+$days = get_all_days();
 $durations = [55,75];
 $instructor_data = get_all_advisors();
 
@@ -70,8 +70,8 @@ if(isset($_POST["submit_edit_to_class"])){
 <div class="who">
     <h3>CRN: <?= $class["class_id"] ?></h3>
     <h3><?= $class["course_name"] ?></h3>
-    <h3><?= $class["time"] ?> - <?= $class["days"] ?> - <?= $class["room"] ?></h3>
-    <h3>by <?= $class["instructor"] ?></h3>
+    <h3><?= $class["time"] ?>, <?= $class["days"] ?>, <?= $class["room"] ?></h3>
+    <h3>with <?= $class["instructor"] ?></h3>
 </div>
 
 

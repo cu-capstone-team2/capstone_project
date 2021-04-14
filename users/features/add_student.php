@@ -56,7 +56,7 @@
         $errors = validate_new_student($_POST);
         $input = clean_array($_POST);
         if(empty($errors)){
-            $username = generate_username($_POST["first_name"], $_POST["last_name"]);
+            $username = generate_username($_POST["first_name"], $_POST["last_name"], STUDENT);
             $password = generate_random_password();
             $hash_password = PASSWORD_HASH($password, PASSWORD_DEFAULT);
             $PIN = generate_random_pin();

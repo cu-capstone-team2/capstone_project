@@ -17,18 +17,23 @@ function validate_new_student($input){
             $errors['first_name'] = "First Name Required";
         }else if(!ctype_alpha($input['first_name'])){
             $errors['first_name'] = "First Name can only contain characters";
+        }else if(strlen($input['first_name']) > 50){
+            $errors['first_name'] = "Max 50 characters for First Name";
         }
 
         if(!isset($input['last_name']) || empty($input['last_name'])){
             $errors['last_name'] = "Last Name Required";
         }else if(!ctype_alpha($input['last_name'])){
             $errors["last_name"] = "Last Name can only contain characters";
+        }else if(strlen($input['last_name']) > 50){
+            $errors['last_name'] = "Max 50 characters for Last Name";
         }
-
         if(!isset($input['email']) || empty($input['email'])){
             $errors['email'] = "Email is required";
         }else if(!filter_var($input['email'], FILTER_VALIDATE_EMAIL)){
             $errors['email'] = "Email is not Valid";
+        }else if(strlen($input['email']) > 50){
+            $errors['email'] = "Max 50 characters for Email";
         }
 
         if(!isset($input['major_id']) || empty($input["major_id"])){
@@ -47,7 +52,7 @@ $student_added = false;
  if(isset($_POST["submit_new_student"])){
    $errors = validate_new_student($_POST);
       if(empty($errors)){
-        $username = generate_username($_POST["first_name"], $_POST["last_name"]);
+        $username = generate_username($_POST["first_name"], $_POST["last_name"], STUDENT);
           $password = generate_random_password();
           $hash_password = PASSWORD_HASH($password, PASSWORD_DEFAULT);
           $PIN = generate_random_pin();

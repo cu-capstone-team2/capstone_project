@@ -21,9 +21,7 @@ function generate_random_password(){
 	return $password;
 }
 
-function generate_username($first_name, $last_name){
-	global $role;
-	
+function generate_username($first_name, $last_name, $role = 0){	
 	$username = $first_name . $last_name;
 	if($role === STUDENT){
 		$username .= get_next_student_id();

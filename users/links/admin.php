@@ -1,6 +1,6 @@
 <?php
 
-$links = ['list_students'=>"List Students",'list_faculty'=>"List Faculty",'list_courses'=>"List Courses",
-			'list_classes'=>"List Classes",'list_major'=>"List Majors",'list_apply_request'=> "Enroll Request",
+$links = ['list_students'=>"Students",'list_faculty'=>"Faculty/Staff",'list_courses'=>"Courses",
+			'list_classes'=>"Classes",'list_major'=>"Majors",'list_apply_request'=> "Applies",
 			'list_contact_us'=>"Contacted Us",'edit_info'=>"Edit Info"];
 ?>

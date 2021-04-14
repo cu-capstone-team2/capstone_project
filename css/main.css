@@ -47,8 +47,8 @@ header {
   width: 100vw;
   height: 48px;
   background-color: var(--dark-yellow);
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 35px;
+  padding-right: 35px;
   font-size: 1.2rem;
   display: flex;
   justify-content: space-between;
@@ -338,12 +338,45 @@ h2.center{
 }
 
 .profile-pic {
-  background-image: url(http://eliasproctor.com/admin/user_images/selfie.jpg);
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  background-position: 45% 0%;
+  background-size: 200%;
   border: 1px solid black;
 }
+
+.persons .person:nth-child(1) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01479.JPG);
+}
+
+.persons .person:nth-child(2) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01469.JPG);
+}
+
+.persons .person:nth-child(3) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01474.JPG);
+}
+
+.persons .person:nth-child(4) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01476.JPG);
+}
+
+.persons .person:nth-child(5) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01472.JPG);
+}
+
+.persons .person:nth-child(6) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01471.JPG);
+}
+
+.persons .person:nth-child(7) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01482.JPG);
+}
+
+.persons .person:nth-child(8) .profile-pic{
+  background-image: url(/~team2/project/images/about_us_photo/DSC01478.JPG);
+}
+
+
 
 .person:hover .profile-pic {
   transform: rotateY(360deg);
@@ -415,9 +448,15 @@ h2.center{
   margin-bottom: 0;
 }
 
+.show-container{
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
 .show-more-button {
-  height: 45px;
-  width: 45px;
+  height: 30px;
+  width: 30px;
   clip-path: polygon(25% 0%, 75% 0%, 75% 50%, 100% 50%, 50% 100%, 0% 50%, 25% 50%);
   transition: all .25s;
   color: var(--dark-yellow);
@@ -425,6 +464,14 @@ h2.center{
   outline: none;
   border: none;
   margin-top: 0;
+  margin-left: auto;
+  position: absolute;
+  right: 0;
+  top: -30px;
+}
+
+.show-more-button:hover{
+	cursor: pointer;
 }
 
 .show-more-button + .about-info-content {
@@ -432,9 +479,96 @@ h2.center{
 }
 
 .show-more-button.showing {
-  transform: rotateZ(-180deg);
+  transform: rotateZ(180deg);
 }
 
 .show-more-button.showing + .about-info-content {
   display: unset;
+}
+
+.backdrop{
+	display: none;
+	z-index: 501;
+	background-color: rgba(0,0,0,.75);
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	left: 0;
+	top: 0;
+}
+
+.backdrop.showing{
+	display: unset;
+}
+
+.backdrop:hover{
+	cursor: pointer;
+}
+
+.backdrop.showing + .use-case-design{
+	display: unset;
+}
+
+.use-case-design{
+	display: none;
+	background-image: url(http://eliasproctor.com/admin/user_images/selfie.jpg);
+	background-attachment: scroll;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	z-index: 502;
+	width: 90vw;
+	height: 90vh;
+	background-color: white;
+	position: fixed;
+	left: 5vw;
+	top: 5vh;
+	padding: 15px;
+}
+
+.use-case-buttons{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.use-case-button{
+	margin: 5px;
+	padding: 5px;
+	background-color: var(--dark-yellow);
+	text-align: center;
+}
+
+.use-case-button:hover{
+	cursor: pointer;
+}
+
+.use-case-close-button,
+.use-case-change-index-buttons > button{
+	width: 40px;
+	height: 40px;
+	font-size: 1.2rem;	
+	-webkit-appearance: none;
+	border-radius: 0;
+	outline: none;
+	border: 1px solid black;
+	color: white;
+}
+
+.use-case-change-index-buttons > button{
+  background-color: var(--dark-yellow);
+}
+
+.use-case-close-button{
+  background-color: #ff3434;
+}
+
+.use-case-change-index-buttons{
+}
+
+.change-use-case-buttons{
+	display: flex;
+	justify-content: space-between;
 }

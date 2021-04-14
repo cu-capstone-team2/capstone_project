@@ -114,13 +114,18 @@
     <h1>Offered Classes</h1>
 </div>
 <?php 
-$offered_classes = get_all_classes($_GET);
+$pagination = new Pagination(PAGES_CLASSES, $_GET, -1, true);
+$offered_classes = get_all_classes($_GET, false, $pagination);
 $times = get_all_class_time();
 $days = ["MW","TR","MTWR","F","SS","MR"];
 $input = clean_array($_GET);
 $orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days","crn"=>"CRN"];
 $majors = get_all_majors();
 ?>
+
+<h3 class='total-count'><?= $pagination->get_total_rows() ?> Classes(s)</h3>
+
+
 <!-- Beginning of search form -->
 
 <button class="search-button">Search</button>
@@ -229,5 +234,6 @@ $majors = get_all_majors();
         <?php endforeach; ?>
     </table>
 </div>
-<br>
-<br>
+
+<?php $pagination->print_all_links() ?>
+

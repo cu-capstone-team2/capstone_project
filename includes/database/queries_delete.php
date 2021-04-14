@@ -43,6 +43,27 @@ function delete_class($class_id){
     return query($sql, "i", [$class_id]);
 }
 
+function can_course_be_deleted($course_id){
+	$sql = "
+		SELECT COUNT(Class.class_id) as classes
+		FROM Course
+		LEFT JOIN Class
+			ON Class.course_id = Course.course_id
+		WHERE Course.course_id = ?
+	";
+	$row = query_one($sql,"s",[$course_id]);
+	if(!$row) return true;
+	return (int)$row["classes"] === 0;
+}
+
+function delete_course($course_id){
+	$sql = "
+		DELETE FROM Course
+		WHERE course_id = ?
+	";
+	return query($sql,"i",[$course_id]);
+}
+
 function delete_appointment($faculty_id, $appointment_id){
     $sql = "
         DELETE FROM Appointment
@@ -81,4 +102,27 @@ function delete_contact($id){
 	
 	return query($sql, "i", [$id]);
 }
+
+function can_major_be_deleted($major_id){
+	return get_major_students($major_id) === 0
+			&& get_major_courses($major_id) === 0
+			&& get_major_classes($major_id) === 0;
+}
+
+function delete_major($major_id){
+	$sql = "
+		DELETE FROM Major
+		WHERE major_id = ?
+	";
+	return query($sql,"s",[$major_id]);
+}
+
+function delete_applies_by_major($major_id){
+	$sql = "
+		DELETE FROM Apply
+		WHERE major_id = ?
+	";
+	return query($sql,"s",[$major_id]);
+}
+
 ?>

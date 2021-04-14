@@ -16,6 +16,7 @@ if($role === ADMIN){
 $pagination = new Pagination(PAGES_STUDENTS, $_GET);
 $students = get_all_students($_GET, false, $pagination);
 $input = clean_array($_GET);
+$majors = get_all_majors();
 
 ?>
 
@@ -45,12 +46,15 @@ $input = clean_array($_GET);
         <input type="text" name="id" value="<?= show_value($input,"id") ?>" />
     </div>
     <div>
-        <label>Major: </label>
-        <select name="major">
-            <option value="all" <?= check_select($input,"major","all") ?>>Any</option>
-            <option value="it" <?= check_select($input,"major","it") ?>>IT Students</option>
-            <option value="cs" <?= check_select($input,"major","cs") ?>>CS Students</option>
-        </select>
+	<div>
+		<label>Major: </label>
+		<select name="major">
+		<option value="all">All</option>
+		<?php foreach($majors as $major): ?>
+			<option value="<?= $major["major_id"] ?>" <?= check_select($input,'major',$major["major_id"]) ?>><?= $major["short_name"] ?></option>
+		<?php endforeach ?>
+		</select>
+	</div>
     </div>
     <?php if($role === ADMIN): ?>
     <div>

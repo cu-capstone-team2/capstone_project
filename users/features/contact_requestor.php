@@ -56,11 +56,9 @@ if(isset($_POST['submit_requestor'])){
 <hr>
 
 <div class="who">
-	<h2> <?php echo $request["full_name"]?></h2>
-	<h3> <?php echo "Email: ".$r_email?></h3>
+	<h2><?php echo $request["full_name"]?></h2>
+	<h3><?php echo "Email: ".$r_email?></h3>
 </div>
-
-
 
 <form method="POST" action="" class="form">
 <div class="form-group">

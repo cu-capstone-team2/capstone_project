@@ -26,13 +26,14 @@ function update_student_info($student_id,$first_name,$last_name,$email,$classifi
 		UPDATE Student SET
 			student_firstname = ?,
 			student_lastname = ?,
+			student_username = CONCAT(LOWER(?),LOWER(?),?),
 			student_email = ?,
 			classification = ?,
 			major_id = ?,
 			faculty_id = ?
 		WHERE student_id = ?
 	";
-	return query($sql,"ssssiii",[$first_name,$last_name,$email,$classification,$major_id,$advisor_id,$student_id]);
+	return query($sql,"sssssssiii",[$first_name,$last_name,$first_name,$last_name,$student_id,$email,$classification,$major_id,$advisor_id,$student_id]);
 }
 
 function update_student_password($student_id, $password){
@@ -154,12 +155,13 @@ function update_faculty_details($faculty_id, $first_name, $last_name, $email, $p
 		UPDATE Faculty_Staff SET
 		faculty_firstname = ?,
 		faculty_lastname = ?,
+		faculty_username = CONCAT(LOWER(?),LOWER(?),?),
 		faculty_email = ?,
 		faculty_phone = ?,
 		role = ?
 		WHERE faculty_id = ?
 	";
-	return query($sql, "ssssss", [$first_name, $last_name, $email, $phone, $role, $faculty_id]);
+	return query($sql, "sssssssss", [$first_name, $last_name, $first_name, $last_name, $faculty_id, $email, $phone, $role, $faculty_id]);
 }
 
 function update_appointments_finished($instructor_id){

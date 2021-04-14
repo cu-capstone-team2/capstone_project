@@ -20,11 +20,11 @@ class Pagination{
   private $total_rows;
   private $id;
 
-  public function __construct($list_type, $input, $id = -1, $limit = 9){
+  public function __construct($list_type, $input, $id = -1, $do_default_limit = false){
     $this->list_type = $list_type;
     $this->input = $input;
     echo "<script src='js/pagination.js'></script>";
-    $this->limit = $this->get_list_limit();
+    $this->limit = $do_default_limit? 9 : $this->get_list_limit();
     $this->id = $id;
     $this->set_total_pages();
     $this->set_current_page();

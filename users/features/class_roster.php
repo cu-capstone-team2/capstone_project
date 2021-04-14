@@ -15,6 +15,7 @@
 
 ?>
 <div class="who">
+    <h3>CRN: <?= $class["class_id"] ?></h3>
     <h3><?= $class["course_name"] ?></h3>
     <h3><?= $class["time"] ?> - <?= $class["days"] ?></h3>
     <h3>by <?= $class["instructor"] ?></h3>

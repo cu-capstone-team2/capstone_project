@@ -45,7 +45,20 @@ function validate_edit_course($input){
     $errors['credits'] = "Credits must be between 1 and 5";
   }
   
-
+  global $course_id;
+  if(isset($input['course_number']) && isset($input['major_id'])){
+	$dupli_courses = get_courses_by_course_number($input['major_id'],$input['course_number'], $course_id);
+	if(!empty($dupli_courses)){
+		$msg = "Course Title Interferes with the following courses: <BR>";
+		foreach($dupli_courses as $this_course){
+			$msg .= $this_course["course_title"] . ", " . $this_course["course_name"] . "<BR>";
+		}
+		$errors['dupli_courses'] = $msg;
+		$errors['major_id'] = "";
+		$errors['course_number'] = "";
+	}
+  }
+  
   return $errors;
 }
 
@@ -69,6 +82,10 @@ if(isset($_POST["submit_course"])){
 
 
 <form method="post" class="form">
+
+	<?= show_error($errors,'dupli_courses') ?>
+
+
   <div class="form-group">
     <label>Course Name</label>
   

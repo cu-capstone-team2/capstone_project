@@ -37,7 +37,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 50;
+  z-index: 100;
 }
 
 * {
@@ -147,7 +147,7 @@ header {
   top: 0;
   width: 100vw;
   height: 48px;
-  z-index: 100;
+  z-index: 105;
 }
 
 header > .mainlinks {
@@ -397,7 +397,5 @@ footer {
   }
 }
 
-
 .search_button {
-
 }

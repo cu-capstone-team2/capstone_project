@@ -10,7 +10,7 @@ function get_students_by_advisor($advisor_id){
             student_email,
             classification,
             PIN,
-            student_username,
+			student_username,
             student_active,
             Major.short_name
         FROM Student
@@ -49,6 +49,22 @@ function get_students_by_class($class_id){
     ";
 
     return query_many($sql, "s", [$class_id]);
+}
+
+function get_courses_by_course_number($major_id, $course_number, $course_id = -1){
+	$sql = "
+		SELECT
+			CONCAT(short_name, course_number) as course_title,
+			course_name
+		FROM Course
+		INNER JOIN Major
+			ON Major.major_id = Course.major_id
+		WHERE Major.major_id = ?
+			AND course_number = ?
+			AND course_id != ?
+		;
+	";
+	return query_many($sql, "sss",[$major_id, $course_number, $course_id]);
 }
 
 function student_already_enrolled($student_id,$course_id){
@@ -94,7 +110,7 @@ function get_classes_by_student($student_id){
             CONCAT(Major.short_name, Course.course_number) as course_title,
             CONCAT(Faculty_Staff.faculty_lastname,', ',Faculty_Staff.faculty_firstname) as instructor,
             CONCAT(Faculty_Staff.faculty_lastname,', ',SUBSTR(Faculty_Staff.faculty_firstname,1,1)) as instructor_short,	   
-            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+	        CONCAT(DATE_FORMAT(time_,'%l:%i-'), DATE_FORMAT(DATE_ADD(ADDTIME(TIMESTAMP(CURRENT_DATE),time_), INTERVAL minutes minute),'%l:%i%p')) as time,
             days,
             credits,
             CONCAT(building, ' ', room_number) as room,
@@ -125,7 +141,7 @@ function get_classes_by_instructor($instructor_id){
             Class.class_id,
             course_name,
             CONCAT(Major.short_name, Course.course_number) as course_title,
-            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+	        CONCAT(DATE_FORMAT(time_,'%l:%i-'), DATE_FORMAT(DATE_ADD(ADDTIME(TIMESTAMP(CURRENT_DATE),time_), INTERVAL minutes minute),'%l:%i%p')) as time,
             days,
             credits,
             COUNT(Enrollment.student_id) as students,
@@ -229,7 +245,7 @@ function get_many_class_overlap($days,$time_id,$room_id, $class_id = -1){
             Class.class_id,
             course_name,
             CONCAT(Major.short_name, Course.course_number) as course_title,
-            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+	        CONCAT(DATE_FORMAT(time_,'%l:%i-'), DATE_FORMAT(DATE_ADD(ADDTIME(TIMESTAMP(CURRENT_DATE),time_), INTERVAL minutes minute),'%l:%i%p')) as time,
             days,
             credits,
             CONCAT(Room.building,' ',Room.room_number) as room
@@ -259,7 +275,7 @@ function get_many_class_faculty_overlap($faculty_id, $days,$time_id, $class_id =
             Class.class_id,
             course_name,
             CONCAT(Major.short_name, Course.course_number) as course_title,
-            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+	        CONCAT(DATE_FORMAT(time_,'%l:%i-'), DATE_FORMAT(DATE_ADD(ADDTIME(TIMESTAMP(CURRENT_DATE),time_), INTERVAL minutes minute),'%l:%i%p')) as time,
             days,
             credits,
             CONCAT(Room.building,' ',Room.room_number) as room,
@@ -292,7 +308,7 @@ function get_many_class_student_overlap($student_id, $days, $time_id){
             Class.class_id,
             course_name,
             CONCAT(Major.short_name, Course.course_number) as course_title,
-            DATE_FORMAT(Timeslot.time_,'%l:%i%p') as time,
+	        CONCAT(DATE_FORMAT(time_,'%l:%i-'), DATE_FORMAT(DATE_ADD(ADDTIME(TIMESTAMP(CURRENT_DATE),time_), INTERVAL minutes minute),'%l:%i%p')) as time,
             days,
             credits,
             CONCAT(Room.building,' ',Room.room_number) as room,
@@ -320,4 +336,20 @@ function get_many_class_student_overlap($student_id, $days, $time_id){
     return query_many($sql,"ssss",[$days, $days, $student_id, $time_id]);
 }
 
-?>
+function get_majors_by_short_name($short_name){
+    $sql = "
+        SELECT major_name, short_name
+        FROM Major
+        WHERE short_name = ?
+    ";
+    return query_many($sql,'s',[$short_name]);
+}
+
+function get_majors_by_major_name($major_name){
+    $sql = "
+        SELECT major_name, short_name
+        FROM Major
+        WHERE major_name = ?
+    ";
+    return query_many($sql,'s',[$major_name]);
+}

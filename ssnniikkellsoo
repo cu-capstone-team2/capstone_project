@@ -1,0 +1,21 @@
+bd437d1 About page is mostly done, need to add everyone's pictures
+7e86655 All feature work for each user
+5c1c851 Added overlap feature, which students cannot enroll into classes with time conflicts. Same for instructors with teaching and classes in the same rooms and times.
+f629dcf Added activate and deactivate feature, accounts that are deactivated cannot login
+ce12151 Added pagination and search feature to appointments, also 'forgot password' feature to reset password
+46fb9c2 Added pagination feature to search engines
+30f61d0 Added search feature with css styling, also fpdf is now on. Some add features are done.
+3dbb32e Added search engine for students, add_appointments, change_advisor, side navigation to users page.
+1655705 Added the ability to list appointments
+1089bcc Changed table design and added interface to click on row in a table and have a dropdown menu
+8bc3e3a Added designer's user page styling, also added features with URL variables assignment
+0a52d79 Changed student names to full_name, also added links in tables, next team members will add links to tables
+35e63f1 Did pick_major feature
+edc5ae6 Added more query methods for the table assignment
+5edca17 Added connect variables
+a9c2576 Merge branch 'main' of github.com:cu-capstone-team2/capstone_project into main
+a1f2e78 Added features like list classes, list schedule
+4668a4e Created readme.md file, just has our names
+d92d444 Deleted user pages, just one user.php, then features folder with different features
+fb04f52 Added feature links for each user, haven't tested them all yet
+535ba28 Init commit, login works

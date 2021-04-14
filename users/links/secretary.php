@@ -1,6 +1,6 @@
 <?php
 
-$links = ['list_students'=>"List Students",'list_advisors'=>"List Advisors",'edit_info'=>"Edit Info"];
+$links = ['list_students'=>"Students",'list_advisors'=>"Advisors",'edit_info'=>"Edit Info"];
 
 ?>
 

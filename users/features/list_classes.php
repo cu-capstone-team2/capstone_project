@@ -2,13 +2,14 @@
 
 <h1>List Classes</h1>
 <hr>
+<a class="feature-url" href="user.php?feature=add_class">Add Class</a>
 
 <?php 
 
 $pagination = new Pagination(PAGES_CLASSES, $_GET);
 $classes = get_all_classes($_GET, false, $pagination);
 $times = get_all_class_time();
-$days = ["MW","TR","MTWR","F","SS","MR"];
+$days = get_all_days();
 $input = clean_array($_GET);
 $orders = ["course_n"=>"Course#","title"=>"Title","time"=>"Time","days"=>"Days","crn"=>"CRN"];
 $majors = get_all_majors();
