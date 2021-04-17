@@ -17,7 +17,7 @@ $cnt = 1;
 ?>
 
 
-<h1>Apply Request</h1>
+<h1>Applications</h1>
 <hr>
 <h3 class='total-count'><?= $pagination->get_total_rows() ?> Request(s)</h3>
 

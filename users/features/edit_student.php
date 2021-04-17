@@ -74,6 +74,7 @@
             $faculty_id = $_POST["faculty_id"];
 			update_student_info($student_id,$first_name,$last_name,$email,$classification,$major_id,$faculty_id);
             $student = get_student_by_id($student_id);
+		    $advisors = get_all_advisors();
 			echo "<h3 style='color:green'>Successfully edited student</h3>";
         }
         

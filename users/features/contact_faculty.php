@@ -1,4 +1,4 @@
-<?php check_user([CHAIR,SECRETARY,STUDENT]) ?>
+<?php check_user([ADMIN,CHAIR,SECRETARY]) ?>
 
 <?php 
 	$faculty_id = isset($_GET["faculty_id"])? $_GET["faculty_id"] : "";
@@ -10,7 +10,7 @@
 		change_page("user.php");
 	}
 
-	function validate_contact_advisors($input){
+	function validate_contact_faculty($input){
 		$errors = [];
 		if(!isset($input['subject']) || empty($input['subject'])){
 			$errors['subject']="subject is required";
@@ -29,7 +29,7 @@
 
  	if(isset($_POST['submit_new_email'])){
 		$input = clean_array($_POST);
-    	$errors = validate_contact_advisors($_POST);
+    	$errors = validate_contact_faculty($_POST);
 
   		if(empty($errors)){
     		mail($faculty['faculty_email'],$_POST['subject'],$_POST['message']);
@@ -41,16 +41,14 @@
 
 ?>
 
-<h1>Contact Advisor</h1>
+<h1>Contact Faculty/Staff</h1>
 <hr>
 
 <div class="who">
-	<?php if($role !== STUDENT): ?>
 	<h3>ID : <?php echo $faculty["faculty_id"] ?></h3>
-
-	<?php endif ?>
- <h3> Advisor : <?php echo $faculty["full_name"] ?></h3>
+	<h3>Name: <?php echo $faculty["full_name"] ?></h3>
 	<h3>Email: <?php echo $faculty["faculty_email"] ?></h3>
+	<h3>Role: <?php echo get_role_name((int)$faculty["role"]) ?></h3>
 </div>
 
 <form method="post" class='form'>

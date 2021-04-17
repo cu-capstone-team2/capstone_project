@@ -1,7 +1,16 @@
 <?php
+/*-----------------------------------------------------------------------------
 
-function get_all_students($search = [], $count = false, $pagination = null)
+  Purpose: This page is used to store the SQL code in functions to be used on
+           the features to reterive all records from the database and store in
+           in a php array
+
+------------------------------------------------------------------------------*/
+
+function get_all_students($search = [], $count = false, $pagination = null) //this function retrieve all students from the database and search for each student
 {
+
+    //used for the search function on list page to filter thru the data
     global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
@@ -33,6 +42,7 @@ function get_all_students($search = [], $count = false, $pagination = null)
         }
     }
 
+    //main SQL code to retrieve all students from MySQL server
     $sql = "
         SELECT
             student_id,
@@ -60,7 +70,7 @@ function get_all_students($search = [], $count = false, $pagination = null)
 
     $params = [$id, $major, $status, $name];
     $types = "ssss";
-
+    //used for the pagination on the list page
     if ($count)
         return Pagination::get_count_query($sql, $types, $params);
     else if ($pagination !== null)
@@ -69,8 +79,9 @@ function get_all_students($search = [], $count = false, $pagination = null)
         return query_many($sql, $types, $params);
 }
 
-function get_all_faculty($search = [], $count = false, $pagination = null)
+function get_all_faculty($search = [], $count = false, $pagination = null)//this function retrieve all faculty from the database and search for each faculty
 {
+    //used for search function on the list page
     global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
@@ -102,7 +113,7 @@ function get_all_faculty($search = [], $count = false, $pagination = null)
                 break;
         }
     }
-
+    //main SQL code to reterive all faculty
     $sql = "
         SELECT
             faculty_id,
@@ -144,8 +155,9 @@ function get_all_faculty($search = [], $count = false, $pagination = null)
         return query_many($sql, $types, $params);
 }
 
-function get_all_advisors($search = [], $count = false, $pagination = null)
+function get_all_advisors($search = [], $count = false, $pagination = null)//this function retrieves the faculty that are advisors and shows the count of student each advisors have
 {
+
     // initialize names and id, in case they were entered by user
     $name = "%";
     $name .= isset($search["name"]) ? $search["name"] : "";
@@ -167,6 +179,8 @@ function get_all_advisors($search = [], $count = false, $pagination = null)
                 break;
         }
     }
+
+
     $sql = "
         SELECT
             Faculty_Staff.faculty_id,
@@ -326,7 +340,7 @@ function get_all_courses($search = [], $count = false, $pagination = null)
     // return query_many($sql,'ss',[$major,$course]);
 }
 
-function get_all_constants()
+function get_all_constants()//retrieves all constants of users and other items
 {
     $sql = "
         SELECT
@@ -410,7 +424,7 @@ function get_all_offices()
     return query_many_np($sql);
 }
 
-function get_all_classrooms()
+function get_all_classrooms()//this function retrieves the rooms that are used as classroom
 {
     $sql = "
         SELECT
@@ -425,8 +439,9 @@ function get_all_classrooms()
     return query_many_np($sql);
 }
 
-function get_all_office_available()
+function get_all_office_available() //this function retrieves all offices that are availbe and not occupied
 {
+  //main SQL code for get all available office
     $sql = "
 		SELECT *
 		FROM Room
@@ -442,8 +457,9 @@ function get_all_office_available()
     return query_many_np($sql);
 }
 
-function get_apply_request($search = [], $count = false, $pagination = null)
+function get_apply_request($search = [], $count = false, $pagination = null)//This function retrieves the applies request record to list out
 {
+  //the search function of the applies page
     global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
@@ -451,7 +467,7 @@ function get_apply_request($search = [], $count = false, $pagination = null)
     $name .= "%";
     $id = isset($search["id"]) && !empty($search["id"]) ? $search["id"] : "%";
     $major = isset($search["major"]) && $search["major"] !== "all" ? $search["major"] : "%";
-    $orderby = "ORDER BY full_name, apply_id, short_name,date";
+    $orderby = "ORDER BY date_requested";
 
     $status = "0%";
     if ($role === ADMIN && isset($search["status"])) {
@@ -469,13 +485,14 @@ function get_apply_request($search = [], $count = false, $pagination = null)
             case "id":
                 $orderby = "ORDER BY apply_id, full_name, short_name";
                 break;
-            case "date":
-                $orderby = "ORDER BY date_requested";
-                break;
-            default:
+            case "name":
                 $orderby = "ORDER BY full_name, apply_id, short_name";
                 break;
-        }
+            case "date":
+			default:
+                $orderby = "ORDER BY date_requested";
+                break;
+		}
     }
 
 
@@ -510,8 +527,9 @@ function get_apply_request($search = [], $count = false, $pagination = null)
         return query_many($sql, $types, $params);
 }
 
-function get_contact_info($search = [], $count = false, $pagination = null)
+function get_contact_info($search = [], $count = false, $pagination = null)//this function retrieves the record from the table for users that have contacted the school
 {
+    //the search function for the contacted page
     global $role;
     // initialize names and id, in case they were entered by user
     $name = "%";
@@ -545,7 +563,7 @@ function get_contact_info($search = [], $count = false, $pagination = null)
         }
     }
 
-
+//main SQL code for to retrieve contacted page
     $sql = "
 		SELECT
 			ID,
@@ -573,3 +591,4 @@ function get_contact_info($search = [], $count = false, $pagination = null)
     else
         return query_many($sql, $types, $params);
 }
+?>

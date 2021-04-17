@@ -1,9 +1,11 @@
 <?php check_user([ADMIN,CHAIR,INSTRUCTOR,STUDENT]) ?>
 
-<h1>List Classes</h1>
+<h1>Classes</h1>
 <hr>
-<a class="feature-url" href="user.php?feature=add_class">Add Class</a>
 
+<?php if($role === ADMIN): ?>
+	<a class="feature-url" href="user.php?feature=add_class">Add Class</a>
+<?php endif ?>
 <?php 
 
 $pagination = new Pagination(PAGES_CLASSES, $_GET);

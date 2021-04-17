@@ -1,7 +1,7 @@
-<?php check_user([ADMIN]) ?>
+<?php check_user([ADMIN, CHAIR, SECRETARY]) ?>
  
 
-<h1>List Faculty</h1>
+<h1>Faculty</h1>
 <hr>
 
 <a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
@@ -13,9 +13,15 @@ if($role === ADMIN){
         update_faculty_active($_GET["activate"], 1);
         change_page(link_without("activate"));
     } else if(isset($_GET["deactivate"])){
-        update_faculty_active($_GET["deactivate"], 0);
-        change_page(link_without("deactivate"));
-    }
+		if(can_faculty_be_deactivated($_GET["deactivate"])){
+			update_faculty_active($_GET["deactivate"], 0);
+		}
+		change_page(link_without("deactivate"));
+    } else if(isset($_GET["delete"])){
+		delete_all_appointments_by_faculty($_GET["delete"]);
+		delete_faculty($_GET["delete"]);
+		change_page(link_without("delete"));
+	}
 }
 
 $pagination = new Pagination(PAGES_FACULTY, $_GET);
@@ -116,10 +122,14 @@ $roles = [ADMIN=>"Admin",CHAIR=>"Chair",INSTRUCTOR=>"Instructor",SECRETARY=>"Sec
                   </p>
               </div>
               <div class="info-shown-div-links">
-                  <?= $role === ADMIN . "<BR>" ?>
+
+				<?php if($faculty["faculty_active"] == "1"): ?>
+					<a class="feature-url" href="user.php?feature=contact_faculty&faculty_id=<?= $faculty["faculty_id"] ?>">Contact Faculty</a>
+				<?php endif ?>
                   <?php if ($role === ADMIN): ?>
                     <?php if($faculty["faculty_active"] == "0"): ?>
                         <a onclick="return confirm('Are you sure you want to activate <?= $faculty['full_name'] ?>?')" class="feature-url" href="<?= link_without("") . "&activate={$faculty["faculty_id"]}" ?>">Activate Account</a>
+                        <a onclick="return confirm('Are you sure you want to permanently delete <?= $faculty['full_name'] ?> from the database? Doing so will also delete every advisor appointment.')" class="feature-url" href="<?= link_without("") . "&delete={$faculty["faculty_id"]}" ?>">Delete Account</a>
                     <?php else: ?>
     			              <a class="feature-url" href = "user.php?feature=edit_faculty&faculty_id=<?= $faculty["faculty_id"] ?>">Edit Info</a>
                         <?php if(can_faculty_be_deactivated($faculty["faculty_id"])): ?>

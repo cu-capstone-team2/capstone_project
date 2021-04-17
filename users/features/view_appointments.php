@@ -1,6 +1,7 @@
 <?php check_user([INSTRUCTOR]) ?>
-<h1>View Appointments</h1>
+<h1>Appointments</h1>
 <hr>
+<a class="feature-url" href="user.php?feature=add_appointment">Add Appoint.</a>
 
 <?php
 

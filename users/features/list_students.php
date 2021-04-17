@@ -9,8 +9,13 @@ if($role === ADMIN){
         change_page(link_without("activate"));
     } else if(isset($_GET["deactivate"])){
         update_student_active($_GET["deactivate"], 0);
+		delete_appointments_students_upcoming($_GET["deactivate"], 0);
         change_page(link_without("deactivate"));
-    }
+    } else if(isset($_GET["delete"])){
+		delete_all_appointments_by_student($_GET["delete"]);
+		delete_student($_GET["delete"]);
+		change_page(link_without("delete"));
+	}
 }
 
 $pagination = new Pagination(PAGES_STUDENTS, $_GET);
@@ -20,7 +25,7 @@ $majors = get_all_majors();
 
 ?>
 
-<h1>List Students</h1>
+<h1>Students</h1>
 <hr>
 
 <?php if($role === ADMIN): ?>
@@ -121,7 +126,7 @@ $majors = get_all_majors();
                     <?php if($role === CHAIR || $role === SECRETARY): ?>
                         <a class="feature-url"  href="user.php?feature=change_advisor&student_id=<?= $student["student_id"]?>">Change Advisor</a>
                     <?php endif; ?>
-                    <?php if($role === INSTRUCTOR || $role === SECRETARY || $role === CHAIR): ?>
+                    <?php if($role === ADMIN || $role === INSTRUCTOR || $role === SECRETARY || $role === CHAIR): ?>
                         <a class="feature-url"  href="user.php?feature=contact_student&student_id=<?= $student["student_id"]?>">Contact Student</a>
                     <?php endif; ?>
                     <?php if($role === CHAIR): ?>
@@ -131,9 +136,10 @@ $majors = get_all_majors();
                     <?php if($role === ADMIN): ?>
                         <?php if($student["student_active"] == "0"): ?>
                             <a onclick="return confirm('Are you sure you want to activate <?= $student['full_name'] ?>?')" class="feature-url" href="<?= link_without("") . "&activate={$student["student_id"]}" ?>">Activate Account</a>
+							<a onclick="return confirm('Are you sure you want to permenantly delete <?= $student['full_name'] ?>? All archived appointments will also be deleted.')" class='feature-url' href="<?= link_without("") . "&delete={$student['student_id']}"?>">Delete Account</a>
                         <?php else: ?>
                             <a class="feature-url"  href="user.php?feature=edit_student&student_id=<?= $student["student_id"] ?>">Edit Student</a>
-                            <a onclick="return confirm('Are you sure you want to deactivate <?= $student['full_name'] ?>? The student will not be able to login and will be unenrolled from all courses.')" class="feature-url" href="<?= link_without("") . "&deactivate={$student["student_id"]}" ?>">Deactive Account</a>
+                            <a onclick="return confirm('Are you sure you want to deactivate <?= $student['full_name'] ?>? The student will not be able to login and will be unenrolled from all courses. Also, upcoming appointments with advisors will be cancelled.')" class="feature-url" href="<?= link_without("") . "&deactivate={$student["student_id"]}" ?>">Deactive Account</a>
                         <?php endif ?>
                     <?php endif; ?>
                 </div>

@@ -1,6 +1,6 @@
 <?php check_user([CHAIR,SECRETARY]) ?>
 
-<h1>List Advisors</h1>
+<h1>Advisors</h1>
 <hr>
 
 <?php

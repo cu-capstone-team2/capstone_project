@@ -16,7 +16,7 @@ $advisees = get_students_by_advisor($faculty_id);
 
 ?>
 
-<h1>List Advisees</h1>
+<h1>Advisees</h1>
 <hr>
 
 <?php if($role !== INSTRUCTOR): ?>
@@ -56,9 +56,6 @@ $advisees = get_students_by_advisor($faculty_id);
                     <?php endif ?>
                     <?php if($role === CHAIR || $role === SECRETARY): ?>
                         <a class="feature-url" href="user.php?feature=change_advisor&student_id=<?= $advisee["student_id"] ?>">Change Advisor</a>
-                    <?php endif ?>
-                    <?php if($role === INSTRUCTOR): ?>
-                        <a class="feature-url" href="user.php?feature=add_appointment&student_id=<?= $advisee["student_id"] ?>">Add Appointment</a>
                     <?php endif ?>
                 </div>
                 </div>

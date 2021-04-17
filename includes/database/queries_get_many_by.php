@@ -228,9 +228,12 @@ function get_appointments_by_instructor($instructor_id, $search=[], $count = fal
 
 function get_appointments_by_date($faculty_id,$date,$time_id,$appoint_id = -1){
 	$sql = "
-		SELECT *
+		SELECT Appointment.*,
+			CONCAT(student_lastname,', ',student_firstname) as full_name
 		FROM Appointment
-		WHERE faculty_id = ?
+		INNER JOIN Student
+			ON Student.student_id = Appointment.student_id
+		WHERE Appointment.faculty_id = ?
 			AND appointment_date = ?
 			AND time_id = ?
 			AND NOT(appointment_id = ?)	

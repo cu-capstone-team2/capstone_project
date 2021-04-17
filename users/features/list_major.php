@@ -14,7 +14,7 @@ $majors = get_all_majors();
  ?>
 
 
-<h1>List Majors</h1>
+<h1>Majors</h1>
 <hr>
 <a class="feature-url" href="user.php?feature=add_major">Add Major</a>
 

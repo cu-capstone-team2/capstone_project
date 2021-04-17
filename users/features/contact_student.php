@@ -1,4 +1,4 @@
-<?php check_user([CHAIR,INSTRUCTOR,SECRETARY]) ?>
+<?php check_user([ADMIN,CHAIR,INSTRUCTOR,SECRETARY]) ?>
 
 
 <?php 

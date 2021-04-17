@@ -120,7 +120,7 @@ $student_added = false;
   <select <?= error_outline($errors,'advisor') ?> name = "advisor" required>
 	<option selected hidden disabled></option>
     <?php foreach ($advisors as $advisor): ?>
-        <option <?= check_select($input,"advisor",$advisor["faculty_id"]) ?> value="<?=$advisor["faculty_id"]?>"> <?=$advisor["full_name"]?> - tutors <?=$advisor["students"]?> students </option>
+        <option <?= check_select($input,"advisor",$advisor["faculty_id"]) ?> value="<?=$advisor["faculty_id"]?>"> <?=$advisor["full_name"]?> - advises <?=$advisor["students"]?> students </option>
     <?php endforeach; ?>
   </select>
     <?= show_error($errors,"advisor"); ?>

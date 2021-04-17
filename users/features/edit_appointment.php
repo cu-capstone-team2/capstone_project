@@ -19,7 +19,7 @@
             if(!isset($input['appointment_date']) || empty($input["appointment_date"])){
                 $errors['appointment_date'] = "Date is Required";
             }else if(strtotime($input['appointment_date']) < strtotime('today midnight')){
-                $errors['appointment_date'] = "Date's before today are invalid";
+                $errors['appointment_date'] = "Dates before today are invalid";
             } else if(isset($input['time_id']) && count(get_appointments_by_date($user['faculty_id'],$input['appointment_date'],$input['time_id'],$appointment_id)) > 0){
 		$errors['time_conflict'] = "There's are already an appointment at this time.";
 	}
@@ -53,7 +53,8 @@
 <hr>
 
 <div class="who">
-    <h3>for <?= "{$appointment["full_name"]}" ?>, ID = <?= $appointment["student_id"] ?></h3>
+    <h3>Advisee: <?= "{$appointment["full_name"]}" ?></h3>
+    <h3>Advisee ID: <?= $appointment["student_id"] ?></h3>
 </div>
 
 

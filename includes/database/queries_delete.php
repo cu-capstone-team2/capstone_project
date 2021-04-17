@@ -73,6 +73,40 @@ function delete_appointment($faculty_id, $appointment_id){
     return query($sql,"ii",[$faculty_id, $appointment_id]);
 }
 
+function delete_appointments_students_upcoming($student_id){
+	$sql = "
+		DELETE FROM Appointment
+		WHERE is_finished = 0
+			AND student_id = ?
+	";
+	return query($sql,"s",[$student_id]);
+}
+
+function delete_appointments_faculty_upcoming($faculty_id){
+	$sql = "
+		DELETE FROM Appointment
+		WHERE is_finished = 0
+			AND faculty_id = ?
+	";
+	return query($sql,"s",[$faculty_id]);
+}
+
+function delete_all_appointments_by_student($student_id){
+	$sql = "
+		DELETE FROM Appointment
+		WHERE student_id = ?
+	";
+	return query($sql,"s",[$student_id]);
+}
+
+function delete_all_appointments_by_faculty($faculty_id){
+	$sql = "
+		DELETE FROM Appointment
+		WHERE faculty_id = ?
+	";
+	return query($sql,"s",[$faculty_id]);
+}
+
 function delete_request($id){
 	$sql = "
 		DELETE FROM Apply 
@@ -123,6 +157,22 @@ function delete_applies_by_major($major_id){
 		WHERE major_id = ?
 	";
 	return query($sql,"s",[$major_id]);
+}
+
+function delete_student($student_id){
+	$sql = "
+		DELETE FROM Student
+		WHERE student_id = ?
+	";
+	return query($sql,"s",[$student_id]);
+}
+
+function delete_faculty($faculty_id){
+	$sql = "
+		DELETE FROM Faculty_Staff
+		WHERE faculty_id = ?
+	";
+	return query($sql,"s",[$faculty_id]);
 }
 
 ?>

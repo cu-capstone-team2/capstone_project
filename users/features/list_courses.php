@@ -1,7 +1,7 @@
 <?php check_user([ADMIN]) ?>
 
 
-<h1>List Courses</h1>
+<h1>Courses</h1>
 <hr>
 <a class="feature-url" href="user.php?feature=add_course">Add Course</a>
 
