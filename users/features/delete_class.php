@@ -11,13 +11,14 @@ if(!$class){
 } else {
 
 }
-
+	//When a class is deleted, all students enrolled in the class are unenrolled,
+	//and then the class is deleted.
 	$students = get_students_by_class($class["class_id"]);
 	foreach ($students as $student) {
 		//echo $student["full_name"]."=> id:".$student["student_id"]."<br>";
 		delete_enrollment($student["student_id"], $class["class_id"]);
 	}
-	echo var_dump($students);
+	//echo var_dump($students);
 	if (empty(get_students_by_class($class["class_id"]))) {
 		delete_class($class_id);
 		change_page("user.php?feature=list_classes");

@@ -1,5 +1,5 @@
 <?php
-
+//Call all pages in the form_validations folder 
 $files = ['login'];
 
 foreach($files as $file){

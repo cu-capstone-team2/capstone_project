@@ -1,8 +1,16 @@
 <?php
+/****************************************************************
+		
+		******** RESET PASSWORD VERIFY PAGE ********
+		
+
+
+
+****************************************************************/
 
 $user = false;
 
-function validate_reset_password($input){
+function validate_reset_password($input){//This function validates that the requestor has a vaild account
   global $user;
   $errors = [];
 
@@ -39,7 +47,7 @@ function validate_reset_password($input){
 $errors = [];
 $input = [];
 
-if(isset($_POST["submit_reset_password"])){
+if(isset($_POST["submit_reset_password"])){//checks to make sure no errors then email a temporary password to user
   $errors = validate_reset_password($_POST);
   if(empty($errors)){
     $key = generate_reset_password_key();

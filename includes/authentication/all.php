@@ -1,13 +1,20 @@
 <?php
+/***************************************************************************
 
-ob_start();
-session_start();
+			 ******** LOGIN AUTHENTICATION PAGE ********
+			PURPOSE: This page contain the authentication for each user
+					  when they login into the system 
 
-function is_logged_in(){
+***************************************************************************/
+
+ob_start();//starts output buffer
+session_start();//starts a new session 
+
+function is_logged_in(){//This function checks that the users logged in 
     return isset($_SESSION["id"]) && isset($_SESSION["role"]);
 }
 
-function login_user($input){
+function login_user($input){//This function will return the users info on the default page 
     if($input['role'] === "student"){
         $student = get_student_by_username($input['username']);
         login($student["student_id"], STUDENT);
@@ -17,24 +24,24 @@ function login_user($input){
     }
 }
 
-function go_to_correct_page(){
+function go_to_correct_page(){//This functin will direct the user to the right page
     if(!is_logged_in())
         change_page('index.php');
     change_page('user.php');
 }
 
-function login($id, $role){
+function login($id, $role){//This function saves the id and role of the user when logined
     $_SESSION["id"] = $id;
     $_SESSION["role"] = $role;
 }
 
-function logout(){
+function logout(){//This function unset the session from the authentication
     unset($_SESSION["id"]);
     unset($_SESSION["role"]);
     unset($_SESSION["PIN"]);
 }
 
-function is_faculty($role){
+function is_faculty($role){//This function after it is a faculty checks which role of the faculty member 
     switch($role){
         case ADMIN:
         case CHAIR:
@@ -46,7 +53,7 @@ function is_faculty($role){
     }
 }
 
-function check_user($valid_users){
+function check_user($valid_users){//This function checks that the user is valid in the database 
     /* Check if user is valid */
     global $role;
     $valid = false;
@@ -60,7 +67,7 @@ function check_user($valid_users){
         change_page("user.php");
 }
 
-function authenticate(){
+function authenticate(){//This function checks if user is logged if not redirects to homepage
     if(!is_logged_in()){
         change_page('index.php');
     }

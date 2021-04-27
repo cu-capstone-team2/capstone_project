@@ -9,7 +9,13 @@
 	if(!$faculty){
 		change_page("user.php");
 	}
-
+	/*
+        Validates input form data and returns errors if any.
+        Validations:
+        Are fields complete?
+        Are input lengths respected?
+        Are inputs sanitized?
+    */
 	function validate_contact_faculty($input){
 		$errors = [];
 		if(!isset($input['subject']) || empty($input['subject'])){
@@ -26,7 +32,7 @@
 	$errors = [];
 	$input = [];
 
-
+	//If no errors, email is sent to faculty member.
  	if(isset($_POST['submit_new_email'])){
 		$input = clean_array($_POST);
     	$errors = validate_contact_faculty($_POST);

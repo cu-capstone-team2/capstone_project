@@ -1,9 +1,16 @@
 <?php
+/************************************************************************
 
+			******** SQL QUERIES GET ONE BY ONE PAGE ********
+			
+			PURPOSE: This contain the SQL queries when inputed a ID 
+					 will return a single record when inputed 
+
+*************************************************************************/
 // these functions query exactly one row
 // and returns associative array to access columns
 
-function get_student_by_username($username){
+function get_student_by_username($username){//This function will return a student when a username is passed and then will return a student login infomation
     $sql = "
         SELECT
             student_username,
@@ -17,7 +24,7 @@ function get_student_by_username($username){
     return query_one_no_clean($sql,"s",[$username]);
 }
 
-function get_faculty_by_username($username){
+function get_faculty_by_username($username){//This function will return the faculty when a username is passed and then will return a faculty login infomation
     $sql = "
         SELECT
             faculty_username,
@@ -32,7 +39,7 @@ function get_faculty_by_username($username){
     return query_one_no_clean($sql,"s",[$username]);
 }
 
-function get_student_by_id($id){
+function get_student_by_id($id){//This function will return a student basic info for the default screen 
     $sql = "
         SELECT
             Student.*,
@@ -50,7 +57,7 @@ function get_student_by_id($id){
     return query_one($sql,"s",[$id]);
 }
 
-function get_next_appointment_by_student($id){
+function get_next_appointment_by_student($id){//This function will return a student/faculty any upcoming appointment with an students ID 
 	$sql = "
 		SELECT
 			appointment_id,
@@ -71,7 +78,7 @@ function get_next_appointment_by_student($id){
 	return $appointment["total_time"];
 }
 
-function get_next_appointment_by_advisor($id){
+function get_next_appointment_by_advisor($id){//This function will return a student/faculty upcoming appointment with an faculty ID 
 	$sql = "
 		SELECT
 			appointment_id,
@@ -95,7 +102,7 @@ function get_next_appointment_by_advisor($id){
 	return "w/ " . $appointment["student"] . " " . $appointment["total_time"];
 }
 
-function get_faculty_by_id($id){
+function get_faculty_by_id($id){//This function will return a faculty memeber info by passing faculty ID 
     $sql = "
         SELECT
             Faculty_Staff.*,
@@ -110,8 +117,7 @@ function get_faculty_by_id($id){
     return query_one($sql,"s",[$id]);
 }
 
-
-function get_appointment_by_id($id){
+function get_appointment_by_id($id){//This function will return a appointment by passing the appointment ID
 	$sql = "
 	SELECT
 		appointment_id,
@@ -129,7 +135,7 @@ function get_appointment_by_id($id){
 	return query_one($sql,"s",[$id]);
 }
 
-function get_chair(){
+function get_chair(){//This function will return Chair of the department by SQL 
     $sql = "
         SELECT
             Faculty_Staff.*,
@@ -144,7 +150,7 @@ function get_chair(){
     return query_one_np($sql);
 }
 
-function get_course_by_id($id){
+function get_course_by_id($id){//This function will return a course that is passed thru to the function 
     $sql = "
         SELECT
             Course.*,
@@ -158,7 +164,7 @@ function get_course_by_id($id){
 }
 
 // returns one row of enrollment if student is enrolled
-function get_enrollment_by_student_class($student_id,$class_id){
+function get_enrollment_by_student_class($student_id,$class_id){//This function will return a row of class that a student is enrolled in
     $sql = "
         SELECT
             *
@@ -170,7 +176,7 @@ function get_enrollment_by_student_class($student_id,$class_id){
 }
 
 // returns class information if class exists
-function get_class_by_id($id){
+function get_class_by_id($id){//This function will return a class and save class infomation to be printed when called
     $sql = "
         SELECT
             Class.*,
@@ -203,7 +209,7 @@ function get_class_by_id($id){
 }
 
 // returns how many credits the student is currently enrolled in
-function get_credits_by_student($student_id){
+function get_credits_by_student($student_id){//This function will return the sum of the credits a student is currently taking 
     $sql = "
         SELECT
             SUM(credits) as credits
@@ -222,21 +228,21 @@ function get_credits_by_student($student_id){
     return (int)$row["credits"];
 }
 
-function get_timeslot_by_id($time_id){
+function get_timeslot_by_id($time_id){//This function will return the timeslot of the day for organizing classtime and appointments 
     $sql = "
         SELECT * FROM Timeslot WHERE time_id = ?;
     ";
     return query_one($sql,"s",[$time_id]);
 }
 
-function get_room_by_id($room_id) {
+function get_room_by_id($room_id) {//This function will return a room and information by passing thru the room ID
     $sql = "
         SELECT * FROM Room WHERE room_id = ?;
     ";
     return query_one($sql,"s",[$room_id]);
 }
 
-function get_major_name_by_id($id){
+function get_major_name_by_id($id){//This funciton will return a Major's name when when selected by the major ID
 	$sql = "
 		SELECT major_name
 		FROM Major
@@ -246,7 +252,7 @@ function get_major_name_by_id($id){
 
 }
 
-function get_apply_info($id){
+function get_apply_info($id){//This function will return Apply request by Apply ID 
 	$sql = "
 	      SELECT
 		apply_id,
@@ -266,7 +272,7 @@ function get_apply_info($id){
 	 return query_one($sql, "s", [$id]);
 }
 
-function get_apply_by_email($email){
+function get_apply_by_email($email){//This function will return a Apply email from the apply email
 	$sql = "
 		SELECT email
 		FROM Apply
@@ -276,7 +282,7 @@ function get_apply_by_email($email){
 	return query_one($sql,"s",[$email]);
 }
 
-function get_reset_password_by_key($key){
+function get_reset_password_by_key($key){//This function will return a user and new password 
     $sql = "
         SELECT
             password_key,
@@ -289,7 +295,7 @@ function get_reset_password_by_key($key){
     return query_one($sql, "s", [$key]);
 }
 
-function get_contact_user($id){
+function get_contact_user($id){//This function will return a user that have contacted the school
  $sql = "
 		SELECT
 			ID,
@@ -304,7 +310,7 @@ function get_contact_user($id){
 	return query_one($sql, "s", [$id]);
 }
 
-function get_major_students($major_id){
+function get_major_students($major_id){//This function will return a count of major students by major 
     $sql = "
         SELECT
             COUNT(Student.student_id) as students
@@ -320,7 +326,7 @@ function get_major_students($major_id){
     return (int)$row['students'];
 }
 
-function get_major_courses($major_id){
+function get_major_courses($major_id){//This funciton will return a count of major course by major
     $sql = "
         SELECT
             COUNT(Course.course_id) as courses
@@ -334,7 +340,7 @@ function get_major_courses($major_id){
     return (int)$row['courses'];
 }
 
-function get_major_classes($major_id){
+function get_major_classes($major_id){//This function will return a count of major classes by major 
     $sql = "
         SELECT
             COUNT(Class.class_id) as classes

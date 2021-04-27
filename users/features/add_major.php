@@ -1,5 +1,14 @@
 <?php check_user([ADMIN]);
 
+
+/*
+  Validates the major input form data and returns errors if any.
+  Validations:
+  Are all inputs complete?
+  Are all inputs sanitized?
+  Are character limits respected?
+  Are inputs unique?
+*/
 function validate_new_major($input){
   $errors = [];
 
@@ -34,7 +43,7 @@ function validate_new_major($input){
 
 $input = [];
 $errors = [];
-
+// If no errors detected, adds major.
 if(isset($_POST["submit_major"])){
   $errors = validate_new_major($_POST);
   $input = clean_array($_POST);

@@ -1,6 +1,8 @@
 <?php
 /*-----------------------------------------------------------------------------
 
+			******** SQL QUERIES GET ALL PAGE ********
+
   Purpose: This page is used to store the SQL code in functions to be used on
            the features to reterive all records from the database and store in
            in a php array
@@ -180,7 +182,7 @@ function get_all_advisors($search = [], $count = false, $pagination = null)//thi
         }
     }
 
-
+    //main SQL code to reterive all faculty that are advisors and the count of students they advise
     $sql = "
         SELECT
             Faculty_Staff.faculty_id,
@@ -218,9 +220,9 @@ function get_all_advisors($search = [], $count = false, $pagination = null)//thi
         return query_many($sql, $types, $params);
 }
 
-function get_all_classes($search = [], $count = false, $pagination = null)
+function get_all_classes($search = [], $count = false, $pagination = null) //This function return the table of classes from the database and search thru the table
 {
-
+    //search function to filter thru the table
     $instructor = isset($search["instructor"]) ? '%' . $search["instructor"] . '%' : "%";
     $crn = isset($search["crn"]) && !empty($search["crn"]) ? $search["crn"] : '%';
     $days = isset($search["days"]) && $search["days"] !== "all" ? $search["days"] . '%' : '%';
@@ -246,6 +248,8 @@ function get_all_classes($search = [], $count = false, $pagination = null)
                 break;
         }
     }
+
+    //main SQL code to reterive all class in the table
     $sql = "
         SELECT
             Class.class_id,
@@ -292,8 +296,10 @@ function get_all_classes($search = [], $count = false, $pagination = null)
         return query_many($sql, $types, $params);
 }
 
-function get_all_courses($search = [], $count = false, $pagination = null)
+function get_all_courses($search = [], $count = false, $pagination = null)//this function reterives all course from the table that the school offers
 {
+
+    //this section is used to search the table 
     $course = isset($search["course"]) && !empty($search["course"]) ? $search["course"] : '%';
     $order = "title";
     $major = isset($search["major"]) && $search["major"] !== "all" ? $search["major"] : '%';
@@ -309,6 +315,7 @@ function get_all_courses($search = [], $count = false, $pagination = null)
         }
     }
 
+    //main SQL code that reterives the table to list all the courses
     $sql = "
         SELECT
             Course.course_id,
@@ -350,7 +357,7 @@ function get_all_constants()//retrieves all constants of users and other items
     return query_one_np($sql);
 }
 
-function get_all_majors()
+function get_all_majors()//this function retrieves all majors from the table
 {
     $sql = "
         SELECT
@@ -363,7 +370,7 @@ function get_all_majors()
     return query_many_np($sql);
 }
 
-function get_all_timeslots()
+function get_all_timeslots()//this function retrieves all timeslots from the table
 {
     $sql = "
         SELECT
@@ -377,11 +384,11 @@ function get_all_timeslots()
     return query_many_np($sql);
 }
 
-function get_all_days(){
+function get_all_days(){//This function returns all days of the week for class time and appointments
     return ["MW","TR","MR","MTWR","T","W","R","F","S"];
 }
 
-function get_all_appointment_timeslots()
+function get_all_appointment_timeslots()//This function reterives all appointments Timeslot
 {
     $sql = "
 		SELECT
@@ -395,7 +402,7 @@ function get_all_appointment_timeslots()
     return query_many_np($sql);
 }
 
-function get_all_class_time()
+function get_all_class_time()//This function retrieves all class times
 {
     $sql = "
 		SELECT
@@ -409,7 +416,7 @@ function get_all_class_time()
     return query_many_np($sql);
 }
 
-function get_all_offices()
+function get_all_offices()//This function retrieves all rooms that are offices
 {
     $sql = "
 		SELECT

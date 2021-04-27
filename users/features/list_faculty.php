@@ -4,8 +4,9 @@
 <h1>Faculty</h1>
 <hr>
 
-<a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
-
+<?php if($role === ADMIN): ?>
+ <a class="feature-url"  href="user.php?feature=add_faculty">Add Faculty</a>
+<?php endif ?>
 <?php
 
 if($role === ADMIN){

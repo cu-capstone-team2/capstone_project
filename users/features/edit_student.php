@@ -14,7 +14,13 @@
     $advisors = get_all_advisors();
 
 
-
+    /*
+      Validates input form data, and returns errors if any.
+      Validations:
+        Are all fields complete?
+        Are character limits respected?
+        Are plain-text fields sanitized?
+    */
     function validate_new_student($input){
 
         $errors = [];
@@ -61,7 +67,9 @@
 
     $input = [];
     $errors = []; 
-
+    /*
+        If no errors occur, changes are submitted.
+    */
     if(isset($_POST["submit_new_student"])){
         $errors = validate_new_student($_POST);
         $input = clean_array($_POST);

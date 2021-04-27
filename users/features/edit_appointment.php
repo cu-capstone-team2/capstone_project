@@ -8,7 +8,13 @@
 	if(!$appointment){
 		change_page('user.php');
     }   
-
+    /* Validates input form data, and returns errors if any.
+		Validations:
+		Are all fields complete?
+		Are input lengths respected?
+		Are there any time conflicts?
+		
+	*/
     function validate_new_appointment($input){
 	global $user, $appointment_id;
             $errors = [];
@@ -36,6 +42,9 @@
     $errors = [];
     $input = [];
 
+    /*
+		If no errors are detected, the appointment is submitted.
+    */
     if(isset($_POST["submit_new_appointment"])){
         $errors = validate_new_appointment($_POST);
         $input = clean_array($_POST);

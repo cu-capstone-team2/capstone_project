@@ -1,4 +1,12 @@
 <?php
+/***********************************************************************
+
+		******** MYSQL QUERIES METHOD PAGE ********
+		PURPOSE: This page contain the function that returns
+				 the query from the SQL code to be save in abs
+				 an array
+		
+***********************************************************************/
 
 /*
 Cleans entire array

@@ -1,7 +1,14 @@
 <?php check_user([ADMIN,SECRETARY,STUDENT,INSTRUCTOR,CHAIR]) ?>
 
 <?php
-
+/*
+  Validates input form data, and returns errors if any.
+  Validations:
+    Are all fields complete?
+    Are character limits respected?
+    Are plain-text fields sanitized?
+    Does the new password match both times it is input?
+*/
 function verify_password($input){
 	global $user, $role;
 	$errors = [];
@@ -61,7 +68,9 @@ function verify_password($input){
 
 $errors = [];
 $input = [];
-
+/*
+	If no errors occur, the new password is hashed, and the hash is stored.
+*/
 if(isset($_POST["submit_password"])){
 	$errors = verify_password($_POST);
 	$input = clean_array($_POST);

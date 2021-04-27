@@ -14,7 +14,11 @@ if(!$contact)
 $r_email = $contact["email"];
 	
 
-
+/*
+    Validates input form data and returns errors if any.
+    Validations:
+    Are fields complete?
+*/
 function validate_contact_contactor($input){
 	$errors = [];
 	if(!isset($input['subject']) || empty($input['subject'])){

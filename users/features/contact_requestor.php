@@ -23,7 +23,11 @@
 	if(!$request)
 		change_page('user.php');
 
-
+/*
+    Validates input form data and returns errors if any.
+	Validations:
+	Are fields complete?
+*/
 function validate_contact_requestor($input){
 	$errors = [];
 	if(!isset($input['subject']) || empty($input['subject'])){
@@ -36,7 +40,7 @@ function validate_contact_requestor($input){
 
 	return $errors;
 }
-
+//If no errors, send email.
 if(isset($_POST['submit_requestor'])){
 	$error = validate_contact_requestor($_POST);
 

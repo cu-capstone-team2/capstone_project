@@ -8,7 +8,13 @@ if(!$chair){
 }
 $error = [];
 $input = [];
-
+/*
+    Validates input form data and returns errors if any.
+    Validations:
+        Are fields complete?
+        Are input lengths respected?
+        Are inputs sanitized?
+*/
 function validate_contact_chair($input){
 	$errors = [];
 	if(!isset($input['subject']) || empty($input['subject'])){
@@ -23,7 +29,7 @@ function validate_contact_chair($input){
 	
 	return $errors;
 }
-
+//If no errors detected, send email to chair.	
 if(isset($_POST['submit_new_chair'])){
 	$error=validate_contact_chair($_POST);
 	$input = clean_array($_POST);

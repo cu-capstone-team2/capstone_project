@@ -1,6 +1,15 @@
 <?php
+/********************************************************************
 
-function get_students_by_advisor($advisor_id){
+		******** SQL QUERIES GET BY MANY PAGE ********
+
+		PURPOSE: The page contains the SQL QUERIES tha return data
+				 by a input 
+
+********************************************************************/
+
+
+function get_students_by_advisor($advisor_id){//This function returns the student that a instructor/advisors advises 
     $sql = "
         SELECT
             student_id,
@@ -23,7 +32,7 @@ function get_students_by_advisor($advisor_id){
     return query_many($sql, "s", [$advisor_id]);
 }
 
-function get_students_by_class($class_id){
+function get_students_by_class($class_id){//This function returns the students that are enrolled in that class 
     $sql = "
         SELECT
             Student.student_id,
@@ -51,7 +60,7 @@ function get_students_by_class($class_id){
     return query_many($sql, "s", [$class_id]);
 }
 
-function get_courses_by_course_number($major_id, $course_number, $course_id = -1){
+function get_courses_by_course_number($major_id, $course_number, $course_id = -1){//This function returns the courses by major and by other course info
 	$sql = "
 		SELECT
 			CONCAT(short_name, course_number) as course_title,
@@ -67,7 +76,7 @@ function get_courses_by_course_number($major_id, $course_number, $course_id = -1
 	return query_many($sql, "sss",[$major_id, $course_number, $course_id]);
 }
 
-function student_already_enrolled($student_id,$course_id){
+function student_already_enrolled($student_id,$course_id){//
 	$sql = "
 		SELECT Enrollment.*
 		FROM Enrollment

@@ -1,5 +1,12 @@
 <?php
+/****************************************
 
+   ******** CONSTANTS PAGE ********
+	PURPOSE: This page contain 
+			 constant for users 
+			 and items in the functions
+
+****************************************/
 define('INSTRUCTOR',1);
 define('SECRETARY',2);
 define('ADMIN',3);

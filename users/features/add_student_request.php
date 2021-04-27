@@ -10,6 +10,15 @@ if(!$request){
 }
 $advisors= get_all_advisors();
 $majors = get_all_majors();
+    /*
+        Similar to add_student.php, but details are auto-filled from an
+        applications request.
+        Validates input form data and returns errors if any.
+        Validations: 
+        Are all fields complete?
+        Are all inputs sanitized?
+        Are input lengths respected?
+    */
 function validate_new_student($input){
         $errors = [];
 
@@ -48,7 +57,10 @@ function validate_new_student($input){
 }
 
 $student_added = false;
-
+    /*
+        If no errors, then account information is generated and emailed to the student's email
+        and the application request is closed
+    */
  if(isset($_POST["submit_new_student"])){
    $errors = validate_new_student($_POST);
       if(empty($errors)){

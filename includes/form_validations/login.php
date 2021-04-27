@@ -1,6 +1,14 @@
 <?php
+/***********************************************
 
-function validate_login($input){
+	******** VALIDATION PAGE ********
+	
+	PURPOSE: This page contains a vaildation 
+			 function for users to login
+
+***********************************************/
+
+function validate_login($input){//This function contains login and verify the users by username and password 
     $errors = [];
 
     $error_msg = "Could not login";

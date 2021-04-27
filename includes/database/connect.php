@@ -1,8 +1,15 @@
 <?php
+/**************************************************************************
+			******** MYSQL DATABASE CONNECTION PAGE ********
+			PURPOSE: Used to connect from the datebase to the website 
+					 thru PHP 
 
-$conn = mysqli_connect(D_LOCATION,D_USERNAME,D_PASSWORD,D_DATABASE);
+**************************************************************************/
 
-if($error = mysqli_connect_error($conn)){
+
+$conn = mysqli_connect(D_LOCATION,D_USERNAME,D_PASSWORD,D_DATABASE);//database connction call 
+
+if($error = mysqli_connect_error($conn)){//if database connction fails it quits 
     die("CONNECTION FAILED: " . $error);
 }
 

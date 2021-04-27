@@ -8,7 +8,15 @@
   if(!$course){
 		change_page('user.php');
   }
-
+/*
+  Validates input form data, and returns errors if any.
+  Validations:
+    Are all fields complete?
+    Are character limits respected?
+    Are plain-text fields sanitized?
+    Is a valid credit value submitted?
+    Are the any naming conflicts with another course?
+*/
 function validate_edit_course($input){
   $errors = [];
 

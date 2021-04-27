@@ -1,18 +1,15 @@
 <?php check_user([INSTRUCTOR]) ?>
 
 <?php
-	
-    // $student_id = isset($_get["student_id"])? $_get["student_id"] : "";
-    // $student = get_student_by_id($student_id);
-
     $times = get_all_appointment_timeslots();
-
-    // if(!$student){
-		// change_page("user.php?feature=list_advisees");
-    // }
-
 	$students = get_students_by_advisor($user["faculty_id"]);
 	
+
+    /*
+        Validates the appointment form input data and returns an array of corresponding errors
+        Validations include: is variable set?, is date scheduled at some point in future?,
+        is the time not occupied by another appointment?, is the comment field under 255 chars?
+    */
     function validate_new_appointment($input){
 	global $user;
         $errors = [];
@@ -38,14 +35,14 @@
             $errors['comments'] = "Comment must be under 255 characters";
         }
 
-	
-
         return $errors;
     }
 
     $errors = [];
     $input = [];
-
+    /*
+        If input is successfully validated then the appointment is added.
+    */
     if(isset($_POST["submit_new_appointment"])){
         $errors = validate_new_appointment($_POST);
         $input = clean_array($_POST);
@@ -56,18 +53,10 @@
 	$input = [];
         }
     }
-
 ?>
-
-
-
 <h1>Add Appointment</h1>
 <hr>
-
-
-
 <form method="post" class="form">
-
 	<div class="form-group">
 		<label>Advisee</label>
         <select <?= error_outline($errors, "student_id") ?> name="student_id" required>
@@ -112,7 +101,10 @@
     <input type="submit" name="submit_new_appointment" >
 </form>
 
+
+
 <script>
+    //Limits appointment comment length
 const charCount = document.querySelector('#char-count');
 const comments = document.querySelector('#comments');
 

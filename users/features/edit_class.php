@@ -5,7 +5,6 @@ check_user([ADMIN]);
 $class_id = isset($_GET["class_id"])? $_GET["class_id"] : "";
 
 $class = get_class_by_id($class_id);
-//echo var_dump($class);
 if(!$class){
 	change_page("user.php");
 }
@@ -15,6 +14,13 @@ $room_data = get_all_classrooms();
 $days = get_all_days();
 $durations = [55,75];
 $instructor_data = get_all_advisors();
+/*
+	Validates input form data, and returns errors if any.
+	Validations:
+	Are all fields complete?
+	Are there any timeslot or room overlaps?
+	Are there any scheduling issues for the instructor selected?
+*/
 
 function validate_new_class($input){
 	global $class;
@@ -52,7 +58,9 @@ function validate_new_class($input){
 
 $errors = [];
 $input = [];
-
+/*
+	If no error, submit changes to database.
+*/
 if(isset($_POST["submit_edit_to_class"])){
 		$errors = validate_new_class($_POST);
 		if(empty($errors)){

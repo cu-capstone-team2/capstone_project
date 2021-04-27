@@ -7,7 +7,7 @@
 
     $class = get_class_by_id($class_id);
 
-    if(!$class){
+    if(!$class){ // If no valid class is found, redirect from page.
         change_page("user.php?feature=teaching_schedule");
     }
 

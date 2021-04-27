@@ -5,6 +5,15 @@
 
   $rooms = get_all_office_available();
 
+  
+  /*
+    Validates add_faculty input form data and returns any errors.
+    Validations:
+    Are all fields completed?
+    Are all inputs sanitized?
+    Are all input lengths respected?
+
+  */
   function validate_new_faculty($input){
     $errors = [];
 
@@ -53,6 +62,11 @@
   $input = [];
   $errors = [];
 
+  /*
+    if no errors then faculty is added, username and password generated and hashed,
+    and then an email is containing the login information is sent to the faculty members
+    email.
+  */
   if(isset($_POST["submit_new_faculty"])){
     $errors = validate_new_faculty($_POST);
 	$input = clean_array($_POST);

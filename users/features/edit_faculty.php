@@ -9,7 +9,13 @@
   	if(!$faculty){
 		  change_page('user.php');
     }
-
+/*
+  Validates input form data, and returns errors if any.
+  Validations:
+    Are all fields complete?
+    Are character limits respected?
+    Are plain-text fields sanitized?
+*/
 function validate_new_faculty($input){
     $errors = [];
 
@@ -53,7 +59,9 @@ function validate_new_faculty($input){
 
   $input = [];
   $errors = [];
-
+  /*
+    If no errors, submit changes to faculty
+  */
   if(isset($_POST["submit_new_faculty"])){
     $errors = validate_new_faculty($_POST);
 

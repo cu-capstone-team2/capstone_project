@@ -4,7 +4,9 @@
 <hr>
 
 <?php
-
+/*
+    This page lists advisors according to the users search filter.
+*/
 $pagination = new Pagination(PAGES_ADVISORS, $_GET);
 $advisors = get_all_advisors($_GET, false, $pagination);
 $input = clean_array($_GET);

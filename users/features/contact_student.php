@@ -13,7 +13,9 @@
 	}
 
 	$s_email = $student["student_email"];
-	
+/*
+    Validates input form data and returns errors if any.
+*/	
 function validate_contact_student($input){
 	$errors = [];
 	if(!isset($input['subject']) || empty($input['subject'])){

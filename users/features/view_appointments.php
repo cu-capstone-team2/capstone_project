@@ -4,7 +4,10 @@
 <a class="feature-url" href="user.php?feature=add_appointment">Add Appoint.</a>
 
 <?php
-
+/*
+     This page handles listing appointments for an advisor as well as
+     updating an appointment status if canceled or completed. 
+*/
 if(isset($_GET["cancel"])){
     delete_appointment($user["faculty_id"], $_GET["cancel"]);
     $link = link_without("cancel");

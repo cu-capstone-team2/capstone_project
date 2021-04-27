@@ -1,7 +1,16 @@
 <?php check_user([CHAIR,INSTRUCTOR,STUDENT]) ?>
 <h1>Enrollment</h1>
 <hr>
-<?php 
+<?php
+    /*  
+        This page is multifunctional.
+        It is meant to handle all aspects of enrolling AND dropping
+        classes from a students schedule, including considering whether
+        or not a student or advisor is the one using the page.
+
+        If user is a student, a pin is required to proceed,
+        otherwise continue to enrollment
+    */
 	$errors = [];
 	if($role === STUDENT){
 		if(!isset($_SESSION["PIN"])){
@@ -29,7 +38,11 @@
 
 <?php
 	$credits = get_credits_by_student($student["student_id"]);
-
+    /*
+        This block handles enrollment errors such as 
+        exceeding the credit limit for a schedule,
+        and class overlaps
+    */
 	if (isset($_GET["enroll"])) {
 		$enrolled_crn = $_GET["enroll"];
 		$class_to_enroll = get_class_by_id($enrolled_crn);
@@ -56,12 +69,15 @@
 	 		}
 	 	}
 	}
+    /*
+        This block handles the user dropping a class.
+    */
 	if (isset($_GET["drop"])) {
 		delete_enrollment($student["student_id"],$_GET["drop"]);
 		change_page("user.php?feature=enroll&student_id={$student["student_id"]}");
 	}
 ?>
-
+<!-- List of currently enrolled classes begin here -->
 <?php $classes = get_classes_by_student($student["student_id"]) ?>
 
 <h2>Credit Hours: <?= $credits ?> </h2>
@@ -107,7 +123,7 @@
         <?php endforeach; ?>
     </table>
 </div>
-
+<!-- List of currently enrolled classes ends here. -->
 <?= show_error($errors,"enrollment") ?>
 <?= show_error($errors,"overlaps") ?>
 <div class="who">
@@ -188,7 +204,7 @@ $majors = get_all_majors();
 
 <!-- End of search form -->
 
-
+<!-- Beginning of classes offered listing -->
 <div class="div-table">
     <table>
         <tr>
@@ -234,6 +250,6 @@ $majors = get_all_majors();
         <?php endforeach; ?>
     </table>
 </div>
-
+<!-- End of classes offered listing -->
 <?php $pagination->print_all_links() ?>
 

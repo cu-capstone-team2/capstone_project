@@ -1,7 +1,9 @@
 <?php
 
 check_user([CHAIR,INSTRUCTOR,SECRETARY]);
-
+/*
+    This page lists the advisees for a faculty member.
+*/
 $faculty_id = isset($_GET["faculty_id"])? $_GET["faculty_id"] : "";
 
 if($role === INSTRUCTOR){

@@ -11,7 +11,7 @@ if(!$student){
 }
 
 $majors = get_all_majors();
-
+// Validates input form data, and returns errors if any.
 function validate_new_major($input){
     $errors = [];
     if(!isset($input['major_id']) || empty($input["major_id"])){
@@ -22,7 +22,7 @@ function validate_new_major($input){
 
 $errors = [];
 $input = [];
-
+// If no error detected, submit the change.
 if(isset($_POST["submit_new_major"])){
     $errors = validate_new_major($_POST);
 	$input = clean_array($_POST);

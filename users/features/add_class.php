@@ -1,14 +1,23 @@
 <?php
 check_user([ADMIN]);
 
+
+//Initalizes dropdown data
 $times_data = get_all_class_time();
 $room_data = get_all_classrooms();
 $days = get_all_days();
 $durations = [55,75];
 $courses = get_all_courses();
-
-
 $instructor_data = get_all_advisors();
+
+
+/*
+	Validates class input form and returns errors.
+	Validations:
+	are all fields properly completed?
+	are there any scheduling conflicts with other classes?
+	is the instructor free to teach at this time?
+*/
 function validate_new_class($input){
 	$errors = [];
 	if (!isset($input['course_id']) || empty($input['course_id'])){
@@ -52,7 +61,9 @@ function validate_new_class($input){
 
 $errors = [];
 $input = [];
-
+/*
+	If no errors, class is added.
+*/
 if(isset($_POST["submit_new_class"])){
 		$errors = validate_new_class($_POST);
 		$input = clean_array($_POST);

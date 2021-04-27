@@ -7,7 +7,12 @@
 if(isset($_POST["request_pin"])){
 	send_pin();
 }
-
+/* 
+  Validates input form data, and returns errors if any.
+  Validations:
+    Is field complete?
+    Does PIN match users pin?
+*/
 function validate_pin($input){
   global $user;
   $errors = [];
@@ -24,6 +29,9 @@ function validate_pin($input){
 
 $errors = [];
 $input = [];
+/*
+  If no errors detected, student is allowed to proceed to enrollment.
+*/
 if(isset($_POST["submit_pin"])){
   $errors = validate_pin($_POST);
   if(empty($errors)){

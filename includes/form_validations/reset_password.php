@@ -2,7 +2,7 @@
 
 $key;
 
-if(isset($_GET["key"])){
+if(isset($_GET["key"])){//makes sure that gets the as a key if not returns to homepage
   $key = get_reset_password_by_key($_GET["key"]);
   if(!$key){
     change_page("index.php");
@@ -11,7 +11,7 @@ if(isset($_GET["key"])){
   change_page("index.php");
 }
 
-function verify_password($input){
+function verify_password($input){//This function verify that new password 
 	$errors = [];
 
 	

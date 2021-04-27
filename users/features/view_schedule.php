@@ -1,6 +1,9 @@
 <?php
 check_user([STUDENT,INSTRUCTOR,CHAIR]);
-
+/*
+    This page displays a students schedule.
+    It also allows viewing a PDF of the schedule for printing.
+*/
 $student_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
 
 if(isset($user["student_id"]))

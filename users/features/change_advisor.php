@@ -6,7 +6,11 @@ $student = get_student_by_id($student_id);
 if(!$student){
 		change_page("user.php");
 }
-
+/*
+    Validates input form data and returns errors if any.
+    Validations:
+    Is advisor field completed?
+*/
 function validate_new_advisors($input){
 	$errors = [];
 
@@ -18,7 +22,9 @@ return $errors;
 
 $errors = [];
 $input = [];
-
+/*
+	If no errors, change is submitted.
+*/
 if(isset($_POST["submit_new_advisors"])){
 		$errors = validate_new_advisors($_POST);
 		if(empty($errors)){
