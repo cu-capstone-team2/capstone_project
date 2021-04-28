@@ -1,0 +1,108 @@
+input {
+  outline: none;
+}
+
+.form__login {
+  width: 100%;
+  max-width: 400px;
+  padding: 25px;
+  background-color: var(--light);
+  box-shadow: var(--shadow);
+  justify-self: center;
+  animation: come-in;
+  animation-iteration-count: 1;
+  animation-duration: 0.5s;
+  background-color: white;
+}
+
+.form__login input[type='submit'] {
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+  background-color: var(--dark-yellow);
+  color: var(--black);
+}
+
+.form__login input[type='submit']:hover {
+  cursor: pointer;
+}
+
+.container__input,
+.container__select {
+  margin-top: 25px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.container__select .container__input__filled {
+  transform: translateX(-0.2rem) translateY(-1.5rem);
+}
+
+.container__input * {
+  padding: 5px;
+  font-size: 1rem;
+}
+
+.container__input label,
+.container__select label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-in;
+}
+
+.container__select label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  pointer-events: none;
+  transition: all 0.5s ease-in;
+}
+
+.container__input input,
+.container__select select {
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+  background-color: var(--light-yellow);
+}
+.container__input textarea {
+  resize: none;
+  width: 100%;
+  padding: 5px;
+  font-size: 1rem;
+  background-color: var(--light-yellow);
+}
+
+.container__input textarea:focus {
+}
+
+.container__input input:focus {
+}
+
+.container__input__filled {
+  transition: transform none !important;
+  color: var(--darker);
+}
+
+.container__input input:focus + label,
+.container__input__filled {
+  transform: translateY(-1.5rem) translateX(-0.2rem);
+}
+
+.container__input textarea:focus + label,
+.container__input__filled {
+  transform: translateY(-1.5rem) translateX(-0.2rem);
+}
+
+@keyframes come-in {
+  from {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

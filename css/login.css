@@ -1,0 +1,62 @@
+.login{
+	/* width: 95%;
+	max-width: 30rem;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	margin-top: 100px;
+	justify-content: space-evenly;
+	align-items: center; */
+	justify-self: center;
+	animation: come-in;
+	animation-iteration-count: 1;
+	animation-duration: .5s;
+	background-color: var(--light);
+	border: 3px solid black;
+	border-radius: 5px;
+	background-color: white;
+}
+
+
+/* .login *{
+	color: var(--darkest);
+	margin: 5px;
+}
+
+.login input:focus{
+	-webkit-box-shadow: 0px 5px 21px -5px var(--darker); 
+	box-shadow: 0px 5px 21px -5px var(--darker);
+	background-color: var(--lightest);
+	color: var(--darker);
+}
+
+.login input:focus::placeholder{
+	color: var(--darkest);
+}
+
+.login input{
+	width: 100%;
+	padding: 10px;
+	font-size: 1rem;
+}
+
+.login input[type="submit"]{
+	color: var(--lightest);
+	background-color: var(--darker);
+}
+
+.login input[type="submit"]:hover{
+	cursor: pointer;
+} */
+
+@keyframes come-in{
+	from{
+		transform: translateY(-200px);
+		opacity: 0;
+	}
+	to{
+		transform: translateY(0);
+		opacity: 1;
+	}
+}

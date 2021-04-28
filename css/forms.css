@@ -1,0 +1,86 @@
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* The person who is being edited */
+.who{
+	margin: 15px 0;
+}
+.who > * {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.form-group {
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group > :is(input, select, textarea) {
+  padding: 5px;
+  font-size: 1rem;
+  color: var(--text-color);
+  width: 100%;
+  /* max-width: 100%;
+  min-width: 100%; */
+}
+
+.form-group > textarea {
+  font-size: 1rem !important;
+  height: 150px;
+  resize: none;
+}
+
+.form-group > :is(input, select, textarea):focus {
+  outline: none;
+}
+
+.form-group > label {
+  margin-bottom: 5px;
+  font-weight: 550;
+  color: var(--text-color);
+}
+
+.form > input[type='submit'] {
+  margin: 10px 0;
+  padding: 5px 10px;
+  flex-grow: 0;
+  flex-shrink: 0;
+	flex: basis;
+
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.15rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--text-color);
+  background-color: var(--dark-yellow);
+  box-shadow: inset 0 -0.6rem 0 -0.35rem rgba(0, 0, 0, 0.17);
+  text-align: center;
+  position: relative;
+  opacity: 0.75;
+}
+
+.error {
+  color: red !important;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 0.9rem;
+}
+
+.input-error {
+  outline-width: 2px !important;
+  outline-style: solid !important;
+  outline-color: red !important;
+  background-color: rgba(255, 0, 0, 0.08);
+  border: none;
+}
+
+.input-error:focus {
+  outline-width: 2px !important;
+  outline-style: solid !important;
+  outline-color: red !important;
+}
