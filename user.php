@@ -10,7 +10,7 @@ require_once("partials/user/header.php");
 
 require_once("users/links/choose.php");
 
-$feature = "";
+$feature = "does_not_exists_file";
 
 if(isset($_GET["feature"])){
 	$feature = $_GET["feature"];
