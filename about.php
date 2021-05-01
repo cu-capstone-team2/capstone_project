@@ -6,6 +6,12 @@
 <?php require_once("partials/home/header.php") ?>
 
 
+<!--
+THE ABOUT PAGE 
+used to summarize our project for anyone that wants to go on this website.
+Includes the Purpose, Requirements, Design, Features, Languages, and Developers
+-->
+
 <div class="about-info">
 	<h1>About Page</h1>
 	<hr>

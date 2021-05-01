@@ -1,23 +1,36 @@
 <?php
 
+/*
+FPDF is a PHP framework used to generate a PDF of a student schedule
+It is class based
+*/
+
+// include all files
 require_once("includes/all.php");
 
+
+// get the current student logged in
 $student_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
 $student = get_student_by_id($student_id);
 
+// if student doesn't exist, change page
 if(!$student){
 	change_page("index.php");
 }
 
+// get current user role
 $user = authenticate();
 
 $role = isset($user["role"])? (int)$user["role"] : STUDENT;
 
+// if not any of these roles, then change page
 check_user([CHAIR,SECRETARY,INSTRUCTOR,STUDENT]);
 
 
+// FPDF framework
 require_once('fpdf/fpdf.php');
 
+// this PDF class is an extension of FPDF, allows the generation of a PDF file
 class studentPDF extends FPDF
 {
 // Page header
@@ -56,6 +69,7 @@ function Footer()
 //Academic header
 function academicInfo()
 {
+	// show basic information about student
 	global $student;
 	$this->SetFont('Times','B','14');
 	$this->Cell(60,10,'Current Academic Information',0,0,'C');
@@ -98,13 +112,14 @@ function academicInfo()
 //Schedule
 function scheduleTable($header, $data)
 {
+	// show table of all of the classes the student is enrolled in
 	global $student;
 	//schedule header
 	$this->SetFont('Times','B','14');
 	$this->Cell(40,10,'Spring Schedule 2021',0,0,'C');
 	$this->Ln();
 	
-$this->SetFont('Times','',12);
+	$this->SetFont('Times','',12);
 	
 	//colors
 	$this->SetFillColor(255,211,89);
@@ -143,48 +158,18 @@ $this->SetFont('Times','',12);
 		$this->Ln();
 	}
 	
-	//Data
-	
-	// foreach($data as $row)
-	// {
-		// $this->SetTextColor(0,0,0);
-		// $this->Cell($w[0],6,$row[0],1, 0, 'L', true);
-		// $this->Cell($w[1],6,$row[1],1, 0,'L',true);
-		// $this->Cell($w[2],6,$row[2],1,0, 'L',true);
-		// $this->Cell($w[3],6,$row[3],1,0, 'C',true);
-		// $this->Cell($w[4],6,$row[4],1,0, 'C',true);
-		// $this->Cell($w[5],6,$row[5],1,0, 'C',true);
-		// $this->SetTextColor(180,101,49);
-		// $this->Cell($w[6],6,$row[6],1,0, 'L',true);
-		
-		
-
-		// $this->Ln();
-		
-
-	// }
 	$this->Cell(array_sum($w),0,' ','T');
-
-
 }
 
 
 }	
-
+// create instance of PDF class, and call methods to generate PDF.
 $pdf = new studentPDF();
 $pdf->AliasNbPages();
 
 
 $header= array('CRN', 'Course', 'Title', 'Time', 'Days', 'Location', 'Instructor');
-$data= [
-	['123', 'CS 4231', 'Operating Systems', '12-1:45', 'MW', 'Howell Hall 204', 'Zhao'],
-	['234', 'CS 4112', 'Algorithms Analysis ', '11-12:15', 'TTR', 'Howell Hall 206', 'Monian'],
-	['765', 'IT 3603', 'Human Computer Interface', '11-12:15', 'MW', 'Howell Hall 207', 'Johari'],
-	['643', 'CS 2154', 'Discrete Math', '9-10:45', 'TTR', 'Howell Hall 209', 'Drissi'],
-	['543', 'IT 4342', 'Worksplace Safety', '-','-','Online', 'Hickerson']
-];
-
-
+$data = [];
 $pdf->AddPage();
 $pdf->Image('images/logo_10.png', 15, 85, 175, 175);
 $pdf->academicInfo();

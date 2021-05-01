@@ -286,10 +286,9 @@ ABOUT PAGE
   background-color: white;
 }
 
-h2.center{
+h2.center {
   margin: 15px 0;
 }
-
 
 .persons {
   display: flex;
@@ -339,44 +338,64 @@ h2.center{
 
 .profile-pic {
   background-repeat: no-repeat;
-  background-position: 45% 0%;
-  background-size: 200%;
   border: 1px solid black;
 }
 
-.persons .person:nth-child(1) .profile-pic{
+/* Elias Proctor */
+.persons .person:nth-child(1) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01479.JPG);
+  background-size: 125%;
+  background-position: 45% 10%;
 }
 
-.persons .person:nth-child(2) .profile-pic{
+/* Robert Alden */
+.persons .person:nth-child(2) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01469.JPG);
+  background-size: 125%;
+  background-position: 43% 8%;
 }
 
-.persons .person:nth-child(3) .profile-pic{
+/* Kayla Snyder */
+.persons .person:nth-child(3) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01474.JPG);
+  background-size: 125%;
+  background-position: 42% 7%;
 }
 
-.persons .person:nth-child(4) .profile-pic{
+/* Cynthia Dy */
+.persons .person:nth-child(4) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01476.JPG);
+  background-size: 125%;
+  background-position: 47.5% 100%;
 }
 
-.persons .person:nth-child(5) .profile-pic{
+/* Ryan Cox */
+.persons .person:nth-child(5) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01472.JPG);
+  background-size: 125%;
+  background-position: 55% 0%;
 }
 
-.persons .person:nth-child(6) .profile-pic{
+/* Kadar Lamsal */
+.persons .person:nth-child(6) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01471.JPG);
+  background-size: 125%;
+  background-position: 45% 27%;
 }
 
-.persons .person:nth-child(7) .profile-pic{
+/* Ryan Pierce */
+.persons .person:nth-child(7) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01482.JPG);
+  background-size: 125%;
+  background-position: 58% 40%;
 }
 
-.persons .person:nth-child(8) .profile-pic{
+/* Michael Argyros */
+.persons .person:nth-child(8) .profile-pic {
   background-image: url(/~team2/project/images/about_us_photo/DSC01478.JPG);
+  background-size: 125%;
+  background-position: 57% 20%;
 }
-
-
 
 .person:hover .profile-pic {
   transform: rotateY(360deg);
@@ -414,11 +433,11 @@ OVERALL FEATURES TABLE in ABOUT PAGE
   background-color: var(--light-yellow);
 }
 
-.feature-table-div tr:nth-child(1) > td{
+.feature-table-div tr:nth-child(1) > td {
   background-color: var(--dark-yellow);
 }
 
-.feature-table-div tr > td:nth-child(1){
+.feature-table-div tr > td:nth-child(1) {
   background-color: var(--dark-yellow);
 }
 
@@ -430,35 +449,43 @@ OVERALL FEATURES TABLE in ABOUT PAGE
 .cell {
 }
 
-
 .fill-cell {
   background-color: #ff3434;
 }
 
-
-
-h2.center{
+h2.center {
 }
 
-.show-more-button, .about-info-content, .about-info-content + h2, .about-info hr{
+.show-more-button,
+.about-info-content,
+.about-info-content + h2,
+.about-info hr {
   margin: 15px 0;
 }
 
-h2.center{
+h2.center {
   margin-bottom: 0;
 }
 
-.show-container{
-	display: flex;
-	flex-direction: column;
-	position: relative;
+.show-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 .show-more-button {
   height: 30px;
   width: 30px;
-  clip-path: polygon(25% 0%, 75% 0%, 75% 50%, 100% 50%, 50% 100%, 0% 50%, 25% 50%);
-  transition: all .25s;
+  clip-path: polygon(
+    25% 0%,
+    75% 0%,
+    75% 50%,
+    100% 50%,
+    50% 100%,
+    0% 50%,
+    25% 50%
+  );
+  transition: all 0.25s;
   color: var(--dark-yellow);
   background-color: var(--dark-yellow);
   outline: none;
@@ -470,8 +497,8 @@ h2.center{
   top: -30px;
 }
 
-.show-more-button:hover{
-	cursor: pointer;
+.show-more-button:hover {
+  cursor: pointer;
 }
 
 .show-more-button + .about-info-content {
@@ -486,89 +513,89 @@ h2.center{
   display: unset;
 }
 
-.backdrop{
-	display: none;
-	z-index: 501;
-	background-color: rgba(0,0,0,.75);
-	width: 100vw;
-	height: 100vh;
-	position: fixed;
-	left: 0;
-	top: 0;
+.backdrop {
+  display: none;
+  z-index: 501;
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
 }
 
-.backdrop.showing{
-	display: unset;
+.backdrop.showing {
+  display: unset;
 }
 
-.backdrop:hover{
-	cursor: pointer;
+.backdrop:hover {
+  cursor: pointer;
 }
 
-.backdrop.showing + .use-case-design{
-	display: unset;
+.backdrop.showing + .use-case-design {
+  display: unset;
 }
 
-.use-case-design{
-	display: none;
-	background-image: url(http://eliasproctor.com/admin/user_images/selfie.jpg);
-	background-attachment: scroll;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: contain;
-	z-index: 502;
-	width: 90vw;
-	height: 90vh;
-	background-color: white;
-	position: fixed;
-	left: 5vw;
-	top: 5vh;
-	padding: 15px;
+.use-case-design {
+  display: none;
+  background-image: url(http://eliasproctor.com/admin/user_images/selfie.jpg);
+  background-attachment: scroll;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  z-index: 502;
+  width: 90vw;
+  height: 90vh;
+  background-color: white;
+  position: fixed;
+  left: 5vw;
+  top: 5vh;
+  padding: 15px;
 }
 
-.use-case-buttons{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: row;
-	flex-wrap: wrap;
+.use-case-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
-.use-case-button{
-	margin: 5px;
-	padding: 5px;
-	background-color: var(--dark-yellow);
-	text-align: center;
+.use-case-button {
+  margin: 5px;
+  padding: 5px;
+  background-color: var(--dark-yellow);
+  text-align: center;
 }
 
-.use-case-button:hover{
-	cursor: pointer;
+.use-case-button:hover {
+  cursor: pointer;
 }
 
 .use-case-close-button,
-.use-case-change-index-buttons > button{
-	width: 40px;
-	height: 40px;
-	font-size: 1.2rem;	
-	-webkit-appearance: none;
-	border-radius: 0;
-	outline: none;
-	border: 1px solid black;
-	color: white;
+.use-case-change-index-buttons > button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  -webkit-appearance: none;
+  border-radius: 0;
+  outline: none;
+  border: 1px solid black;
+  color: white;
 }
 
-.use-case-change-index-buttons > button{
+.use-case-change-index-buttons > button {
   background-color: var(--dark-yellow);
 }
 
-.use-case-close-button{
+.use-case-close-button {
   background-color: #ff3434;
 }
 
-.use-case-change-index-buttons{
+.use-case-change-index-buttons {
 }
 
-.change-use-case-buttons{
-	display: flex;
-	justify-content: space-between;
+.change-use-case-buttons {
+  display: flex;
+  justify-content: space-between;
 }

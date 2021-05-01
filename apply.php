@@ -8,6 +8,9 @@
 
 		$requests = get_apply_request();
 		$majors = get_all_majors();
+		
+		// function to make sure input from user is correct
+		// return errors if any
 		function validate_apply($input){
 			$errors = [];
 
@@ -39,6 +42,8 @@
 
 
 
+		// if form was submitted, check if validated.
+		// if so, then insert application and tell the user it was submitted successfully
 	 if(isset($_POST["submit_apply"])){
    		$error = validate_apply($_POST);
 		$input = clean_array($_POST);
@@ -56,6 +61,10 @@
 <div class="form__login login">
 	<h1>Apply Now!</h1>
 
+<!--
+	APPLICATION FORM
+-->
+	
 <form action="<?= action()?>" method="post">
     <div class="container__input">
 		<input type="text" name="first_name" value="<?= show_value($input, 'first_name')?>">

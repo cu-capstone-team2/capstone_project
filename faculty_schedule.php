@@ -1,7 +1,9 @@
 <?php
 
+// connect to the database
 require_once("includes/all.php");
 
+// check the faculty member requested, if they don't exist, change page
 $faculty_id = isset($_GET["faculty_id"])? $_GET["faculty_id"] : "";
 $faculty = get_faculty_by_id($faculty_id);
 
@@ -13,8 +15,10 @@ $user = authenticate();
 
 $role = isset($user["role"])? (int)$user["role"] : STUDENT;
 
+// check if current user is one of these, else change page
 check_user([CHAIR,SECRETARY,INSTRUCTOR]);
 
+// FPDF framework
 require('fpdf/fpdf.php');
 
 class PDF extends FPDF{
@@ -71,6 +75,7 @@ class PDF extends FPDF{
 			$this->Ln(15);
 		}
 		
+		// used to trim the name
 		function trim_course_name($name){
 			if(strlen($name) >30){
 				return substr($name,0,27) . "...";
@@ -98,13 +103,8 @@ class PDF extends FPDF{
 			$this->Cell(21,6,'Location',1,0,'C',true);
 			$this->Cell(25,6,'Enrolled',1,0,'C',true);
 			$this->Ln();
-			// $classes = [
-			// 	['24150','MIS 3183','Structured Query Language','-','-','-',20],
-			// 	['23410','IT 2064L','Internetworking Tech Lab','11:00-11:55am','MW','HH 204',25],
-			// 	['24152','CS 2333','Web Systems Technologies','12:30-1:45pm','W','HH 201N',15],
-			// 	['23322','CS 4233','Capstone Project','2:00-3:15pm','TR','HH 206',19],
-			// 	['23428','IT 2064','Internetworking Tech','9:30-10:45am','MW','HH 213',20]
-			// ];
+
+			// query all the classes this instructor teaches before generating table
 			$classes = get_classes_by_instructor($faculty["faculty_id"]);
 
 			$this->SetFillColor(255,235,185);
@@ -156,12 +156,6 @@ $pdf = new PDF();
 $pdf->AliasNbPages();
 
 $header = array('Level', 'Class', 'Minor', 'Major');
-$data = [
-	['Freshman', 'Yes', 'Math', 'CS'],
-	['Sophmore', 'No', 'Art', 'English'],
-	['Junior', 'Yes', 'N/A', 'IT'],
-	['Senior', 'Yes', 'N/A', 'Biology']
-];
 
 $pdf->AddPage();
 $pdf->Image('images/logo_10.png', 15, 85, 175, 175);

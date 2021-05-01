@@ -4,7 +4,7 @@
 <?php
       $error = [];
       $input = [];
-
+	// validate the contact form, check if there are any errors
       function validate_contact($input){
           $errors = [];
           if(!isset($input['first_name']) || empty($input['first_name'])){
@@ -31,7 +31,7 @@
         return $errors;
 
       }
-
+	// if submit button is pressed, and no errors, then insert contact form into the database.
       	 if(isset($_POST["submit_contact"])){
             $error = validate_contact($_POST);
 			$input = clean_array($_POST);
@@ -44,6 +44,10 @@
           }
  ?>
 
+ <!--
+ Contact Us FORM
+ -->
+ 
 <div class = "form__login login">
   <h1>Contact Us</h1>
   <form action="<?=action()?>" method="post">
@@ -80,6 +84,9 @@ document.querySelector('input').focus();
 </script>
 
 <script>
+/*
+Disallows messages to be more than 255 characters
+*/
 const charCount = document.querySelector('#char-count');
 const comments = document.querySelector('#message');
 

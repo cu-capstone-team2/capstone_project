@@ -7,6 +7,8 @@
 $errors = [];
 $input = [];
 
+// If the submit button is set, then validate the form.
+// If no errors, then login the user
 if(isset($_POST["submit_login"])){
     $errors = validate_login($_POST);
     if(empty($errors)){
@@ -20,6 +22,10 @@ if(isset($_POST["submit_login"])){
 
 ?>
 
+<!-- 
+	LOGIN FORM
+	includes username, password, and role as input
+-->
 <div class="form__login login">
     <?= show_error($errors,"login") ?>
 

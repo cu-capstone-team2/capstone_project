@@ -4,6 +4,8 @@
 
 <?php
 
+// if key exists, then show the reset_password page
+// else, show the verify page
 if(isset($_GET["key"])){
   require_once("includes/form_validations/reset_password.php");
 } else{
