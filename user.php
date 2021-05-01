@@ -15,8 +15,7 @@ require_once("partials/user/header.php");
 // only show links depending on the user role
 require_once("users/links/choose.php");
 
-// Determine which feature is being requested, if it doesn't exist, go to default page
-$feature = "";
+$feature = "does_not_exists_file";
 
 if(isset($_GET["feature"])){
 	$feature = $_GET["feature"];
