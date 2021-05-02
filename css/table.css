@@ -21,6 +21,7 @@ main a:active {
   text-decoration: none;
 }
 
+/* Info in the default page */
 .info-table{
 	width: 100%;
 }
@@ -45,6 +46,8 @@ main a:active {
 	border: 1px solid black;
 	padding: 5px;
 }
+
+/* All features with tables have this div around them */
 
 .div-table {
   border: 1px solid black;
@@ -76,6 +79,8 @@ main a:active {
 .div-table .row + tr {
   display: none;
 }
+
+/* Info shows adjacent row in list */
 
 .info-shown {
   color: blue;
@@ -120,7 +125,7 @@ main a:active {
 }
 
 /*
-Button shadow and button press animation help from
+Button shadow and button press animation
 */
 
 .feature-url {
@@ -171,6 +176,8 @@ span.pagination-link {
   color: white;
   background-color: var(--dark-yellow);
 }
+
+/* number of items from query */
 
 .total-count {
   text-align: right;

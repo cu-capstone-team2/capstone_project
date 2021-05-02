@@ -23,11 +23,15 @@ body {
   color: var(--text-color);
 }
 
+/* logout button */
+
 .logout-top-right {
   position: absolute !important;
   top: 15px;
   right: 15px;
 }
+
+/* Navigation menu */
 
 .dropdown-menu {
   opacity: 0.5;
@@ -69,6 +73,8 @@ body {
   grid-template-rows: 48px 1fr 64px;
   grid-template-columns: 250px 1fr;
 }
+
+/* Main content of the user's page */
 
 main {
   position: relative;
@@ -138,6 +144,8 @@ hr + a.feature-url:active {
   }
 }
 
+/* top of page with navigation */
+
 header {
   grid-area: header;
   background-color: var(--dark-yellow);
@@ -188,6 +196,8 @@ header > .mainlinks {
   width: 100%;
   height: 100%;
 }
+
+/* Dropdown menu toggle button */
 
 .toggle-button {
   display: flex;
@@ -370,6 +380,7 @@ footer {
     width: 170px;
     height: 170px;
   }
+/* footer at the bottom of the page */
   .footer {
     padding: 20px;
     flex-direction: column;

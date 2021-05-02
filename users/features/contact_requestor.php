@@ -6,7 +6,7 @@
 	$input = [];
 	
 	
-		
+	// get specific applications requested, if not found go to default page		
 	if(isset($_GET["apply_id"])){
 		$r_id = $_GET["apply_id"];
 			$request = get_apply_info($r_id);

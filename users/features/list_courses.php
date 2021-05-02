@@ -1,5 +1,10 @@
 <?php check_user([ADMIN]) ?>
 
+<!--
+Show all of the courses for admin
+Can also delete courses and filter courses with search form
+Courses show in tables
+-->
 
 <h1>Courses</h1>
 <hr>

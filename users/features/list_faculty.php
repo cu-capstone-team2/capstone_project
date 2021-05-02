@@ -1,5 +1,10 @@
 <?php check_user([ADMIN, CHAIR, SECRETARY]) ?>
- 
+
+<!--
+List all of the faculty
+Admin can deactivate and activate accounts here
+Faculty members shown in table
+--> 
 
 <h1>Faculty</h1>
 <hr>

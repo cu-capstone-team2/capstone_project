@@ -1,10 +1,21 @@
 <?php check_user([INSTRUCTOR, CHAIR]) ?>
+
+<!--
+
+Shows the class roster of a specific class
+
+-->
+
 <h1>Class Roster</h1>
 <hr>
 
 <?php
+
+	// check class requested
 	$class_id = isset($_GET["class_id"])? $_GET["class_id"] : "";
 
+
+	// get class from database
     $class = get_class_by_id($class_id);
 
     if(!$class){ // If no valid class is found, redirect from page.
@@ -20,6 +31,11 @@
     <h3><?= $class["time"] ?> - <?= $class["days"] ?></h3>
     <h3>by <?= $class["instructor"] ?></h3>
 </div>
+
+<!--
+Generate table to show all students in class
+Chair and instructors can view schedule from here
+-->
 
 <div class="div-table">
     <table>

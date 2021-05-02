@@ -241,7 +241,7 @@ $majors = get_all_majors();
     	                        <a class="feature-url" href="user.php?feature=enroll&student_id=<?=$student["student_id"] ?>&enroll=<?= $class["class_id"] ?>">Enroll</a>
                             <?php endif ?>
                         <?php else: ?>
-                            <p class="error">Too Many Credits to Enroll, (Max: 18)</p>
+                            <p class="error">Max credits is 18</p>
 	                    <?php endif ?>
 	                </div>
                 </div>

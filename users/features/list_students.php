@@ -2,6 +2,11 @@
 
 <?php 
 
+/*
+List all students in a table
+admin can activate and deactivate students
+*/
+
 if($role === ADMIN){
     // activate and deactive accounts if admin
     if(isset($_GET["activate"])){

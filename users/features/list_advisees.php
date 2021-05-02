@@ -18,6 +18,10 @@ $advisees = get_students_by_advisor($faculty_id);
 
 ?>
 
+<!--
+Generates a table of all advisee for a specific advisor
+-->
+
 <h1>Advisees</h1>
 <hr>
 

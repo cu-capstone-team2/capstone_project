@@ -1,5 +1,8 @@
 <?php check_user([ADMIN]);
 
+// used to close contact in from database
+// I don't think this page is used anymore
+
 $errors = [];
 $input = [];
 

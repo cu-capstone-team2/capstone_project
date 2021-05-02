@@ -3,6 +3,8 @@ STYLING FOR THE SEARCH FORM FEATURE ON THE LIST PAGES
 INCLUDES THE BUTTONS, SEARCH FORM, and BACKDROP
 */
 
+/* Button that activates search form to show */
+
 .search-button {
   color: blue;
   padding: 5px;
@@ -59,6 +61,8 @@ INCLUDES THE BUTTONS, SEARCH FORM, and BACKDROP
   width: 100%;
 }
 
+/* Black backdrop that behind the search form */
+
 .backdrop {
   transition: opacity 0.25s;
   transform: rotateX(90deg);
@@ -86,6 +90,8 @@ INCLUDES THE BUTTONS, SEARCH FORM, and BACKDROP
   transform: unset;
   opacity: 1;
 }
+
+/* Allows the search form to come down */
 
 @keyframes down {
   from {

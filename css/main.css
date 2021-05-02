@@ -3,6 +3,8 @@ THIS PAGE INCLUDES ALL OF THE STYLES FOR THE LANDING PAGES OF THE SITE
 THIS CODE DOES NOT EFFECT THE USER'S PAGES
 */
 
+/* Import font family and css variables are declared */
+
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
 :root {
   /* --dark-yellow: #ffc429;
@@ -26,6 +28,8 @@ THIS CODE DOES NOT EFFECT THE USER'S PAGES
 html {
   background-color: var(--light-yellow);
 }
+/* Make height and body height 100% so grid is at least the size of the screen */
+
 body,
 html {
   height: 100% !important;
@@ -46,6 +50,9 @@ body {
   grid-template-areas: 'header' 'main' 'footer';
   grid-template-rows: 48px 1fr 64px;
 }
+
+/* The top part of the template, including the navigation */
+
 header {
   position: fixed;
   z-index: 500;
@@ -59,6 +66,8 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
+/* Main content of the page */
 main {
   grid-area: main;
   display: flex;
@@ -99,6 +108,9 @@ footer {
   padding: 0;
   z-index: 50;
 }
+
+/* Cameron Logo on the footer */
+
 .logo {
   height: 100%;
   width: 100%;
@@ -133,6 +145,9 @@ footer {
   transform: rotateZ(-2deg);
   font-size: 45px;
 }
+
+/* Navigation links  */
+
 .mainlinks {
   height: 50px;
   align-items: center;
@@ -195,6 +210,8 @@ footer {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
 }
+
+/* Grid layout changes when the screen is too small */
 
 @media (max-width: 700px) {
   body {
@@ -294,6 +311,8 @@ ABOUT PAGE
 h2.center {
   margin: 15px 0;
 }
+
+/* Styling for each developer image in the about page */
 
 .persons {
   display: flex;
@@ -478,6 +497,8 @@ h2.center {
   position: relative;
 }
 
+/* Button shows adjacent content */
+
 .show-more-button {
   height: 30px;
   width: 30px;
@@ -518,6 +539,8 @@ h2.center {
   display: unset;
 }
 
+/* Backdrop for the use case models */
+
 .backdrop {
   display: none;
   z-index: 501;
@@ -540,6 +563,8 @@ h2.center {
 .backdrop.showing + .use-case-design {
   display: unset;
 }
+
+/* Use case diagram in about page */
 
 .use-case-design {
   display: none;

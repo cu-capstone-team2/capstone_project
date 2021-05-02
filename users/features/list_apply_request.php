@@ -1,6 +1,12 @@
 <?php check_user([ADMIN]);
 
 
+/*
+List all of the applications for the site
+Can handle deleting requests as well
+Generates a table to show applications
+*/
+
 if(isset($_GET["delete"])){
 	delete_request($_GET["delete"]);
 	change_page(link_without("delete"));

@@ -5,6 +5,7 @@
 
 	$error = [];
 	$input = [];
+	// query student, if not found, go to default page
 	$s_id = isset($_GET["student_id"])? $_GET["student_id"] : "";
 	$student = get_student_by_id($s_id);
 

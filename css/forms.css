@@ -17,6 +17,8 @@ ALLOWS FOR INPUT LABELS TO MOVE UP AND DOWN
   text-align: center;
 }
 
+/* Form group per label and input tags for forms */
+
 .form-group {
   margin: 10px 0;
   display: flex;
@@ -49,6 +51,8 @@ ALLOWS FOR INPUT LABELS TO MOVE UP AND DOWN
   color: var(--text-color);
 }
 
+/* Submit button for forms */
+
 .form > input[type='submit'] {
   margin: 10px 0;
   padding: 5px 10px;
@@ -68,6 +72,8 @@ ALLOWS FOR INPUT LABELS TO MOVE UP AND DOWN
   position: relative;
   opacity: 0.75;
 }
+
+/* Red inputs and outline for when there's an error */
 
 .error {
   color: red !important;

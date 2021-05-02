@@ -2,6 +2,12 @@
 
 <?php
 
+/*
+List all of the students that tried to contact admin
+Can use search form to filter specific data
+Shown in a table
+*/
+
 if(isset($_GET["delete"])){
 	delete_contact($_GET["delete"]);
 	change_page(link_without("delete"));

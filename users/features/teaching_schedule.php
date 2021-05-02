@@ -1,8 +1,16 @@
 <?php check_user([CHAIR,INSTRUCTOR]) ?>
+
+<!--
+Show teaching schedule for a specific instructor
+Generate table of the classes they teach
+-->
+
 <h1>Teaching Schedule</h1>
 <hr>
 
 <?php 
+
+// if instructor does not exist, then go to default page
 
 $instructor_id = isset($_GET["faculty_id"])? $_GET["faculty_id"] : "";
 

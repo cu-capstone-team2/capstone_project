@@ -1,3 +1,8 @@
+<!--
+Shows all classes in the database in a table
+Search features allows filtering and pagination for table
+-->
+
 <?php check_user([ADMIN,CHAIR,INSTRUCTOR,STUDENT]) ?>
 
 <h1>Classes</h1>

@@ -42,6 +42,8 @@ input {
   transform: translateX(-0.2rem) translateY(-1.5rem);
 }
 
+/* Container around input and label tags */
+
 .container__input * {
   padding: 5px;
   font-size: 1rem;
@@ -99,6 +101,8 @@ input {
 .container__input__filled {
   transform: translateY(-1.5rem) translateX(-0.2rem);
 }
+
+/* Allows form to animate down when the page loads */
 
 @keyframes come-in {
   from {

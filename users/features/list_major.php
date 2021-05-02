@@ -1,5 +1,10 @@
 <?php check_user([ADMIN]);
 
+/*
+List all of the majors
+Only for admin, and can delete majors if major is not used
+*/
+
 if(isset($_GET["delete"]) ){
 	if(can_major_be_deleted($_GET["delete"])){
 		delete_applies_by_major($_GET["delete"]);
