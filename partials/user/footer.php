@@ -1,3 +1,7 @@
+<!--
+TO BE INCLUDED AT THE BOTTOM OF EVERY PAGE, FOR CONSISTENCY
+-->
+
 <script src="js/main.js"></script>
 <script src="js/input.js"></script>
 <script src="js/table.js"></script>

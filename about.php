@@ -16,6 +16,10 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 	<h1>About Page</h1>
 	<hr>
 
+	<!--
+		PURPOSE OF THE PROJECT
+	-->
+
 	<h2 class='center'>Purpose</h2>
 	<div class='show-container'>
 	<button class='show-more-button'></button>
@@ -25,6 +29,10 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 	</div>
 
 	<hr>	
+
+	<!--
+		USER REQUIREMENTS
+	-->
 	<h2 class='center'>User Requirements</h2>
 	<div class='show-container'>
 	<button class='show-more-button'></button>
@@ -87,6 +95,9 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 	</div>
 
 	<hr>
+	<!--
+		DESIGN
+	-->
 	<h2 class='center'>Design</h2>
 	<div class='show-container'>
 	<button class='show-more-button'></button>
@@ -101,7 +112,9 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 	</div>
 	</div>
 
-	
+	<!--
+		FEATURES
+	-->
 	<hr>
 	<h2 class='center'>Overall Features</h2>
 	<div class='show-container'>
@@ -120,6 +133,7 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 			["Class Roster",				0,1,1,0,0],
 			["Contact Advisor",			0,1,0,1,1],
 			["Contact Chair",				0,0,1,0,0],
+			["Contact Faculty",		1,1,0,1,0],
 			["Contact Requester",		1,0,0,0,0],
 			["Contact Student",			0,1,1,1,0],
 			["Delete Class",				1,0,0,0,0],
@@ -138,7 +152,7 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 			["List Classes",				1,1,1,0,1],
 			["List Contact Us",			1,0,0,0,0],
 			["List Courses",				1,0,0,0,0],
-			["List Faculty",				1,0,0,0,0],
+			["List Faculty",				1,1,0,1,0],
 			["List Major",					1,0,0,0,0],
 			["List Students",				1,1,0,1,0],
 			["Pick Major",					0,1,0,1,0],
@@ -180,6 +194,9 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 	</div>
 	</div>
 
+	<!--
+		LANGUAGES AND OS
+	-->
 	<hr>	
 	<h2 class='center'>Languages and OS</h2>
 	<div class='show-container'>
@@ -195,7 +212,9 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 	</div>
 	</div>
 
-	
+	<!--
+		DEVELOPERS OF THE PROJECT
+	-->
 	<hr>
 	<h2 class='center'>Developers</h2>
 	<div class='show-container'>
@@ -261,9 +280,13 @@ Includes the Purpose, Requirements, Design, Features, Languages, and Developers
 </div>
 </div>
 
-
-
 <?php require_once("partials/home/footer.php") ?>
+
+
+<!--
+	PART OF THE DESIGN PART, TO SWITCH BETWEEN DIFFERENT MODELS
+-->
+
 <div class='backdrop'></div>
 <div class='use-case-design'>
 	<div class='change-use-case-buttons''>

@@ -1,3 +1,8 @@
+
+<!--
+TO BE INCLUDED AT THE TOP OF EVERY PAGE, FOR CONSISTENCY
+-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

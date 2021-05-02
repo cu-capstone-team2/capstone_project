@@ -151,7 +151,7 @@ class PDF extends FPDF{
 	
 }
 
-
+// instance of pdf page, and call methods to generate PDF
 $pdf = new PDF();
 $pdf->AliasNbPages();
 

@@ -1,3 +1,7 @@
+// Robert did this page, basically creates a cookie that stores
+// the size of the window, which allows PHP to use that cookie
+// to dynamically render the limit of rows in a table based on 
+// window size.
 
 var height = window.innerHeight
 

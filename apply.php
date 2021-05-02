@@ -1,59 +1,62 @@
-<?php require_once("includes/all.php") ?>
-
-<?php require_once("partials/home/header.php") ?>
-
 <?php
-		$error = [];
+
+// connect to database and functions
+require_once("includes/all.php");
+
+// include header
+require_once("partials/home/header.php");
+$error = [];
+$input = [];
+
+$requests = get_apply_request();
+$majors = get_all_majors();
+
+// function to make sure input from user is correct
+// return errors in associative array if any
+function validate_apply($input){
+	$errors = [];
+
+	if(!isset($input['first_name']) || empty($input['first_name'])){
+		$errors['first_name'] = "First Name is Required";
+	}else if(!ctype_alpha($input['first_name'])){
+		$errors['first_name'] = "First Name can only contain characters";
+	}
+
+	if(!isset($input['last_name']) || empty($input['last_name'])){
+		$errors['last_name'] = "Last Name Required";
+	}else if(!ctype_alpha($input['last_name'])){
+		$errors["last_name"] = "Last Name can only contain characters";
+	}
+
+	if(!isset($input['email']) || empty($input['email'])){
+		$errors['email'] = "Email is required";
+	}else if(!filter_var($input['email'], FILTER_VALIDATE_EMAIL)){
+		$errors['email'] = "Email is not Valid";
+	}else if(!!get_apply_by_email($input['email'])){
+		$errors['email'] = "A request with that email has already been sent";
+	}
+
+	if(!isset($input['major']) || empty($input['major'])){
+		$errors['major'] = "Major is required";
+	}
+		return $errors;
+}
+
+
+
+// if form was submitted, check if validated.
+// if so, then insert application and tell the user it was submitted successfully
+// else show errors
+if(isset($_POST["submit_apply"])){
+$error = validate_apply($_POST);
+$input = clean_array($_POST);
+		if(empty($error)){
+		insert_apply($_POST["first_name"],$_POST["last_name"], $_POST["email"],$_POST["major"]);
+		echo "<h3 style ='color:green'>Request Made!</h3>";
+		echo "<a href ='index.php' style = 'color:green'> Go back to Home</a> ";	 
 		$input = [];
-
-		$requests = get_apply_request();
-		$majors = get_all_majors();
-		
-		// function to make sure input from user is correct
-		// return errors if any
-		function validate_apply($input){
-			$errors = [];
-
-			if(!isset($input['first_name']) || empty($input['first_name'])){
-				$errors['first_name'] = "First Name is Required";
-			}else if(!ctype_alpha($input['first_name'])){
-				$errors['first_name'] = "First Name can only contain characters";
-			}
-
-			if(!isset($input['last_name']) || empty($input['last_name'])){
-				$errors['last_name'] = "Last Name Required";
-			}else if(!ctype_alpha($input['last_name'])){
-				$errors["last_name"] = "Last Name can only contain characters";
-			}
-
-			if(!isset($input['email']) || empty($input['email'])){
-				$errors['email'] = "Email is required";
-			}else if(!filter_var($input['email'], FILTER_VALIDATE_EMAIL)){
-				$errors['email'] = "Email is not Valid";
-			}else if(!!get_apply_by_email($input['email'])){
-				$errors['email'] = "A request with that email has already been sent";
-			}
-
-			if(!isset($input['major']) || empty($input['major'])){
-				$errors['major'] = "Major is required";
-			}
-				return $errors;
-		}
-
-
-
-		// if form was submitted, check if validated.
-		// if so, then insert application and tell the user it was submitted successfully
-	 if(isset($_POST["submit_apply"])){
-   		$error = validate_apply($_POST);
-		$input = clean_array($_POST);
-             if(empty($error)){
-				insert_apply($_POST["first_name"],$_POST["last_name"], $_POST["email"],$_POST["major"]);
-				echo "<h3 style ='color:green'>Request Made!</h3>";
-                echo "<a href ='index.php' style = 'color:green'> Go back to Home</a> ";	 
-				$input = [];
-			}
-	 }
+	}
+}
 
 
 ?>

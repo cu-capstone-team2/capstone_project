@@ -1,6 +1,10 @@
+/*
+THIS IS THE LOGIC TO ALLOW INPUT LABELS TO MOVE UP AND DOWN
+*/
 const container_inputs = document.querySelectorAll('.container__input');
 const container_selects = document.querySelectorAll('.container__select');
 
+// check if the input is filled, if so add closs, else remove it
 const check_filled = (input,label) => {
     console.log('called');
     if(input.value.length === 0 && label.classList.contains('container__input__filled')){
@@ -10,6 +14,7 @@ const check_filled = (input,label) => {
     }
 }
 
+// add event listeners when each input is updated and check if filled with data
 container_inputs.forEach(ci=>{
     const label = ci.querySelector('label');
     const input = ci.querySelector("input");
@@ -28,6 +33,7 @@ container_inputs.forEach(ci=>{
 
 })
 
+// the same as the inputs, but for the select elements
 container_selects.forEach(ci=>{
     const label = ci.querySelector('label');
     const input = ci.querySelector("select");

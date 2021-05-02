@@ -1,3 +1,8 @@
+/*
+STYLES THE FORM ON LANDING PAGES
+ALLOWS FOR INPUT LABELS TO MOVE UP AND DOWN
+*/
+
 .form {
   display: flex;
   flex-direction: column;

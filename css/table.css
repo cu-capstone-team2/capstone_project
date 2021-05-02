@@ -1,3 +1,7 @@
+/*
+THIS PAGE IS FOR THE STYLING OF ALL OF THE TABLES IN THE WEBSITE
+*/
+
 .div-table {
   overflow-x: auto;
   width: 100%;
@@ -117,7 +121,6 @@ main a:active {
 
 /*
 Button shadow and button press animation help from
-https://fdossena.com/?p=html5cool/buttons/i.frag
 */
 
 .feature-url {

@@ -1,5 +1,5 @@
 <?php
-
+// depending on the role of the current user, then show those links
 switch($role){
 	case ADMIN:
 		require_once('users/links/admin.php');
@@ -18,6 +18,7 @@ switch($role){
 		break;
 }
 
+// below is dynamic renderin of links based on the user's links
 ?>
 
 <?php foreach($links as $link=>$name): ?>

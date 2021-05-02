@@ -1,7 +1,11 @@
-<?php require_once("includes/all.php")?>
-<?php require_once("partials/home/header.php")?>
-
 <?php
+
+// include database and functions
+require_once("includes/all.php");
+
+// include header template
+require_once("partials/home/header.php");
+
       $error = [];
       $input = [];
 	// validate the contact form, check if there are any errors

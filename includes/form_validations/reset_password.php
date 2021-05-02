@@ -61,6 +61,7 @@ function verify_password($input){//This function verify that new password
 $errors = [];
 $input = [];
 $success = false;
+// if no errors, then update password, else show errors
 if(isset($_POST["submit_new_password"])){
   $errors = verify_password($_POST);
   if(empty($errors)){

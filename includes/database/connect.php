@@ -7,7 +7,7 @@
 **************************************************************************/
 
 
-$conn = mysqli_connect(D_LOCATION,D_USERNAME,D_PASSWORD,D_DATABASE);//database connction call 
+$conn = mysqli_connect(D_LOCATION,D_USERNAME,D_PASSWORD,D_DATABASE);//database connection call 
 
 if($error = mysqli_connect_error($conn)){//if database connction fails it quits 
     die("CONNECTION FAILED: " . $error);
