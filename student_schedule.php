@@ -129,7 +129,7 @@ function scheduleTable($header, $data)
 	
 	
 	//width columns
-	$w = array(15,20,55,20,20,35,25);
+	$w = array(15,20,60,29,20,18,25);
 	//Header
 	for($i=0;$i<count($header);$i++)
 		$this->Cell($w[$i],7,$header[$i],1,0,'C',true);
