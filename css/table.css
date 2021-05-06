@@ -22,29 +22,29 @@ main a:active {
 }
 
 /* Info in the default page */
-.info-table{
-	width: 100%;
+.info-table {
+  width: 100%;
 }
 
-.info-table caption{
-	font-size: 1.2rem;
-	font-weight: 700;
+.info-table caption {
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
-.info-table table{
-	border-collapse: collapse;
-	width: 100%;
-	margin: 25px 0;
+.info-table table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 25px 0;
 }
 
-.info-table tr td:nth-child(1){
-	background-color: var(--dark-yellow);
+.info-table tr td:nth-child(1) {
+  background-color: var(--dark-yellow);
 }
 
-.info-table td{
-	width: 50%;
-	border: 1px solid black;
-	padding: 5px;
+.info-table td {
+  width: 50%;
+  border: 1px solid black;
+  padding: 5px;
 }
 
 /* All features with tables have this div around them */
@@ -129,15 +129,15 @@ Button shadow and button press animation
 */
 
 .feature-url {
-  padding: 0.3rem 0.7rem;
-  margin: 0 0.3rem 0.3rem 0;
-  border-radius: 0.15rem;
+  padding: 5px 11px;
+  margin: 2.5px;
+  border-radius: 3px;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: bold;
   color: var(--text-color);
   background-color: var(--dark-yellow);
-  box-shadow: inset 0 -0.6rem 0 -0.35rem rgba(0, 0, 0, 0.17);
+  box-shadow: inset 0 -10px 0 -7px rgba(0, 0, 0, 0.17);
   text-align: center;
   position: relative;
   opacity: 0.75;
@@ -149,7 +149,7 @@ Button shadow and button press animation
 }
 
 .feature-url:active {
-  top: 0.1rem;
+  top: 1px;
 }
 
 /* Pagination */
